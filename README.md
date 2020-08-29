@@ -1,5 +1,11 @@
 # curimba
 
+## Membros
+Guilherme Gonzalo
+Rafael Martins Campos
+Roberto Eiji Kamon Imaeda
+
+
 A new Flutter application.
 
 ## Getting Started
