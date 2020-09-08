@@ -1,9 +1,9 @@
+import 'package:curimba/database_helper.dart';
 import 'package:curimba/screens/create_card.dart';
 import 'package:flutter/material.dart';
-import 'package:english_words/english_words.dart';
-
 
 void main() {
+  DatabaseHelper.instance.database;
   runApp(MyApp());
 }
 
@@ -113,4 +113,3 @@ class MyApp extends StatelessWidget {
 //     );
 //   }
 // }
-
