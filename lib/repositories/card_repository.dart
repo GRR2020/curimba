@@ -3,7 +3,7 @@ import 'package:curimba/models/card_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class CardRepository {
-  final table = '';
+  final table = 'cards';
 
   insert(CardModel card) async {
     Database db = await DatabaseHelper.instance.database;

@@ -1,5 +1,7 @@
 import 'package:curimba/masks.dart';
 import 'package:curimba/models/card_model.dart';
+import 'package:curimba/repositories/card_repository.dart';
+import 'package:curimba/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -26,7 +28,8 @@ class _CreateCardState extends State<CreateCard> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          title: Text('Cadastrar Cartão'),
+          title:
+              Text('Cadastrar Cartão', style: TextStyle(fontFamily: 'Rubik')),
         ),
         body: Container(
             padding: EdgeInsets.only(left: 10, right: 10, top: 10),
@@ -36,113 +39,73 @@ class _CreateCardState extends State<CreateCard> {
                   TextFormField(
                     controller: _brandNameController,
                     focusNode: _brandNameFocus,
+                    textInputAction: TextInputAction.next,
                     onFieldSubmitted: (_) => _fieldFocusChange(
                         context, _brandNameFocus, _lastNumbersFocus),
-                    textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Visa',
-                      labelText: 'Marca do Cartão',
-                    ),
+                        border: OutlineInputBorder(),
+                        hintText: 'Visa',
+                        labelText: 'Marca do Cartão',
+                        labelStyle: TextStyle(fontFamily: 'Rubik'),
+                        hintStyle: TextStyle(fontFamily: 'Rubik')),
                     validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter some a';
-                      }
-                      return null;
+                      return Validators.validateNotEmpty(value);
                     },
                   ),
                   SizedBox(height: 10),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 5),
-                          child: TextFormField(
-                            controller: _lastNumbersController,
-                            inputFormatters: [
-                              Masks().lastNumbersMask,
-                              LengthLimitingTextInputFormatter(19)
-                            ],
-                            keyboardType: TextInputType.number,
-                            focusNode: _lastNumbersFocus,
-                            textInputAction: TextInputAction.next,
-                            onFieldSubmitted: (_) => _fieldFocusChange(
-                                context, _lastNumbersFocus, _expiryDateFocus),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: '•••• •••• •••• 4444',
-                              labelText: 'Últimos números',
-                            ),
-                            validator: (value) {
-                              return _validateLastNumbers(value);
-                            },
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 5),
-                          child: TextFormField(
-                            controller: _expiryDateController,
-                            inputFormatters: [
-                              Masks().expiryDateMask,
-                              LengthLimitingTextInputFormatter(5)
-                            ],
-                            focusNode: _expiryDateFocus,
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.done,
-                            onFieldSubmitted: (_) => _submitCard(),
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Vencimento',
-                              hintText: 'DD/MM',
-                            ),
-                            validator: (value) {
-                              return _validateExpiryDate(value);
-                            },
-                          ),
-                        ),
-                      ),
+                  TextFormField(
+                    controller: _lastNumbersController,
+                    focusNode: _lastNumbersFocus,
+                    keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.next,
+                    inputFormatters: [
+                      Masks.lastNumbersMask,
+                      LengthLimitingTextInputFormatter(19)
                     ],
+                    onFieldSubmitted: (_) => _fieldFocusChange(
+                        context, _lastNumbersFocus, _expiryDateFocus),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: '•••• •••• •••• 4444',
+                        labelText: 'Últimos números',
+                        labelStyle: TextStyle(fontFamily: 'Rubik'),
+                        hintStyle: TextStyle(fontFamily: 'Rubik')),
+                    validator: (value) {
+                      return Validators.validateLastNumbers(value);
+                    },
+                  ),
+                  SizedBox(height: 10),
+                  TextFormField(
+                    controller: _expiryDateController,
+                    focusNode: _expiryDateFocus,
+                    keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.done,
+                    inputFormatters: [
+                      Masks.expiryDateMask,
+                      LengthLimitingTextInputFormatter(5)
+                    ],
+                    onFieldSubmitted: (_) => _submitCard(),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Vencimento',
+                        hintText: 'DD/MM',
+                        labelStyle: TextStyle(fontFamily: 'Rubik'),
+                        hintStyle: TextStyle(fontFamily: 'Rubik')),
+                    validator: (value) {
+                      return Validators.validateExpiryDate(value);
+                    },
                   ),
                   SizedBox(height: 10),
                   RaisedButton(
                     onPressed: () {
                       _submitCard();
                     },
-                    child: Text('Cadastrar cartão'),
+                    color: Colors.black,
+                    textColor: Colors.white,
+                    child: Text('Cadastrar cartão'.toUpperCase(),
+                        style: TextStyle(fontFamily: 'Rubik')),
                   )
                 ]))));
-  }
-
-  _validateExpiryDate(value) {
-    print(value);
-    print(Masks().expiryDateMask.unmaskText(value));
-    var unmaskedValue = Masks().expiryDateMask.unmaskText(value);
-    if (unmaskedValue.isEmpty || unmaskedValue.length < 4) {
-      return 'Complete o campo';
-    } else {
-      var day = int.parse(unmaskedValue.substring(0, 2));
-      var month = int.parse(unmaskedValue.substring(2, 4));
-
-      if (day > 31 || day < 1) {
-        return 'Dia inválido';
-      }
-
-      if (month > 12 || month < 1) {
-        return 'Mês inválido';
-      }
-    }
-    return null;
-  }
-
-  _validateLastNumbers(value) {
-    var unmaskedValue = Masks().lastNumbersMask.unmaskText(value);
-    if (unmaskedValue.isEmpty || unmaskedValue.length < 4) {
-      return 'Complete o campo';
-    }
-    return null;
   }
 
   _fieldFocusChange(
@@ -151,10 +114,21 @@ class _CreateCardState extends State<CreateCard> {
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-  _submitCard() {
+  _submitCard() async {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState.validate()) {
-      _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text('Processing Data')));
+      _scaffoldKey.currentState
+          .showSnackBar(SnackBar(content: Text('Salvando cartão')));
+      var response = await _registerCard();
+      _scaffoldKey.currentState
+          .showSnackBar(SnackBar(content: Text(response.toString())));
     }
+  }
+
+  Future<int> _registerCard() async {
+    return await CardRepository().insert(CardModel(
+        lastNumbers: _lastNumbersController.text,
+        brandName: _brandNameController.text,
+        expiryDate: _expiryDateController.text));
   }
 }
