@@ -28,14 +28,14 @@ class _CreateCardState extends State<CreateCard> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          title:
-              Text('Cadastrar Cartão', style: TextStyle(fontFamily: 'Rubik')),
+          title: Text('Cadastrar Cartão'),
         ),
         body: Container(
-            padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+            padding: EdgeInsets.only(left: 10, right: 10),
             child: Form(
                 key: _formKey,
-                child: Column(children: <Widget>[
+                child: ListView(children: <Widget>[
+                  SizedBox(height: 10),
                   TextFormField(
                     controller: _brandNameController,
                     focusNode: _brandNameFocus,
@@ -45,9 +45,7 @@ class _CreateCardState extends State<CreateCard> {
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Visa',
-                        labelText: 'Marca do Cartão',
-                        labelStyle: TextStyle(fontFamily: 'Rubik'),
-                        hintStyle: TextStyle(fontFamily: 'Rubik')),
+                        labelText: 'Marca do Cartão'),
                     validator: (value) {
                       return Validators.validateNotEmpty(value);
                     },
@@ -67,9 +65,7 @@ class _CreateCardState extends State<CreateCard> {
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: '•••• •••• •••• 4444',
-                        labelText: 'Últimos números',
-                        labelStyle: TextStyle(fontFamily: 'Rubik'),
-                        hintStyle: TextStyle(fontFamily: 'Rubik')),
+                        labelText: 'Últimos números'),
                     validator: (value) {
                       return Validators.validateLastNumbers(value);
                     },
@@ -88,23 +84,19 @@ class _CreateCardState extends State<CreateCard> {
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Vencimento',
-                        hintText: 'DD/MM',
-                        labelStyle: TextStyle(fontFamily: 'Rubik'),
-                        hintStyle: TextStyle(fontFamily: 'Rubik')),
+                        hintText: 'DD/MM'),
                     validator: (value) {
                       return Validators.validateExpiryDate(value);
                     },
                   ),
                   SizedBox(height: 10),
                   RaisedButton(
-                    onPressed: () {
-                      _submitCard();
-                    },
-                    color: Colors.black,
-                    textColor: Colors.white,
-                    child: Text('Cadastrar cartão'.toUpperCase(),
-                        style: TextStyle(fontFamily: 'Rubik')),
-                  )
+                      onPressed: () {
+                        _submitCard();
+                      },
+                      color: Colors.black,
+                      textColor: Colors.white,
+                      child: Text('Cadastrar cartão'.toUpperCase()))
                 ]))));
   }
 
@@ -126,7 +118,7 @@ class _CreateCardState extends State<CreateCard> {
   }
 
   Future<int> _registerCard() async {
-    return await CardRepository().insert(CardModel(
+    return await CardRepository.insert(CardModel(
         lastNumbers: _lastNumbersController.text,
         brandName: _brandNameController.text,
         expiryDate: _expiryDateController.text));
