@@ -1,6 +1,6 @@
 # curimba
 [![Coverage Status](https://coveralls.io/repos/github/guigonzalo/curimba/badge.svg)](https://coveralls.io/github/guigonzalo/curimba)
-https://travis-ci.org/guigonzalo/curimba.svg?branch=master
+[![Build Status](https://travis-ci.org/guigonzalo/curimba.svg?branch=master)](https://travis-ci.org/guigonzalo/curimba)
 
 ## Membros
 Guilherme Gonzalo - 10284326
