@@ -1,3 +1,3 @@
-class User {
+class UserModel {
   // TODO: Create User model
 }

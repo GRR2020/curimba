@@ -3,14 +3,14 @@ import 'package:curimba/models/card_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class CardRepository {
-  static final table = 'cards';
+  final table = 'cards';
 
-  static Future<int> insert(CardModel card) async {
+  Future<int> insert(CardModel card) async {
     Database db = await DatabaseHelper.instance.database;
     return await db.insert(table, card.toMap());
   }
 
-  static Future<List<CardModel>> getAll() async {
+  Future<List<CardModel>> getFromUser() async {
     Database db = await DatabaseHelper.instance.database;
     var dbCards = await db.query(table);
 
@@ -24,7 +24,7 @@ class CardRepository {
     });
   }
 
-  static update(CardModel card) async {
+  update(CardModel card) async {
     Database db = await DatabaseHelper.instance.database;
     await db.update(
       table,

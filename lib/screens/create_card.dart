@@ -118,7 +118,7 @@ class _CreateCardState extends State<CreateCard> {
   }
 
   Future<int> _registerCard() async {
-    return await CardRepository.insert(CardModel(
+    return await CardRepository().insert(CardModel(
         lastNumbers: _lastNumbersController.text,
         brandName: _brandNameController.text,
         expiryDate: _expiryDateController.text));

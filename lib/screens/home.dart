@@ -1,7 +1,7 @@
 import 'package:curimba/screens/create_card.dart';
 import 'package:flutter/material.dart';
 
-import 'list_cards.dart';
+import 'cards_list.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -31,7 +31,11 @@ class Home extends StatelessWidget {
                 Expanded(
                     child: RaisedButton(
                         onPressed: () {
-                          MaterialPageRoute(builder: (context) => ListCards());
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CardsList()),
+                          );
                         },
                         color: Colors.black,
                         textColor: Colors.white,
