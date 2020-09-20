@@ -4,5 +4,5 @@ https://travis-ci.org/guigonzalo/curimba.svg?branch=master
 
 ## Membros
 Guilherme Gonzalo - 10284326
-Rafael Martins Campos -
+Rafael Martins Campos - 10367158
 Roberto Eiji Kamon Imaeda - 10284285
