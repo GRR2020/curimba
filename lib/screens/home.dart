@@ -35,6 +35,16 @@ class Home extends StatelessWidget {
                   },
                   color: Colors.black,
                   textColor: Colors.white,
+                  child: Text('Listar cartões'.toUpperCase())),
+              RaisedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CardsList()),
+                    );
+                  },
+                  color: Colors.black,
+                  textColor: Colors.white,
                   child: Text('Listar cartões'.toUpperCase()))
             ])));
   }
