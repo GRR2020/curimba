@@ -1,6 +1,6 @@
 import 'package:curimba/database_helper.dart';
 import 'package:curimba/screens/home.dart';
-import 'package:curimba/view_models/cards_list_view_model.dart';
+import 'package:curimba/view_models/card_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,13 +8,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DatabaseHelper.instance.database;
 
-  final cardsListViewModel = CardsListViewModel();
-  await cardsListViewModel.init();
+  final cardViewModel = CardViewModel();
+  await cardViewModel.init();
 
   runApp(MultiProvider(
       providers: [
-        ChangeNotifierProvider<CardsListViewModel>.value(
-            value: cardsListViewModel)
+        ChangeNotifierProvider<CardViewModel>.value(
+            value: cardViewModel)
       ],
       child: MaterialApp(
         title: 'App',
