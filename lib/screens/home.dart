@@ -11,36 +11,31 @@ class Home extends StatelessWidget {
           title: Text('Tela inicial'),
         ),
         body: Container(
-            padding: EdgeInsets.only(left: 10, right: 10, top: 10),
-            child: Column(children: <Widget>[
-              Row(children: <Widget>[
-                Expanded(
-                    child: RaisedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CreateCard()),
-                          );
-                        },
-                        color: Colors.black,
-                        textColor: Colors.white,
-                        child: Text('Cadastrar cartão'.toUpperCase())))
-              ]),
-              Row(children: <Widget>[
-                Expanded(
-                    child: RaisedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CardsList()),
-                          );
-                        },
-                        color: Colors.black,
-                        textColor: Colors.white,
-                        child: Text('Listar cartões'.toUpperCase())))
-              ]),
+            padding: EdgeInsets.only(left: 10, right: 10),
+            child: ListView(children: <Widget>[
+              SizedBox(height: 10),
+              RaisedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CreateCard(),
+                      ),
+                    );
+                  },
+                  color: Colors.black,
+                  textColor: Colors.white,
+                  child: Text('Cadastrar cartão'.toUpperCase())),
+              RaisedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CardsList()),
+                    );
+                  },
+                  color: Colors.black,
+                  textColor: Colors.white,
+                  child: Text('Listar cartões'.toUpperCase()))
             ])));
   }
 }
