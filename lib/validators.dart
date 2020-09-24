@@ -10,18 +10,12 @@ class Validators {
 
   static validateExpiryDate(value) {
     var unmaskedValue = Masks.expiryDateMask.unmaskText(value);
-    if (unmaskedValue.isEmpty || unmaskedValue.length < 4) {
+    if (unmaskedValue.isEmpty || unmaskedValue.length < 2) {
       return 'Complete o campo';
     } else {
       var day = int.parse(unmaskedValue.substring(0, 2));
-      var month = int.parse(unmaskedValue.substring(2, 4));
-
       if (day > 31 || day < 1) {
         return 'Dia inválido';
-      }
-
-      if (month > 12 || month < 1) {
-        return 'Mês inválido';
       }
     }
     return null;

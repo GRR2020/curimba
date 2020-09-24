@@ -5,11 +5,6 @@ import 'package:sqflite/sqflite.dart';
 class CardRepository {
   final table = 'cards';
 
-  Future<int> insert(CardModel card) async {
-    Database db = await DatabaseHelper.instance.database;
-    return await db.insert(table, card.toMap());
-  }
-
   Future<List<CardModel>> getFromUser() async {
     Database db = await DatabaseHelper.instance.database;
     var dbCards = await db.query(table);
@@ -22,6 +17,11 @@ class CardRepository {
         expiryDate: dbCards[i]['expiry_date'],
       );
     });
+  }
+
+  Future<int> insert(CardModel card) async {
+    Database db = await DatabaseHelper.instance.database;
+    return await db.insert(table, card.toMap());
   }
 
   update(CardModel card) async {
