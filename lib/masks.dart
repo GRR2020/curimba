@@ -6,6 +6,6 @@ class Masks {
   }
 
   static MaskTextInputFormatter get expiryDateMask {
-    return new MaskTextInputFormatter(mask: '##/##', filter: { "#": RegExp(r'[0-9]') });
+    return new MaskTextInputFormatter(mask: '##', filter: { "#": RegExp(r'[0-9]') });
   }
 }

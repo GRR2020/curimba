@@ -3,25 +3,25 @@ import 'package:curimba/view_models/card_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CardsList extends StatelessWidget {
+class RecomendedCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cardViewModel = Provider.of<CardViewModel>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Listar Cartões'),
+        title: Text('Cartões recomendados'),
       ),
-      body: _buildCardList(cardViewModel.cards),
+      body: _buildCardList(cardViewModel.invoiceCards),
     );
   }
 
-  Widget _buildCardList(List<CardModel> cards) {
+  Widget _buildCardList(List<CardModel> invoiceCards) {
     return ListView.builder(
-      itemCount: cards.length,
+      itemCount: invoiceCards.length,
       itemBuilder: (context, index) {
         return ListTile(
-          title: Text('${cards[index].brandName}'),
-          subtitle: Text('${cards[index].invoiceDate.substring(3, 5)}/${cards[index].invoiceDate.substring(0, 2)}'),
+          title: Text('${invoiceCards[index].brandName}'),
+          subtitle: Text('${invoiceCards[index].invoiceDate.substring(3, 5)}/${invoiceCards[index].invoiceDate.substring(0, 2)}'),
         );
       },
     );

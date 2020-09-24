@@ -84,8 +84,8 @@ class _CreateCardState extends State<CreateCard> {
                     onFieldSubmitted: (_) => _submitCard(cardViewModel),
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Vencimento',
-                        hintText: 'DD/MM'),
+                        labelText: 'Dia do Vencimento da Fatura',
+                        hintText: 'DD'),
                     validator: (value) {
                       return Validators.validateExpiryDate(value);
                     },

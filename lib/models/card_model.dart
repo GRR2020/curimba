@@ -9,9 +9,15 @@ class CardModel {
   String invoiceDate;
 
   String _getInvoiceDate(String expiryDate) {
-    var formatter = DateFormat('dd/MM');
-    var tempDate = formatter.parse(expiryDate);
-    tempDate.subtract(new Duration(days: 7));
+    var now = new DateTime.now();
+    if (int.parse(expiryDate) < now.day) {
+      now = now.add(new Duration(days: 31));
+    }
+    var formatter = DateFormat('MM/dd');
+    String month = now.month.toString();
+    String expiryDateWithMonth = month + '/' + expiryDate;
+    var tempDate = formatter.parse(expiryDateWithMonth);
+    tempDate = tempDate.subtract(new Duration(days: 7));
     return formatter.format(tempDate);
   }
 

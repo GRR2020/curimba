@@ -2,6 +2,7 @@ import 'package:curimba/screens/create_card.dart';
 import 'package:flutter/material.dart';
 
 import 'cards_list.dart';
+import 'recomended_cards.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -40,12 +41,14 @@ class Home extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CardsList()),
+                      MaterialPageRoute(builder: (context) => RecomendedCards()),
                     );
                   },
                   color: Colors.black,
                   textColor: Colors.white,
-                  child: Text('Listar cartões'.toUpperCase()))
-            ])));
+                  child: Text('Cartões recomendados'.toUpperCase()))
+            ])
+        )
+    );
   }
 }
