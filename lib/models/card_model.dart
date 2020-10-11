@@ -7,11 +7,16 @@ class CardModel {
   String brandName;
   String expiryDate;
   String invoiceDate;
+  bool isTesting;
 
-  String _getInvoiceDate(String expiryDate) {
-    var now = new DateTime.now();
+  String getInvoiceDate(String expiryDate) {
+    var now = DateTime.now();
+    if (isTesting) {
+      now = DateTime.parse("2020-10-23 20:18:04");
+    }
+    // If already passed the expiration day, we count from the next month
     if (int.parse(expiryDate) < now.day) {
-      now = now.add(new Duration(days: 31));
+      now = now.add(new Duration(days: 30));
     }
     var formatter = DateFormat('MM/dd');
     String month = now.month.toString();
@@ -25,12 +30,15 @@ class CardModel {
       {@required String lastNumbers,
       @required String brandName,
       @required String expiryDate,
-      int id}) {
+      int id,
+      bool isTesting}) {
     this.id = id;
     this.lastNumbers = lastNumbers;
     this.brandName = brandName;
     this.expiryDate = expiryDate;
-    this.invoiceDate = _getInvoiceDate(expiryDate);
+    isTesting = isTesting ?? false;
+    this.isTesting = isTesting;
+    this.invoiceDate = getInvoiceDate(expiryDate);
   }
 
   Map<String, dynamic> toMap() {
