@@ -112,10 +112,15 @@ class _CreateCardState extends State<CreateCard> {
     if (_formKey.currentState.validate()) {
       _scaffoldKey.currentState
           .showSnackBar(SnackBar(content: Text('Salvando cartão')));
-      await cardViewModel.registerCard(CardModel(
+      var saved = await cardViewModel.registerCard(CardModel(
           lastNumbers: _lastNumbersController.text,
           brandName: _brandNameController.text,
           expiryDate: _expiryDateController.text));
+
+      if (saved != 0) {
+        _scaffoldKey.currentState
+            .showSnackBar(SnackBar(content: Text('Cartão salvo com sucesso')));
+      }
     }
   }
 }

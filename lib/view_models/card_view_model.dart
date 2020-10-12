@@ -37,9 +37,10 @@ class CardViewModel extends ChangeNotifier {
     return invoice;
   }
 
-  registerCard(CardModel card) async {
-    await cardRepository.insert(card);
+  Future<int> registerCard(CardModel card) async {
+    var saved = await cardRepository.insert(card);
     _refreshAllStates();
     notifyListeners();
+    return saved;
   }
 }

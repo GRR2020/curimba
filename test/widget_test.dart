@@ -10,8 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('Home Widget should display all options', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: Home()));
+  testWidgets('Home Widget should display all options',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: Home(),
+    ));
 
     expect(find.text('CADASTRAR CARTÃO'), findsOneWidget);
     expect(find.text('LISTAR CARTÕES'), findsOneWidget);
