@@ -11,22 +11,25 @@ void main() async {
   final cardViewModel = CardViewModel();
   await cardViewModel.init();
 
-  runApp(MultiProvider(
-      providers: [
-        ChangeNotifierProvider<CardViewModel>.value(
-            value: cardViewModel)
-      ],
-      child: MaterialApp(
-        title: 'App',
-        theme: ThemeData(
-          textTheme: TextTheme(button: TextStyle(letterSpacing: 1.25)),
-          fontFamily: 'Rubik',
-          primaryColor: Colors.black,
-          buttonTheme: ButtonThemeData(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-          ),
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<CardViewModel>.value(value: cardViewModel)
+  ], child: MyApp()));
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'App',
+      theme: ThemeData(
+        textTheme: TextTheme(button: TextStyle(letterSpacing: 1.25)),
+        fontFamily: 'Rubik',
+        primaryColor: Colors.black,
+        buttonTheme: ButtonThemeData(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         ),
-        home: Home(),
-      )));
+      ),
+      home: Home(),
+    );
+  }
 }

@@ -9,7 +9,7 @@ class CardModel {
   String invoiceDate;
   bool isTesting;
 
-  String getInvoiceDate(String expiryDate) {
+  String _getInvoiceDate(String expiryDate) {
     var now = DateTime.now();
     if (isTesting) {
       now = DateTime.parse("2020-10-23 20:18:04");
@@ -38,7 +38,7 @@ class CardModel {
     this.expiryDate = expiryDate;
     isTesting = isTesting ?? false;
     this.isTesting = isTesting;
-    this.invoiceDate = getInvoiceDate(expiryDate);
+    this.invoiceDate = _getInvoiceDate(expiryDate);
   }
 
   Map<String, dynamic> toMap() {
