@@ -135,32 +135,138 @@ void main() {
   });
 
   group('RecommendedCards Widget', () {
-    testWidgets("on list recommended cards should display all recommended cards",
-            (WidgetTester tester) async {
-          final mockObserver = MockNavigatorObserver();
-          final mockCardViewModel = MockCardViewModel();
-          final recommendedCard = [
-            CardModel(lastNumbers: "1111", brandName: "Brand1", expiryDate: "11"),
-            CardModel(lastNumbers: "2222", brandName: "Brand2", expiryDate: "12"),
-            CardModel(lastNumbers: "3333", brandName: "Brand3", expiryDate: "13"),
-            CardModel(lastNumbers: "4444", brandName: "Brand4", expiryDate: "14"),
-          ];
+    testWidgets(
+        "on list recommended cards should display all recommended cards",
+        (WidgetTester tester) async {
+      final mockObserver = MockNavigatorObserver();
+      final mockCardViewModel = MockCardViewModel();
+      final recommendedCard = [
+        CardModel(lastNumbers: "1111", brandName: "Brand1", expiryDate: "11"),
+        CardModel(lastNumbers: "2222", brandName: "Brand2", expiryDate: "12"),
+        CardModel(lastNumbers: "3333", brandName: "Brand3", expiryDate: "13"),
+        CardModel(lastNumbers: "4444", brandName: "Brand4", expiryDate: "14"),
+      ];
 
-          when(mockCardViewModel.invoiceCards).thenReturn(recommendedCard);
+      when(mockCardViewModel.invoiceCards).thenReturn(recommendedCard);
 
-          await tester.pumpWidget(MultiProvider(
-              providers: [
-                ChangeNotifierProvider<CardViewModel>.value(
-                    value: mockCardViewModel),
-              ],
-              child: MaterialApp(
-                home: RecommendedCards(),
-                navigatorObservers: [mockObserver],
-              )));
-          expect(find.text("Brand1"), findsOneWidget);
-          expect(find.text("Brand2"), findsOneWidget);
-          expect(find.text("Brand3"), findsOneWidget);
-          expect(find.text("Brand4"), findsOneWidget);
-        });
+      await tester.pumpWidget(MultiProvider(
+          providers: [
+            ChangeNotifierProvider<CardViewModel>.value(
+                value: mockCardViewModel),
+          ],
+          child: MaterialApp(
+            home: RecommendedCards(),
+            navigatorObservers: [mockObserver],
+          )));
+      expect(find.text("Brand1"), findsOneWidget);
+      expect(find.text("Brand2"), findsOneWidget);
+      expect(find.text("Brand3"), findsOneWidget);
+      expect(find.text("Brand4"), findsOneWidget);
+    });
+  });
+
+  group('CreateCart Widget', () {
+    testWidgets("should display fields", (WidgetTester tester) async {
+      final mockObserver = MockNavigatorObserver();
+
+      await tester.pumpWidget(MultiProvider(
+          providers: [
+            ChangeNotifierProvider<CardViewModel>.value(value: CardViewModel()),
+          ],
+          child: MaterialApp(
+            home: CreateCard(),
+            navigatorObservers: [mockObserver],
+          )));
+      expect(find.text("Visa"), findsOneWidget);
+      expect(find.text("•••• •••• •••• 4444"), findsOneWidget);
+      expect(find.text("DD"), findsOneWidget);
+      expect(find.text("CADASTRAR CARTÃO"), findsOneWidget);
+    });
+
+    testWidgets(
+        "on click 'CADASTRAR CARTÃO' with valid field should create card",
+        (WidgetTester tester) async {
+      final mockObserver = MockNavigatorObserver();
+      final mockCardViewModel = MockCardViewModel();
+
+      when(mockCardViewModel.registerCard(
+        CardModel(
+            lastNumbers: "•••• •••• •••• 1234",
+            brandName: "brand",
+            expiryDate: "10"),
+      )).thenAnswer(((_) => new Future(() => 1)));
+
+      await tester.pumpWidget(MultiProvider(
+          providers: [
+            ChangeNotifierProvider<CardViewModel>.value(
+                value: mockCardViewModel),
+          ],
+          child: MaterialApp(
+            home: CreateCard(),
+            navigatorObservers: [mockObserver],
+          )));
+
+      var registerBtn = find.byType(RaisedButton);
+      var formFields = find.byType(TextFormField);
+
+      await tester.enterText(formFields.at(0), "brand");
+      await tester.enterText(formFields.at(1), "1234");
+      await tester.enterText(formFields.at(2), "10");
+
+      await tester.tap(registerBtn);
+
+      verify(mockCardViewModel.registerCard(any)).called(1);
+    });
+  });
+
+  testWidgets(
+      "on click 'CADASTRAR CARTÃO' with empty field should return error",
+      (WidgetTester tester) async {
+    final mockObserver = MockNavigatorObserver();
+
+    await tester.pumpWidget(MultiProvider(
+        providers: [
+          ChangeNotifierProvider<CardViewModel>.value(value: CardViewModel()),
+        ],
+        child: MaterialApp(
+          home: CreateCard(),
+          navigatorObservers: [mockObserver],
+        )));
+
+    var registerBtn = find.byType(RaisedButton);
+    var formFields = find.byType(TextFormField);
+
+    await tester.enterText(formFields.at(0), "brand");
+    await tester.enterText(formFields.at(1), "1234");
+
+    await tester.tap(registerBtn);
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(find.text("Complete o campo"), findsOneWidget);
+  });
+
+  testWidgets(
+      "on click 'CADASTRAR CARTÃO' with invalid last numbers should return error",
+      (WidgetTester tester) async {
+    final mockObserver = MockNavigatorObserver();
+
+    await tester.pumpWidget(MultiProvider(
+        providers: [
+          ChangeNotifierProvider<CardViewModel>.value(value: CardViewModel()),
+        ],
+        child: MaterialApp(
+          home: CreateCard(),
+          navigatorObservers: [mockObserver],
+        )));
+
+    var registerBtn = find.byType(RaisedButton);
+    var formFields = find.byType(TextFormField);
+
+    await tester.enterText(formFields.at(0), "brand");
+    await tester.enterText(formFields.at(1), "12");
+    await tester.enterText(formFields.at(2), "10");
+
+    await tester.tap(registerBtn);
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(find.text("Complete o campo"), findsOneWidget);
   });
 }

@@ -78,8 +78,7 @@ class _CreateCardState extends State<CreateCard> {
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.done,
                     inputFormatters: [
-                      Masks.expiryDateMask,
-                      LengthLimitingTextInputFormatter(5)
+                      LengthLimitingTextInputFormatter(2)
                     ],
                     onFieldSubmitted: (_) => _submitCard(cardViewModel),
                     decoration: InputDecoration(
@@ -87,7 +86,7 @@ class _CreateCardState extends State<CreateCard> {
                         labelText: 'Dia do Vencimento da Fatura',
                         hintText: 'DD'),
                     validator: (value) {
-                      return Validators.validateExpiryDate(value);
+                      return Validators.validateExpiryDay(value);
                     },
                   ),
                   SizedBox(height: 10),

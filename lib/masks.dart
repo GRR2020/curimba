@@ -4,8 +4,4 @@ class Masks {
   static MaskTextInputFormatter get lastNumbersMask {
     return new MaskTextInputFormatter(mask: '•••• •••• •••• ####', filter: { "#": RegExp(r'[0-9]') });
   }
-
-  static MaskTextInputFormatter get expiryDateMask {
-    return new MaskTextInputFormatter(mask: '##', filter: { "#": RegExp(r'[0-9]') });
-  }
 }
