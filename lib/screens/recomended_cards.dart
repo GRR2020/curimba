@@ -3,7 +3,7 @@ import 'package:curimba/view_models/card_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class RecomendedCards extends StatelessWidget {
+class RecommendedCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cardViewModel = Provider.of<CardViewModel>(context);

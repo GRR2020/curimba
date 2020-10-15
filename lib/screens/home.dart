@@ -42,7 +42,7 @@ class Home extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => RecomendedCards()),
+                          builder: (context) => RecommendedCards()),
                     );
                   },
                   color: Colors.black,
