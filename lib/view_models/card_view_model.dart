@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:curimba/models/card_model.dart';
 import 'package:curimba/repositories/card_repository.dart';
 import 'package:flutter/widgets.dart';
@@ -39,9 +37,10 @@ class CardViewModel extends ChangeNotifier {
     return invoice;
   }
 
-  registerCard(CardModel card) async {
-    await cardRepository.insert(card);
+  Future<int> registerCard(CardModel card) async {
+    var saved = await cardRepository.insert(card);
     _refreshAllStates();
     notifyListeners();
+    return saved;
   }
 }

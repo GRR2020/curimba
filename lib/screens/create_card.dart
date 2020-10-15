@@ -78,8 +78,7 @@ class _CreateCardState extends State<CreateCard> {
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.done,
                     inputFormatters: [
-                      Masks.expiryDateMask,
-                      LengthLimitingTextInputFormatter(5)
+                      LengthLimitingTextInputFormatter(2)
                     ],
                     onFieldSubmitted: (_) => _submitCard(cardViewModel),
                     decoration: InputDecoration(
@@ -87,7 +86,7 @@ class _CreateCardState extends State<CreateCard> {
                         labelText: 'Dia do Vencimento da Fatura',
                         hintText: 'DD'),
                     validator: (value) {
-                      return Validators.validateExpiryDate(value);
+                      return Validators.validateExpiryDay(value);
                     },
                   ),
                   SizedBox(height: 10),
@@ -112,10 +111,15 @@ class _CreateCardState extends State<CreateCard> {
     if (_formKey.currentState.validate()) {
       _scaffoldKey.currentState
           .showSnackBar(SnackBar(content: Text('Salvando cartão')));
-      await cardViewModel.registerCard(CardModel(
+      var saved = await cardViewModel.registerCard(CardModel(
           lastNumbers: _lastNumbersController.text,
           brandName: _brandNameController.text,
           expiryDate: _expiryDateController.text));
+
+      if (saved != 0) {
+        _scaffoldKey.currentState
+            .showSnackBar(SnackBar(content: Text('Cartão salvo com sucesso')));
+      }
     }
   }
 }

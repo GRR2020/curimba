@@ -41,14 +41,13 @@ class Home extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => RecomendedCards()),
+                      MaterialPageRoute(
+                          builder: (context) => RecommendedCards()),
                     );
                   },
                   color: Colors.black,
                   textColor: Colors.white,
                   child: Text('Cartões recomendados'.toUpperCase()))
-            ])
-        )
-    );
+            ])));
   }
 }
