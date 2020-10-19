@@ -1,6 +1,13 @@
 import 'masks.dart';
 
 class Validators {
+  static validateBySize(value, size) {
+    if (value.isEmpty() || value.length < size) {
+      return "Campo deve ter no mínimo $size caracteres";
+    }
+    return null;
+  }
+
   static validateNotEmpty(value) {
     if (value.isEmpty) {
       return 'Complete o campo';
@@ -22,9 +29,6 @@ class Validators {
 
   static validateLastNumbers(value) {
     var unmaskedValue = Masks.lastNumbersMask.unmaskText(value);
-    if (unmaskedValue.isEmpty || unmaskedValue.length < 4) {
-      return 'Complete o campo';
-    }
-    return null;
+    return validateBySize(unmaskedValue, 4);
   }
 }

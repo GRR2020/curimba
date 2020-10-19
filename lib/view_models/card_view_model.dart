@@ -1,25 +1,24 @@
 import 'package:curimba/models/card_model.dart';
 import 'package:curimba/repositories/card_repository.dart';
+import 'package:curimba/view_models/view_model.dart';
 import 'package:flutter/widgets.dart';
 
-class CardViewModel extends ChangeNotifier {
-  final CardRepository cardRepository = CardRepository();
-
+class CardViewModel extends ViewModel {
   List<CardModel> cards;
   List<CardModel> invoiceCards;
 
-  init() async {
-    await _refreshAllStates();
-  }
+  CardRepository _repository = CardRepository();
 
-  _refreshAllStates() async {
-    cards = await cardRepository.getFromUser();
+  @override
+  @protected
+  refreshAllStates() async {
+    cards = await _repository.getFromUser();
     invoiceCards = await _getIdealDateCards();
     notifyListeners();
   }
 
   _getIdealDateCards() async {
-    cards = await cardRepository.getFromUser();
+    cards = await _repository.getFromUser();
     var now = new DateTime.now();
     cards.sort((a, b) => a.invoiceDate.compareTo(b.invoiceDate));
     List<CardModel> invoice = [];
@@ -38,8 +37,8 @@ class CardViewModel extends ChangeNotifier {
   }
 
   Future<int> registerCard(CardModel card) async {
-    var saved = await cardRepository.insert(card);
-    _refreshAllStates();
+    var saved = await _repository.insert(card);
+    refreshAllStates();
     notifyListeners();
     return saved;
   }

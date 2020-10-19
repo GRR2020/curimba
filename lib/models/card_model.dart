@@ -26,12 +26,13 @@ class CardModel {
     return formatter.format(tempDate);
   }
 
-  CardModel(
-      {@required String lastNumbers,
-      @required String brandName,
-      @required String expiryDate,
-      int id,
-      bool isTesting}) {
+  CardModel({
+    @required String lastNumbers,
+    @required String brandName,
+    @required String expiryDate,
+    int id,
+    bool isTesting,
+  }) {
     this.id = id;
     this.lastNumbers = lastNumbers;
     this.brandName = brandName;
@@ -49,4 +50,6 @@ class CardModel {
       'expiry_date': expiryDate,
     };
   }
+
+
 }

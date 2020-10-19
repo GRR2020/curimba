@@ -10,9 +10,9 @@ void main() async {
 
   final cardViewModel = CardViewModel();
   await cardViewModel.init();
-
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider<CardViewModel>.value(value: cardViewModel)
+    ChangeNotifierProvider<CardViewModel>.value(value: cardViewModel),
+    ChangeNotifierProvider<UserViewModel>.value(value: userViewModel,)
   ], child: MyApp()));
 }
 
