@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:clock/clock.dart';
 
 class CardModel {
   int id;
@@ -7,13 +8,10 @@ class CardModel {
   String brandName;
   String expiryDate;
   String invoiceDate;
-  bool isTesting;
+  Clock clock;
 
   String _getInvoiceDate(String expiryDate) {
-    var now = DateTime.now();
-    if (isTesting) {
-      now = DateTime.parse("2020-10-23 20:18:04");
-    }
+    var now = clock.now();
     // If already passed the expiration day, we count from the next month
     if (int.parse(expiryDate) < now.day) {
       now = now.add(new Duration(days: 30));
@@ -31,13 +29,12 @@ class CardModel {
       @required String brandName,
       @required String expiryDate,
       int id,
-      bool isTesting}) {
+      Clock clock}) {
     this.id = id;
     this.lastNumbers = lastNumbers;
     this.brandName = brandName;
     this.expiryDate = expiryDate;
-    isTesting = isTesting ?? false;
-    this.isTesting = isTesting;
+    this.clock = clock ?? Clock();
     this.invoiceDate = _getInvoiceDate(expiryDate);
   }
 
