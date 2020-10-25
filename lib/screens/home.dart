@@ -1,8 +1,7 @@
-import 'package:curimba/screens/create_card.dart';
 import 'package:flutter/material.dart';
 
-import 'cards_list.dart';
-import 'recomended_cards.dart';
+import '../locator.dart';
+import '../navigation_service.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -17,33 +16,22 @@ class Home extends StatelessWidget {
               SizedBox(height: 10),
               RaisedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CreateCard(),
-                      ),
-                    );
+                    locator<NavigationService>().navigateTo('register-card');
                   },
                   color: Colors.black,
                   textColor: Colors.white,
                   child: Text('Cadastrar cartão'.toUpperCase())),
               RaisedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CardsList()),
-                    );
+                    locator<NavigationService>().navigateTo('list-cards');
                   },
                   color: Colors.black,
                   textColor: Colors.white,
                   child: Text('Listar cartões'.toUpperCase())),
               RaisedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RecommendedCards()),
-                    );
+                    locator<NavigationService>()
+                        .navigateTo('recommended-cards');
                   },
                   color: Colors.black,
                   textColor: Colors.white,

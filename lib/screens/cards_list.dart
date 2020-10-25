@@ -3,7 +3,7 @@ import 'package:curimba/view_models/card_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CardsList extends StatelessWidget {
+class ListCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cardViewModel = Provider.of<CardViewModel>(context);
@@ -11,11 +11,11 @@ class CardsList extends StatelessWidget {
       appBar: AppBar(
         title: Text('Listar Cartões'),
       ),
-      body: _buildCardList(cardViewModel.cards),
+      body: _buildListCards(cardViewModel.cards),
     );
   }
 
-  Widget _buildCardList(List<CardModel> cards) {
+  Widget _buildListCards(List<CardModel> cards) {
     return ListView.builder(
       itemCount: cards.length,
       itemBuilder: (context, index) {

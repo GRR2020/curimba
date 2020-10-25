@@ -75,7 +75,7 @@ void main() {
       await tester.pumpAndSettle();
 
       verify(mockObserver.didPush(any, any));
-      expect(find.byType(CardsList), findsOneWidget);
+      expect(find.byType(ListCards), findsOneWidget);
     });
 
     testWidgets(
@@ -124,7 +124,7 @@ void main() {
                 value: mockCardViewModel),
           ],
           child: MaterialApp(
-            home: CardsList(),
+            home: ListCards(),
             navigatorObservers: [mockObserver],
           )));
       expect(find.text("Brand1"), findsOneWidget);
