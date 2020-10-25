@@ -77,9 +77,7 @@ class _CreateCardState extends State<CreateCard> {
                     focusNode: _expiryDateFocus,
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.done,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(2)
-                    ],
+                    inputFormatters: [LengthLimitingTextInputFormatter(2)],
                     onFieldSubmitted: (_) => _submitCard(cardViewModel),
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -112,9 +110,11 @@ class _CreateCardState extends State<CreateCard> {
       _scaffoldKey.currentState
           .showSnackBar(SnackBar(content: Text('Salvando cartão')));
       var saved = await cardViewModel.registerCard(CardModel(
-          lastNumbers: _lastNumbersController.text,
-          brandName: _brandNameController.text,
-          expiryDate: _expiryDateController.text));
+        lastNumbers: _lastNumbersController.text,
+        brandName: _brandNameController.text,
+        expiryDate: _expiryDateController.text,
+        usersId: null,
+      ));
 
       if (saved != 0) {
         _scaffoldKey.currentState

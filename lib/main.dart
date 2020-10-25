@@ -1,5 +1,5 @@
 import 'package:curimba/database_helper.dart';
-import 'package:curimba/screens/home.dart';
+import 'package:curimba/screens/root.dart';
 import 'package:curimba/view_models/card_view_model.dart';
 import 'package:curimba/view_models/user_view_model.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +33,9 @@ class MyApp extends StatelessWidget {
       title: 'App',
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: (routeSettings) {
-        return MaterialPageRoute(builder: (context) => locator<NavigationService>().widgetForRoute(routeSettings));
+        return MaterialPageRoute(
+            builder: (context) =>
+                locator<NavigationService>().widgetForRoute(routeSettings));
       },
       theme: ThemeData(
         textTheme: TextTheme(button: TextStyle(letterSpacing: 1.25)),
@@ -43,7 +45,7 @@ class MyApp extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         ),
       ),
-      home: Home(),
+      home: Root(),
     );
   }
 }

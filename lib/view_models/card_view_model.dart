@@ -39,7 +39,6 @@ class CardViewModel extends ViewModel {
   Future<int> registerCard(CardModel card) async {
     var saved = await _repository.insert(card);
     refreshAllStates();
-    notifyListeners();
     return saved;
   }
 }
