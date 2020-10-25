@@ -41,6 +41,7 @@ class _CreateCardState extends State<CreateCard> {
                     controller: _brandNameController,
                     focusNode: _brandNameFocus,
                     textInputAction: TextInputAction.next,
+                    key: Key('card brand'),
                     onFieldSubmitted: (_) => _fieldFocusChange(
                         context, _brandNameFocus, _lastNumbersFocus),
                     decoration: InputDecoration(
@@ -57,6 +58,7 @@ class _CreateCardState extends State<CreateCard> {
                     focusNode: _lastNumbersFocus,
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
+                    key: Key('last numbers'),
                     inputFormatters: [
                       Masks.lastNumbersMask,
                       LengthLimitingTextInputFormatter(19)
@@ -77,6 +79,7 @@ class _CreateCardState extends State<CreateCard> {
                     focusNode: _expiryDateFocus,
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.done,
+                    key: Key('invoice date'),
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(2)
                     ],
@@ -94,6 +97,7 @@ class _CreateCardState extends State<CreateCard> {
                       onPressed: () {
                         _submitCard(cardViewModel);
                       },
+                      key: Key('submit register card'),
                       color: Colors.black,
                       textColor: Colors.white,
                       child: Text('Cadastrar cartão'.toUpperCase()))

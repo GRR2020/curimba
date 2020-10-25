@@ -24,6 +24,7 @@ class Home extends StatelessWidget {
                       ),
                     );
                   },
+                  key: Key('resgister card'),
                   color: Colors.black,
                   textColor: Colors.white,
                   child: Text('Cadastrar cartão'.toUpperCase())),
@@ -34,6 +35,7 @@ class Home extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => CardsList()),
                     );
                   },
+                  key: Key('list cards'),
                   color: Colors.black,
                   textColor: Colors.white,
                   child: Text('Listar cartões'.toUpperCase())),
@@ -45,6 +47,7 @@ class Home extends StatelessWidget {
                           builder: (context) => RecommendedCards()),
                     );
                   },
+                  key: Key('recommended cards'),
                   color: Colors.black,
                   textColor: Colors.white,
                   child: Text('Cartões recomendados'.toUpperCase()))
