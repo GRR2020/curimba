@@ -20,9 +20,8 @@ class CardsList extends StatelessWidget {
       itemCount: cards.length,
       itemBuilder: (context, index) {
         return ListTile(
-          key: Key('card tile'),
-          title: Text('${cards[index].brandName}'),
-          subtitle: Text('${cards[index].invoiceDate.substring(3, 5)}/${cards[index].invoiceDate.substring(0, 2)}'),
+          title: Text('${cards[index].brandName}', key: Key('card title'),),
+          subtitle: Text('${cards[index].invoiceDate.substring(3, 5)}/${cards[index].invoiceDate.substring(0, 2)}', key: Key('card subtitle'),),
         );
       },
     );

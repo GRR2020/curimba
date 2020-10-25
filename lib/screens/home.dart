@@ -24,7 +24,7 @@ class Home extends StatelessWidget {
                       ),
                     );
                   },
-                  key: Key('resgister card'),
+                  key: Key('register card'),
                   color: Colors.black,
                   textColor: Colors.white,
                   child: Text('Cadastrar cartão'.toUpperCase())),
