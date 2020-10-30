@@ -1,10 +1,12 @@
 import 'package:curimba/locator.dart';
 import 'package:curimba/models/user_model.dart';
+import 'package:curimba/screens/sign_up_view_model.dart';
 import 'package:curimba/validators.dart';
-import 'package:curimba/view_models/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+
+import '../navigation_service.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -25,9 +27,9 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<UserViewModel>(
-        create: (context) => locator<UserViewModel>(),
-        child: Consumer<UserViewModel>(
+    return ChangeNotifierProvider<SignUpViewModel>(
+        create: (context) => locator<SignUpViewModel>(),
+        child: Consumer<SignUpViewModel>(
           builder: (context, model, child) => Scaffold(
               key: _scaffoldKey,
               appBar: AppBar(
@@ -95,13 +97,15 @@ class _SignUpState extends State<SignUp> {
                           },
                         ),
                         SizedBox(height: 10),
-                        RaisedButton(
-                            onPressed: () {
-                              _signUp(model);
-                            },
-                            color: Colors.black,
-                            textColor: Colors.white,
-                            child: Text('Cadastrar'.toUpperCase()))
+                        model.viewState == ViewState.Idle
+                            ? RaisedButton(
+                                onPressed: () {
+                                  _signUp(model);
+                                },
+                                color: Colors.black,
+                                textColor: Colors.white,
+                                child: Text('Cadastrar'.toUpperCase()))
+                            : CircularProgressIndicator(),
                       ])))),
         ));
   }
@@ -115,14 +119,23 @@ class _SignUpState extends State<SignUp> {
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-  _signUp(UserViewModel userViewModel) async {
+  _signUp(SignUpViewModel viewModel) async {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState.validate()) {
-      var saved = await userViewModel.register(UserModel(
+      var savedUserId = await viewModel.register(UserModel(
         name: _nameCtrl.text,
         username: _usernameCtrl.text,
         password: _passwordCtrl.text,
       ));
+
+      if (savedUserId > 0) {
+        locator<NavigationService>().navigateTo('home');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text('Falha no cadastro'),
+          duration: const Duration(seconds: 1),
+        ));
+      }
     }
   }
 }

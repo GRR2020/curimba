@@ -8,9 +8,12 @@ import 'package:flutter/material.dart';
 
 class NavigationService {
   final GlobalKey<NavigatorState> navigatorKey =
-  new GlobalKey<NavigatorState>();  Future<dynamic> navigateTo(String routeName) {
+      new GlobalKey<NavigatorState>();
+
+  Future<dynamic> navigateTo(String routeName) {
     return navigatorKey.currentState.pushNamed(routeName);
   }
+
   Widget widgetForRoute(RouteSettings routeSettings) {
     var params = routeSettings.name.split('?');
     final route = params.removeAt(0);

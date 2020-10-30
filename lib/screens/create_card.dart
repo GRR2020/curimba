@@ -107,8 +107,10 @@ class _CreateCardState extends State<CreateCard> {
   _submitCard(CardViewModel cardViewModel) async {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState.validate()) {
-      _scaffoldKey.currentState
-          .showSnackBar(SnackBar(content: Text('Salvando cartão')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text('Salvando cartão'),
+        duration: const Duration(seconds: 1),
+      ));
       var saved = await cardViewModel.registerCard(CardModel(
         lastNumbers: _lastNumbersController.text,
         brandName: _brandNameController.text,
@@ -117,8 +119,10 @@ class _CreateCardState extends State<CreateCard> {
       ));
 
       if (saved != 0) {
-        _scaffoldKey.currentState
-            .showSnackBar(SnackBar(content: Text('Cartão salvo com sucesso')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text('Cartão salvo com sucesso'),
+          duration: const Duration(seconds: 1),
+        ));
       }
     }
   }

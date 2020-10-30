@@ -2,6 +2,7 @@ import 'package:curimba/models/card_model.dart';
 import 'package:curimba/repositories/card_repository.dart';
 import 'package:curimba/view_models/view_model.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CardViewModel extends ViewModel {
   List<CardModel> cards;
@@ -37,6 +38,8 @@ class CardViewModel extends ViewModel {
   }
 
   Future<int> registerCard(CardModel card) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    card.usersId = prefs.getInt('userId');
     var saved = await _repository.insert(card);
     refreshAllStates();
     return saved;
