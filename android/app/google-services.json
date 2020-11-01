@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "444028961220",
+    "firebase_url": "https://curimba-f6d0b.firebaseio.com",
+    "project_id": "curimba-f6d0b",
+    "storage_bucket": "curimba-f6d0b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444028961220:android:49a0c986f33f97cc112491",
+        "android_client_info": {
+          "package_name": "com.each.curimba"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "444028961220-m1vuf88hoqcmclbfkf8d2rrm6o7lafjm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyYj6P3I2C8kQUkSuyk2U4SxE6HyTe1AQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "444028961220-m1vuf88hoqcmclbfkf8d2rrm6o7lafjm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
