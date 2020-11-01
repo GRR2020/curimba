@@ -5,6 +5,7 @@ import 'package:curimba/view_models/card_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateCard extends StatefulWidget {
   @override
@@ -107,20 +108,32 @@ class _CreateCardState extends State<CreateCard> {
   _submitCard(CardViewModel cardViewModel) async {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text('Salvando cartão'),
-        duration: const Duration(seconds: 1),
-      ));
-      var saved = await cardViewModel.registerCard(CardModel(
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final usersId = prefs.getInt('userId');
+
+      if (usersId <= 0) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text('Usuário não autentificado'),
+          duration: const Duration(seconds: 1),
+        ));
+        return;
+      }
+
+      var savedCardId = await cardViewModel.register(CardModel(
         lastNumbers: _lastNumbersController.text,
         brandName: _brandNameController.text,
         expiryDate: _expiryDateController.text,
-        usersId: null,
+        usersId: usersId,
       ));
 
-      if (saved != 0) {
+      if (savedCardId > 0) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: const Text('Cartão salvo com sucesso'),
+          duration: const Duration(seconds: 1),
+        ));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text('Falha no cadastro do cartão'),
           duration: const Duration(seconds: 1),
         ));
       }

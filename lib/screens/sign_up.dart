@@ -130,6 +130,11 @@ class _SignUpState extends State<SignUp> {
 
       if (savedUserId > 0) {
         locator<NavigationService>().navigateTo('home');
+      } else if (savedUserId == -1) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text('Username já cadastrado'),
+          duration: const Duration(seconds: 1),
+        ));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: const Text('Falha no cadastro'),

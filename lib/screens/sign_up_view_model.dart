@@ -1,8 +1,9 @@
 import 'package:curimba/models/user_model.dart';
 import 'package:curimba/repositories/user_repository.dart';
+import 'package:curimba/shared_preferences_helper.dart';
 import 'package:curimba/view_models/view_model.dart';
 import 'package:flutter/widgets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:curimba/locator.dart';
 
 enum ViewState { Idle, Busy }
 
@@ -24,10 +25,15 @@ class SignUpViewModel extends ViewModel {
 
   Future<int> register(UserModel model) async {
     _setViewState(ViewState.Busy);
-    var savedUserId = await _repository.insert(model);
+
+    final user = await _repository.findByUsername(model.username);
+    if (user.isNotEmpty) {
+      return -1;
+    }
+
+    final savedUserId = await _repository.insert(model);
     if (savedUserId > 0) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setInt('userId', savedUserId);
+      locator<SharedPreferencesHelper>().setUserId(savedUserId);
     }
     _setViewState(ViewState.Idle);
     return savedUserId;

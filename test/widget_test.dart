@@ -189,7 +189,7 @@ void main() {
       final mockObserver = MockNavigatorObserver();
       final mockCardViewModel = MockCardViewModel();
 
-      when(mockCardViewModel.registerCard(
+      when(mockCardViewModel.register(
         CardModel(
             lastNumbers: "•••• •••• •••• 1234",
             brandName: "brand",
@@ -215,7 +215,7 @@ void main() {
 
       await tester.tap(registerBtn);
 
-      verify(mockCardViewModel.registerCard(any)).called(1);
+      verify(mockCardViewModel.register(any)).called(1);
     });
   });
 

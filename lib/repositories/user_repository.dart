@@ -30,5 +30,4 @@ class UserRepository extends Repository {
       whereArgs: [username],
     );
   }
-
 }

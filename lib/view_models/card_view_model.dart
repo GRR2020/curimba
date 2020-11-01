@@ -1,8 +1,10 @@
 import 'package:curimba/models/card_model.dart';
 import 'package:curimba/repositories/card_repository.dart';
+import 'package:curimba/shared_preferences_helper.dart';
 import 'package:curimba/view_models/view_model.dart';
 import 'package:flutter/widgets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../locator.dart';
 
 class CardViewModel extends ViewModel {
   List<CardModel> cards;
@@ -13,13 +15,22 @@ class CardViewModel extends ViewModel {
   @override
   @protected
   refreshAllStates() async {
-    cards = await _repository.getFromUser();
+    final usersId = await locator<SharedPreferencesHelper>().userId;
+    if (usersId < 0) {
+      return List();
+    }
+
+    cards = (usersId < 0) ? List() : await _repository.getFromUser(usersId);
     invoiceCards = await _getIdealDateCards();
     notifyListeners();
   }
 
-  _getIdealDateCards() async {
-    cards = await _repository.getFromUser();
+  Future<List<CardModel>> _getIdealDateCards() async {
+    final usersId = await locator<SharedPreferencesHelper>().userId;
+    if (usersId < 0) {
+      return List();
+    }
+    cards = await _repository.getFromUser(usersId);
     var now = new DateTime.now();
     cards.sort((a, b) => a.invoiceDate.compareTo(b.invoiceDate));
     List<CardModel> invoice = [];
@@ -29,7 +40,8 @@ class CardViewModel extends ViewModel {
       var invoiceDate = new DateTime(now.year, invoiceMonth, invoiceDay);
       var expiryDate = invoiceDate.add(new Duration(days: 7));
       now = new DateTime(now.year, now.month, now.day);
-      if ((now.isAtSameMomentAs(invoiceDate) || now.isAfter(invoiceDate)) && now.isBefore(expiryDate)) {
+      if ((now.isAtSameMomentAs(invoiceDate) || now.isAfter(invoiceDate)) &&
+          now.isBefore(expiryDate)) {
         invoice.add(element);
       }
     });
@@ -37,9 +49,7 @@ class CardViewModel extends ViewModel {
     return invoice;
   }
 
-  Future<int> registerCard(CardModel card) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    card.usersId = prefs.getInt('userId');
+  Future<int> register(CardModel card) async {
     var saved = await _repository.insert(card);
     refreshAllStates();
     return saved;
