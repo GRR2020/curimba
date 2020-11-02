@@ -10,13 +10,14 @@ class CardViewModel extends ViewModel {
   List<CardModel> cards;
   List<CardModel> invoiceCards;
 
-  CardRepository _repository = CardRepository();
+  @protected
+  CardRepository repository = CardRepository();
 
   @override
   @protected
   refreshAllStates() async {
     final usersId = await locator<SharedPreferencesHelper>().userId;
-    cards = (usersId < 0) ? List() : await _repository.getFromUser(usersId);
+    cards = (usersId < 0) ? List() : await repository.getFromUser(usersId);
     invoiceCards = await _getIdealDateCards();
     notifyListeners();
   }
@@ -26,7 +27,7 @@ class CardViewModel extends ViewModel {
     if (usersId < 0) {
       return List();
     }
-    cards = await _repository.getFromUser(usersId);
+    cards = await repository.getFromUser(usersId);
     var now = new DateTime.now();
     cards.sort((a, b) => a.invoiceDate.compareTo(b.invoiceDate));
     List<CardModel> invoice = [];
@@ -46,7 +47,7 @@ class CardViewModel extends ViewModel {
   }
 
   Future<int> register(CardModel card) async {
-    var saved = await _repository.insert(card);
+    var saved = await repository.insert(card);
     refreshAllStates();
     return saved;
   }

@@ -30,11 +30,13 @@ class SignInViewModel extends ViewModel {
 
     final dbUser = await _repository.findByUsername(username);
     if (dbUser.isEmpty) {
+      _setViewState(ViewState.Idle);
       return AuthErrors.UserNotFound.code;
     }
 
     final user = dbUser.first;
     if (user.password != password) {
+      _setViewState(ViewState.Idle);
       return AuthErrors.PasswordMismatch.code;
     }
 

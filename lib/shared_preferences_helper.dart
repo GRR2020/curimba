@@ -6,8 +6,13 @@ class SharedPreferencesHelper {
     return sharedPrefs.getInt('userId') ?? 0;
   }
 
-  Future<void> setUserId(int userId) async {
+  setUserId(int userId) async {
     final sharedPrefs = await SharedPreferences.getInstance();
     sharedPrefs.setInt('userId', userId);
+  }
+
+  deleteUserId() async {
+    final sharedPrefs = await SharedPreferences.getInstance();
+    sharedPrefs.remove('userId');
   }
 }
