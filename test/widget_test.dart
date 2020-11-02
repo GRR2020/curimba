@@ -6,9 +6,9 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:curimba/models/card_model.dart';
-import 'package:curimba/screens/cards_list.dart';
 import 'package:curimba/screens/create_card.dart';
 import 'package:curimba/screens/home.dart';
+import 'package:curimba/screens/list_cards.dart';
 import 'package:curimba/screens/recomended_cards.dart';
 import 'package:curimba/view_models/card_view_model.dart';
 import 'package:flutter/material.dart';
@@ -104,16 +104,36 @@ void main() {
     });
   });
 
-  group('CardList Widget', () {
+  group('ListCards Widget', () {
     testWidgets("on list card should display all registered cards",
         (WidgetTester tester) async {
       final mockObserver = MockNavigatorObserver();
       final mockCardViewModel = MockCardViewModel();
       final registeredCard = [
-        CardModel(lastNumbers: "1111", brandName: "Brand1", expiryDate: "11"),
-        CardModel(lastNumbers: "2222", brandName: "Brand2", expiryDate: "12"),
-        CardModel(lastNumbers: "3333", brandName: "Brand3", expiryDate: "13"),
-        CardModel(lastNumbers: "4444", brandName: "Brand4", expiryDate: "14"),
+        CardModel(
+          lastNumbers: "1111",
+          brandName: "Brand1",
+          expiryDate: "11",
+          usersId: null,
+        ),
+        CardModel(
+          lastNumbers: "2222",
+          brandName: "Brand2",
+          expiryDate: "12",
+          usersId: null,
+        ),
+        CardModel(
+          lastNumbers: "3333",
+          brandName: "Brand3",
+          expiryDate: "13",
+          usersId: null,
+        ),
+        CardModel(
+          lastNumbers: "4444",
+          brandName: "Brand4",
+          expiryDate: "14",
+          usersId: null,
+        )
       ];
 
       when(mockCardViewModel.cards).thenReturn(registeredCard);

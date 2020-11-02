@@ -16,10 +16,6 @@ class CardViewModel extends ViewModel {
   @protected
   refreshAllStates() async {
     final usersId = await locator<SharedPreferencesHelper>().userId;
-    if (usersId < 0) {
-      return List();
-    }
-
     cards = (usersId < 0) ? List() : await _repository.getFromUser(usersId);
     invoiceCards = await _getIdealDateCards();
     notifyListeners();

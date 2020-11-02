@@ -1,3 +1,4 @@
+import 'package:curimba/errors_helper.dart';
 import 'package:curimba/models/user_model.dart';
 import 'package:curimba/repositories/user_repository.dart';
 import 'package:curimba/shared_preferences_helper.dart';
@@ -28,7 +29,8 @@ class SignUpViewModel extends ViewModel {
 
     final user = await _repository.findByUsername(model.username);
     if (user.isNotEmpty) {
-      return -1;
+      _setViewState(ViewState.Idle);
+      return AuthErrors.UserFound.code;
     }
 
     final savedUserId = await _repository.insert(model);

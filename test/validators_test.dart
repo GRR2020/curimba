@@ -3,6 +3,15 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Validators', () {
+    group('validateBySize', () {
+      test('should return error if value < size', () {
+        expect(Validators.validateBySize("brand", 6), "Campo deve ter no mínimo 6 caracteres");
+      });
+      test('should return null if value >= size', () {
+        expect(Validators.validateBySize("brand", 5), null);
+        expect(Validators.validateBySize("brand", 4), null);
+      });
+    });
     group('validateNotEmpty', () {
       test('should return error if empty', () {
         expect(Validators.validateNotEmpty(""), 'Complete o campo');

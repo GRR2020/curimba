@@ -16,14 +16,14 @@ class Home extends StatelessWidget {
               SizedBox(height: 10),
               RaisedButton(
                   onPressed: () {
-                    locator<NavigationService>().navigateTo('register-card');
+                    locator<NavigationService>().navigateTo('/register-card');
                   },
                   color: Colors.black,
                   textColor: Colors.white,
                   child: Text('Cadastrar cartão'.toUpperCase())),
               RaisedButton(
                   onPressed: () {
-                    locator<NavigationService>().navigateTo('list-cards');
+                    locator<NavigationService>().navigateTo('/list-cards');
                   },
                   color: Colors.black,
                   textColor: Colors.white,
@@ -31,7 +31,7 @@ class Home extends StatelessWidget {
               RaisedButton(
                   onPressed: () {
                     locator<NavigationService>()
-                        .navigateTo('recommended-cards');
+                        .navigateTo('/recommended-cards');
                   },
                   color: Colors.black,
                   textColor: Colors.white,

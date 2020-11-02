@@ -5,7 +5,7 @@ import 'package:sqflite/sqflite.dart';
 
 class UserRepository extends Repository {
   @override
-  String table = "user";
+  String table = 'users';
 
   Future<int> insert(UserModel model) async {
     Database db = await DatabaseHelper.instance.database;
@@ -22,12 +22,23 @@ class UserRepository extends Repository {
     );
   }
 
-  Future<List<Map<String, dynamic>>> findByUsername(String username) async {
+  Future<List<UserModel>> findByUsername(String username) async {
     Database db = await DatabaseHelper.instance.database;
-    return db.query(
+
+    var dbUsers = await db.query(
       table,
       where: 'username = ?',
       whereArgs: [username],
+      limit: 1,
     );
+
+    return List.generate(dbUsers.length, (i) {
+      return UserModel(
+        id: dbUsers[i]['id'],
+        name: dbUsers[i]['name'],
+        username: dbUsers[i]['username'],
+        password: dbUsers[i]['password'],
+      );
+    });
   }
 }

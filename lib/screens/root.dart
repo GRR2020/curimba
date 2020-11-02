@@ -1,6 +1,6 @@
 import 'package:curimba/locator.dart';
 import 'package:curimba/screens/home.dart';
-import 'package:curimba/screens/sign_in.dart';
+import 'package:curimba/screens/sign_up.dart';
 import 'package:flutter/material.dart';
 
 import '../shared_preferences_helper.dart';
@@ -19,7 +19,7 @@ class _RootState extends State<Root> {
             future: _userId,
             builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
               if (snapshot.hasData) {
-                return snapshot.data > 0 ? Home() : SignIn();
+                return snapshot.data > 0 ? Home() : SignUp();
               } else {
                 return Center(
                   child: Column(

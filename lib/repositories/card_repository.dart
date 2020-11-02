@@ -21,7 +21,7 @@ class CardRepository implements Repository {
         lastNumbers: dbCards[i]['last_numbers'],
         brandName: dbCards[i]['brand_name'],
         expiryDate: dbCards[i]['expiry_date'],
-        usersId: userId,
+        usersId: dbCards[i]['users_id'],
       );
     });
   }

@@ -10,7 +10,6 @@ import 'navigation_service.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DatabaseHelper.instance.database;
-
   setupLocator();
 
   final cardViewModel = locator<CardViewModel>();
@@ -27,11 +26,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'App',
       navigatorKey: locator<NavigationService>().navigatorKey,
-      onGenerateRoute: (routeSettings) {
-        return MaterialPageRoute(
-            builder: (context) =>
-                locator<NavigationService>().widgetForRoute(routeSettings));
-      },
+      onGenerateRoute: (routeSettings) =>
+          locator<NavigationService>().generateRoute(routeSettings),
       theme: ThemeData(
         textTheme: TextTheme(button: TextStyle(letterSpacing: 1.25)),
         fontFamily: 'Rubik',

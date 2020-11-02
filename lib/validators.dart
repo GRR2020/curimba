@@ -1,8 +1,8 @@
 import 'masks.dart';
 
 class Validators {
-  static validateBySize(value, size) {
-    if (value.isEmpty() || value.length < size) {
+  static validateBySize(String value, int size) {
+    if (value.isEmpty || value.length < size) {
       return "Campo deve ter no mínimo $size caracteres";
     }
     return null;

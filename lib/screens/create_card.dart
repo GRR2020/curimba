@@ -1,11 +1,14 @@
 import 'package:curimba/masks.dart';
 import 'package:curimba/models/card_model.dart';
+import 'package:curimba/shared_preferences_helper.dart';
 import 'package:curimba/validators.dart';
 import 'package:curimba/view_models/card_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../locator.dart';
 
 class CreateCard extends StatefulWidget {
   @override
@@ -108,8 +111,7 @@ class _CreateCardState extends State<CreateCard> {
   _submitCard(CardViewModel cardViewModel) async {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState.validate()) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      final usersId = prefs.getInt('userId');
+      final usersId = await locator<SharedPreferencesHelper>().userId;
 
       if (usersId <= 0) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
