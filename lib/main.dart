@@ -10,7 +10,7 @@ import 'navigation_service.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DatabaseHelper.instance.database;
-  setupLocator();
+  setUpLocator();
 
   final cardViewModel = locator<CardViewModel>();
   await cardViewModel.init();

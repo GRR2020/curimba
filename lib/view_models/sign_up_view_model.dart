@@ -1,16 +1,19 @@
 import 'package:curimba/errors_helper.dart';
+import 'package:curimba/locator.dart';
 import 'package:curimba/models/user_model.dart';
 import 'package:curimba/repositories/user_repository.dart';
 import 'package:curimba/shared_preferences_helper.dart';
 import 'package:curimba/view_models/view_model.dart';
 import 'package:flutter/widgets.dart';
-import 'package:curimba/locator.dart';
+
+import 'card_view_model.dart';
 
 enum ViewState { Idle, Busy }
 
 class SignUpViewModel extends ViewModel {
   UserRepository _repository = UserRepository();
   ViewState _viewState = ViewState.Idle;
+
   ViewState get viewState => _viewState;
 
   @override
@@ -35,7 +38,8 @@ class SignUpViewModel extends ViewModel {
 
     final savedUserId = await _repository.insert(model);
     if (savedUserId > 0) {
-      locator<SharedPreferencesHelper>().setUserId(savedUserId);
+      await locator<SharedPreferencesHelper>().setUserId(savedUserId);
+      await locator<CardViewModel>().init();
     }
     _setViewState(ViewState.Idle);
     return savedUserId;

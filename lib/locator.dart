@@ -7,7 +7,7 @@ import 'package:get_it/get_it.dart';
 
 GetIt locator = GetIt.I;
 
-void setupLocator() {
+void setUpLocator() {
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => SharedPreferencesHelper());
 

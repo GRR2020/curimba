@@ -5,6 +5,7 @@ import 'package:curimba/view_models/view_model.dart';
 import 'package:flutter/widgets.dart';
 
 import '../errors_helper.dart';
+import 'card_view_model.dart';
 
 enum ViewState { Idle, Busy }
 
@@ -40,7 +41,8 @@ class SignInViewModel extends ViewModel {
       return AuthErrors.PasswordMismatch.code;
     }
 
-    locator<SharedPreferencesHelper>().setUserId(user.id);
+    await locator<SharedPreferencesHelper>().setUserId(user.id);
+    await locator<CardViewModel>().init();
     _setViewState(ViewState.Idle);
     return user.id;
   }

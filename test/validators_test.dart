@@ -34,11 +34,11 @@ void main() {
     });
     group('validateLastNumbers', () {
       test('should return error if empty', () {
-        expect(Validators.validateLastNumbers(""), 'Complete o campo');
+        expect(Validators.validateLastNumbers(""), 'Campo deve ter no mínimo 4 caracteres');
       });
       test('should return error if last numbers size < 4', () {
         expect(Validators.validateLastNumbers("•••• •••• •••• 12"),
-            'Complete o campo');
+            'Campo deve ter no mínimo 4 caracteres');
       });
       test('should return null if last numbers valid', () {
         expect(Validators.validateLastNumbers("•••• •••• •••• 1234"), null);
