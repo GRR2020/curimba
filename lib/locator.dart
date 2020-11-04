@@ -6,7 +6,6 @@ import 'package:curimba/services/push_notification_service.dart';
 import 'package:get_it/get_it.dart';
 
 GetIt locator = GetIt.I;
-
 void setupLocator() {
   // locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => CardViewModel());

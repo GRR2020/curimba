@@ -1,5 +1,6 @@
 import 'package:curimba/database_helper.dart';
 import 'package:curimba/screens/home.dart';
+import 'package:curimba/services/push_notification_service.dart';
 import 'package:curimba/view_models/card_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,9 @@ void main() async {
 
   final cardViewModel = CardViewModel();
   await cardViewModel.init();
+
+  final _pushNotificationService = PushNotificationService();
+  await _pushNotificationService.initialise();
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<CardViewModel>.value(value: cardViewModel)
