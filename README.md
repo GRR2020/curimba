@@ -3,6 +3,6 @@
 [![Build Status](https://travis-ci.org/GRR2020/curimba.svg?branch=master)](https://travis-ci.org/GRR2020/curimba)
 
 ## Membros
-Guilherme Gonzalo - 10284326
-Rafael Martins Campos - 10367158
-Roberto Eiji Kamon Imaeda - 10284285
+- Guilherme Gonzalo (guigonzalo) - 10284326
+- Rafael Martins Campos (rafael9martins) - 10367158
+- Roberto Eiji Kamon Imaeda (jimaeda/eijiimaeda) - 10284285

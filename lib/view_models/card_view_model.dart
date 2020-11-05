@@ -1,25 +1,33 @@
 import 'package:curimba/models/card_model.dart';
 import 'package:curimba/repositories/card_repository.dart';
+import 'package:curimba/shared_preferences_helper.dart';
+import 'package:curimba/view_models/view_model.dart';
 import 'package:flutter/widgets.dart';
 
-class CardViewModel extends ChangeNotifier {
-  final CardRepository cardRepository = CardRepository();
+import '../locator.dart';
 
+class CardViewModel extends ViewModel {
   List<CardModel> cards;
   List<CardModel> invoiceCards;
 
-  init() async {
-    await _refreshAllStates();
-  }
+  @protected
+  CardRepository repository = CardRepository();
 
-  _refreshAllStates() async {
-    cards = await cardRepository.getFromUser();
+  @override
+  @protected
+  refreshAllStates() async {
+    final usersId = await locator<SharedPreferencesHelper>().userId;
+    cards = (usersId < 0) ? List() : await repository.getFromUser(usersId);
     invoiceCards = await _getIdealDateCards();
     notifyListeners();
   }
 
-  _getIdealDateCards() async {
-    cards = await cardRepository.getFromUser();
+  Future<List<CardModel>> _getIdealDateCards() async {
+    final usersId = await locator<SharedPreferencesHelper>().userId;
+    if (usersId < 0) {
+      return List();
+    }
+    cards = await repository.getFromUser(usersId);
     var now = new DateTime.now();
     cards.sort((a, b) => a.invoiceDate.compareTo(b.invoiceDate));
     List<CardModel> invoice = [];
@@ -29,7 +37,8 @@ class CardViewModel extends ChangeNotifier {
       var invoiceDate = new DateTime(now.year, invoiceMonth, invoiceDay);
       var expiryDate = invoiceDate.add(new Duration(days: 7));
       now = new DateTime(now.year, now.month, now.day);
-      if ((now.isAtSameMomentAs(invoiceDate) || now.isAfter(invoiceDate)) && now.isBefore(expiryDate)) {
+      if ((now.isAtSameMomentAs(invoiceDate) || now.isAfter(invoiceDate)) &&
+          now.isBefore(expiryDate)) {
         invoice.add(element);
       }
     });
@@ -37,10 +46,9 @@ class CardViewModel extends ChangeNotifier {
     return invoice;
   }
 
-  Future<int> registerCard(CardModel card) async {
-    var saved = await cardRepository.insert(card);
-    _refreshAllStates();
-    notifyListeners();
+  Future<int> register(CardModel card) async {
+    var saved = await repository.insert(card);
+    refreshAllStates();
     return saved;
   }
 }

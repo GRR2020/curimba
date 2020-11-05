@@ -1,13 +1,19 @@
 import 'package:curimba/database_helper.dart';
 import 'package:curimba/models/card_model.dart';
+import 'package:curimba/repositories/repository.dart';
 import 'package:sqflite/sqflite.dart';
 
-class CardRepository {
-  final table = 'cards';
+class CardRepository implements Repository {
+  @override
+  String table = 'cards';
 
-  Future<List<CardModel>> getFromUser() async {
+  Future<List<CardModel>> getFromUser(int userId) async {
     Database db = await DatabaseHelper.instance.database;
-    var dbCards = await db.query(table);
+    var dbCards = await db.query(
+      table,
+      where: 'users_id = ?',
+      whereArgs: [userId],
+    );
 
     return List.generate(dbCards.length, (i) {
       return CardModel(
@@ -15,6 +21,7 @@ class CardRepository {
         lastNumbers: dbCards[i]['last_numbers'],
         brandName: dbCards[i]['brand_name'],
         expiryDate: dbCards[i]['expiry_date'],
+        usersId: dbCards[i]['users_id'],
       );
     });
   }
@@ -24,9 +31,9 @@ class CardRepository {
     return await db.insert(table, card.toMap());
   }
 
-  update(CardModel card) async {
+  Future<int> update(CardModel card) async {
     Database db = await DatabaseHelper.instance.database;
-    await db.update(
+    return await db.update(
       table,
       card.toMap(),
       where: 'id = ?',
