@@ -1,6 +1,6 @@
 import 'package:curimba/masks.dart';
 import 'package:curimba/models/card_model.dart';
-import 'package:curimba/shared_preferences_helper.dart';
+import 'package:curimba/helpers/shared_preferences_helper.dart';
 import 'package:curimba/validators.dart';
 import 'package:curimba/view_models/card_view_model.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../locator.dart';
 
-class CreateCard extends StatefulWidget {
+class CreateCard extends StatefulWidget{
   @override
   _CreateCardState createState() => _CreateCardState();
 }

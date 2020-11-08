@@ -19,7 +19,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'fake_locator.dart';
-import 'mocks.dart';
+import 'mocks/mock_card_view_model.dart';
+import 'mocks/mock_navigation_observer.dart';
 
 // Mocks
 

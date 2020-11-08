@@ -3,7 +3,7 @@ import 'package:curimba/screens/home.dart';
 import 'package:curimba/screens/sign_up.dart';
 import 'package:flutter/material.dart';
 
-import '../shared_preferences_helper.dart';
+import '../helpers/shared_preferences_helper.dart';
 
 class Root extends StatefulWidget {
   @override
@@ -19,7 +19,9 @@ class _RootState extends State<Root> {
             future: _userId,
             builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
               if (snapshot.hasData) {
-                return snapshot.data > 0 ? Home() : SignUp();
+                return snapshot.data > 0
+                    ? Home()
+                    : SignUp();
               } else {
                 return Center(
                   child: Column(

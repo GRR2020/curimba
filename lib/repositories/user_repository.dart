@@ -1,4 +1,4 @@
-import 'package:curimba/database_helper.dart';
+import 'package:curimba/helpers/database_helper.dart';
 import 'package:curimba/models/user_model.dart';
 import 'package:curimba/repositories/repository.dart';
 import 'package:sqflite/sqflite.dart';

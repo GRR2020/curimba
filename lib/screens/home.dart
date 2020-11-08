@@ -1,4 +1,4 @@
-import 'package:curimba/shared_preferences_helper.dart';
+import 'package:curimba/helpers/shared_preferences_helper.dart';
 import 'package:flutter/material.dart';
 
 import '../locator.dart';

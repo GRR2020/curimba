@@ -1,12 +1,12 @@
 import 'package:curimba/models/card_model.dart';
 import 'package:curimba/repositories/card_repository.dart';
-import 'package:curimba/shared_preferences_helper.dart';
-import 'package:curimba/view_models/view_model.dart';
+import 'package:curimba/helpers/shared_preferences_helper.dart';
+import 'package:curimba/view_models/base_view_model.dart';
 import 'package:flutter/widgets.dart';
 
 import '../locator.dart';
 
-class CardViewModel extends ViewModel {
+class CardViewModel extends BaseViewModel {
   List<CardModel> cards;
   List<CardModel> invoiceCards;
 
