@@ -9,9 +9,9 @@ import 'package:flutter/widgets.dart';
 
 class SignUpViewModel extends BaseViewModel {
   @protected
-  UserRepository repository = UserRepository();
+  final UserRepository repository;
 
-  SignUpViewModel({this.repository});
+  SignUpViewModel({this.repository = const UserRepository()});
 
   @override
   @protected
