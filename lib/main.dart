@@ -1,4 +1,5 @@
 import 'package:curimba/database_helper.dart';
+import 'package:curimba/notification_work_helper.dart';
 import 'package:curimba/screens/root.dart';
 import 'package:curimba/view_models/card_view_model.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DatabaseHelper.instance.database;
   setUpLocator();
-
+  final notificationWorkHelper = locator<NotificationWorkHelper>();
+  await notificationWorkHelper.init();
   final cardViewModel = locator<CardViewModel>();
   await cardViewModel.init();
 
