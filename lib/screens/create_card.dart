@@ -1,10 +1,14 @@
 import 'package:curimba/masks.dart';
 import 'package:curimba/models/card_model.dart';
+import 'package:curimba/shared_preferences_helper.dart';
 import 'package:curimba/validators.dart';
 import 'package:curimba/view_models/card_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../locator.dart';
 
 class CreateCard extends StatefulWidget {
   @override
@@ -77,9 +81,7 @@ class _CreateCardState extends State<CreateCard> {
                     focusNode: _expiryDateFocus,
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.done,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(2)
-                    ],
+                    inputFormatters: [LengthLimitingTextInputFormatter(2)],
                     onFieldSubmitted: (_) => _submitCard(cardViewModel),
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -109,16 +111,33 @@ class _CreateCardState extends State<CreateCard> {
   _submitCard(CardViewModel cardViewModel) async {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState.validate()) {
-      _scaffoldKey.currentState
-          .showSnackBar(SnackBar(content: Text('Salvando cartão')));
-      var saved = await cardViewModel.registerCard(CardModel(
-          lastNumbers: _lastNumbersController.text,
-          brandName: _brandNameController.text,
-          expiryDate: _expiryDateController.text));
+      final usersId = await locator<SharedPreferencesHelper>().userId;
 
-      if (saved != 0) {
-        _scaffoldKey.currentState
-            .showSnackBar(SnackBar(content: Text('Cartão salvo com sucesso')));
+      if (usersId <= 0) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text('Usuário não autentificado'),
+          duration: const Duration(seconds: 1),
+        ));
+        return;
+      }
+
+      var savedCardId = await cardViewModel.register(CardModel(
+        lastNumbers: _lastNumbersController.text,
+        brandName: _brandNameController.text,
+        expiryDate: _expiryDateController.text,
+        usersId: usersId,
+      ));
+
+      if (savedCardId > 0) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text('Cartão salvo com sucesso'),
+          duration: const Duration(seconds: 1),
+        ));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: const Text('Falha no cadastro do cartão'),
+          duration: const Duration(seconds: 1),
+        ));
       }
     }
   }

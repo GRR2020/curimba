@@ -1,8 +1,8 @@
-import 'package:curimba/screens/create_card.dart';
+import 'package:curimba/shared_preferences_helper.dart';
 import 'package:flutter/material.dart';
 
-import 'cards_list.dart';
-import 'recomended_cards.dart';
+import '../locator.dart';
+import '../navigation_service.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -16,38 +16,31 @@ class Home extends StatelessWidget {
             child: ListView(children: <Widget>[
               SizedBox(height: 10),
               RaisedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CreateCard(),
-                      ),
-                    );
-                  },
+                  onPressed: () =>
+                      locator<NavigationService>().navigateTo('/register-card'),
                   color: Colors.black,
                   textColor: Colors.white,
                   child: Text('Cadastrar cartão'.toUpperCase())),
               RaisedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CardsList()),
-                    );
-                  },
+                  onPressed: () =>
+                      locator<NavigationService>().navigateTo('/list-cards'),
                   color: Colors.black,
                   textColor: Colors.white,
                   child: Text('Listar cartões'.toUpperCase())),
               RaisedButton(
+                  onPressed: () => locator<NavigationService>()
+                      .navigateTo('/recommended-cards'),
+                  color: Colors.black,
+                  textColor: Colors.white,
+                  child: Text('Cartões recomendados'.toUpperCase())),
+              RaisedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => RecommendedCards()),
-                    );
+                    locator<SharedPreferencesHelper>().deleteUserId();
+                    locator<NavigationService>().navigateToAndReplace('/');
                   },
                   color: Colors.black,
                   textColor: Colors.white,
-                  child: Text('Cartões recomendados'.toUpperCase()))
+                  child: Text('Sair'.toUpperCase()))
             ])));
   }
 }

@@ -3,6 +3,15 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Validators', () {
+    group('validateBySize', () {
+      test('should return error if value < size', () {
+        expect(Validators.validateBySize("brand", 6), "Campo deve ter no mínimo 6 caracteres");
+      });
+      test('should return null if value >= size', () {
+        expect(Validators.validateBySize("brand", 5), null);
+        expect(Validators.validateBySize("brand", 4), null);
+      });
+    });
     group('validateNotEmpty', () {
       test('should return error if empty', () {
         expect(Validators.validateNotEmpty(""), 'Complete o campo');
@@ -25,11 +34,11 @@ void main() {
     });
     group('validateLastNumbers', () {
       test('should return error if empty', () {
-        expect(Validators.validateLastNumbers(""), 'Complete o campo');
+        expect(Validators.validateLastNumbers(""), 'Campo deve ter no mínimo 4 caracteres');
       });
       test('should return error if last numbers size < 4', () {
         expect(Validators.validateLastNumbers("•••• •••• •••• 12"),
-            'Complete o campo');
+            'Campo deve ter no mínimo 4 caracteres');
       });
       test('should return null if last numbers valid', () {
         expect(Validators.validateLastNumbers("•••• •••• •••• 1234"), null);

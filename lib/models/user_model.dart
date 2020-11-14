@@ -1,3 +1,29 @@
+import 'package:flutter/cupertino.dart';
+
 class UserModel {
-  // TODO: Create User model
+  int id;
+  String name;
+  String username;
+  String password;
+
+  UserModel({
+    @required String name,
+    @required String username,
+    @required String password,
+    int id,
+  }) {
+    this.id = id;
+    this.name = name;
+    this.username = username;
+    this.password = password;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'username': username,
+      'password': password,
+    };
+  }
 }
