@@ -1,7 +1,5 @@
 import 'package:curimba/helpers/database_helper.dart';
-import 'package:curimba/view_models/card_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'locator.dart';
 import 'navigation_service.dart';
@@ -11,11 +9,7 @@ void main() async {
   DatabaseHelper.instance.database;
   setUpLocator();
 
-  final cardViewModel = locator<CardViewModel>();
-
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider<CardViewModel>.value(value: cardViewModel),
-  ], child: MyApp()));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

@@ -9,12 +9,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../mocks/mock_user_repository.dart';
 
 void main() {
-  group('SignInViewModel tests', () {
-    setUpAll(() {
-      setUpLocator();
-      SharedPreferences.setMockInitialValues({});
-    });
+  setUpAll(() {
+    setUpLocator();
+    SharedPreferences.setMockInitialValues({});
+  });
 
+  group('SignInViewModel tests', () {
     test('when user is not found, should return UserNotFound code', () async {
       final mockRepository = MockUserRepository();
       final viewModel = SignInViewModel(repository: mockRepository);

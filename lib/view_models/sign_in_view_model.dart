@@ -13,7 +13,6 @@ class SignInViewModel extends BaseViewModel {
   SignInViewModel({this.repository = const UserRepository()});
 
   @override
-  @protected
   refreshAllStates() async {
     notifyListeners();
   }

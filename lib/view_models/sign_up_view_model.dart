@@ -14,7 +14,6 @@ class SignUpViewModel extends BaseViewModel {
   SignUpViewModel({this.repository = const UserRepository()});
 
   @override
-  @protected
   refreshAllStates() async {
     notifyListeners();
   }
