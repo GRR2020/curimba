@@ -1,12 +1,12 @@
 import 'package:curimba/enums/sign_in_up_errors.dart';
 import 'package:curimba/enums/view_state.dart';
-import 'package:curimba/validators.dart';
+import 'package:curimba/utils/validators.dart';
 import 'package:curimba/view_models/sign_in_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../locator.dart';
-import '../navigation_service.dart';
+import '../utils/locator.dart';
+import '../utils/navigation_service.dart';
 import 'base_view.dart';
 
 class SignIn extends StatelessWidget {

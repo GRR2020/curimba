@@ -5,7 +5,7 @@ import 'package:curimba/repositories/card_repository.dart';
 import 'package:curimba/view_models/base_view_model.dart';
 import 'package:flutter/foundation.dart';
 
-import '../locator.dart';
+import '../utils/locator.dart';
 
 class ListCardsViewModel extends BaseViewModel {
   @protected

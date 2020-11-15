@@ -1,12 +1,12 @@
 import 'package:curimba/enums/view_state.dart';
-import 'package:curimba/masks.dart';
+import 'package:curimba/utils/masks.dart';
 import 'package:curimba/models/card_model.dart';
-import 'package:curimba/validators.dart';
+import 'package:curimba/utils/validators.dart';
 import 'package:curimba/view_models/create_card_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../locator.dart';
+import '../utils/locator.dart';
 import 'base_view.dart';
 
 class CreateCard extends StatelessWidget {
