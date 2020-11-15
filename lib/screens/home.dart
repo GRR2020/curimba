@@ -1,8 +1,8 @@
 import 'package:curimba/helpers/shared_preferences_helper.dart';
 import 'package:flutter/material.dart';
 
-import '../locator.dart';
-import '../navigation_service.dart';
+import '../utils/locator.dart';
+import '../utils/navigation_service.dart';
 
 class Home extends StatelessWidget {
   @override

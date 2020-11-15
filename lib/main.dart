@@ -1,8 +1,8 @@
 import 'package:curimba/helpers/database_helper.dart';
 import 'package:flutter/material.dart';
 
-import 'locator.dart';
-import 'navigation_service.dart';
+import 'utils/locator.dart';
+import 'utils/navigation_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

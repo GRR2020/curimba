@@ -1,4 +1,4 @@
-import 'package:curimba/locator.dart';
+import 'package:curimba/utils/locator.dart';
 import 'package:curimba/screens/home.dart';
 import 'package:curimba/screens/sign_up.dart';
 import 'package:flutter/material.dart';

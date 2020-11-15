@@ -1,13 +1,13 @@
 import 'package:curimba/enums/sign_in_up_errors.dart';
 import 'package:curimba/enums/view_state.dart';
-import 'package:curimba/locator.dart';
+import 'package:curimba/utils/locator.dart';
 import 'package:curimba/models/user_model.dart';
-import 'package:curimba/validators.dart';
+import 'package:curimba/utils/validators.dart';
 import 'package:curimba/view_models/sign_up_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../navigation_service.dart';
+import '../utils/navigation_service.dart';
 import 'base_view.dart';
 
 class SignUp extends StatelessWidget {
@@ -138,18 +138,20 @@ class SignUp extends StatelessWidget {
       ));
 
       if (savedUserId == SignInUpErrors.UserFound.code) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('Username já cadastrado'),
-          duration: const Duration(seconds: 1),
-        ));
+        final snackBar = SnackBar(
+          content: Text('Username já cadastrado'),
+          duration: Duration(seconds: 1),
+        );
+        Scaffold.of(context).showSnackBar(snackBar);
         return;
       }
 
       if (savedUserId <= 0) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('Falha no cadastro'),
-          duration: const Duration(seconds: 1),
-        ));
+        final snackBar = SnackBar(
+          content: Text('Falha no cadastro'),
+          duration: Duration(seconds: 1),
+        );
+        Scaffold.of(context).showSnackBar(snackBar);
         return;
       }
 

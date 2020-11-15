@@ -1,7 +1,7 @@
 import 'package:curimba/enums/sign_in_up_errors.dart';
 import 'package:curimba/enums/view_state.dart';
 import 'package:curimba/helpers/shared_preferences_helper.dart';
-import 'package:curimba/locator.dart';
+import 'package:curimba/utils/locator.dart';
 import 'package:curimba/repositories/user_repository.dart';
 import 'package:curimba/view_models/base_view_model.dart';
 import 'package:flutter/widgets.dart';

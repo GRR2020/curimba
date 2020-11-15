@@ -1,4 +1,4 @@
-import 'package:curimba/locator.dart';
+import 'package:curimba/utils/locator.dart';
 import 'package:curimba/screens/create_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

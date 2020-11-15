@@ -3,7 +3,7 @@ import 'package:curimba/models/card_model.dart';
 import 'package:curimba/view_models/recommended_cards_view_model.dart';
 import 'package:flutter/material.dart';
 
-import '../locator.dart';
+import '../utils/locator.dart';
 import 'base_view.dart';
 
 class RecommendedCards extends StatelessWidget {

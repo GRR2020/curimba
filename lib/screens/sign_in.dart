@@ -1,12 +1,12 @@
 import 'package:curimba/enums/sign_in_up_errors.dart';
 import 'package:curimba/enums/view_state.dart';
-import 'package:curimba/validators.dart';
+import 'package:curimba/utils/validators.dart';
 import 'package:curimba/view_models/sign_in_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../locator.dart';
-import '../navigation_service.dart';
+import '../utils/locator.dart';
+import '../utils/navigation_service.dart';
 import 'base_view.dart';
 
 class SignIn extends StatelessWidget {
@@ -111,18 +111,20 @@ class SignIn extends StatelessWidget {
       );
 
       if (savedUserId == SignInUpErrors.UserNotFound.code) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('Usuário não encontrado'),
-          duration: const Duration(seconds: 1),
-        ));
+        final snackBar = SnackBar(
+          content: Text('Usuário não encontrado'),
+          duration: Duration(seconds: 1),
+        );
+        Scaffold.of(context).showSnackBar(snackBar);
         return;
       }
 
       if (savedUserId == SignInUpErrors.PasswordMismatch.code) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('Senha incorreta'),
-          duration: const Duration(seconds: 1),
-        ));
+        final snackBar = SnackBar(
+          content: Text('Senha incorreta'),
+          duration: Duration(seconds: 1),
+        );
+        Scaffold.of(context).showSnackBar(snackBar);
         return;
       }
 
