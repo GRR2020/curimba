@@ -111,18 +111,20 @@ class SignIn extends StatelessWidget {
       );
 
       if (savedUserId == SignInUpErrors.UserNotFound.code) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('Usuário não encontrado'),
-          duration: const Duration(seconds: 1),
-        ));
+        final snackBar = SnackBar(
+          content: Text('Usuário não encontrado'),
+          duration: Duration(seconds: 1),
+        );
+        Scaffold.of(context).showSnackBar(snackBar);
         return;
       }
 
       if (savedUserId == SignInUpErrors.PasswordMismatch.code) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('Senha incorreta'),
-          duration: const Duration(seconds: 1),
-        ));
+        final snackBar = SnackBar(
+          content: Text('Senha incorreta'),
+          duration: Duration(seconds: 1),
+        );
+        Scaffold.of(context).showSnackBar(snackBar);
         return;
       }
 

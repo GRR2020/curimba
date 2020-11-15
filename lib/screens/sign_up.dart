@@ -138,18 +138,20 @@ class SignUp extends StatelessWidget {
       ));
 
       if (savedUserId == SignInUpErrors.UserFound.code) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('Username já cadastrado'),
-          duration: const Duration(seconds: 1),
-        ));
+        final snackBar = SnackBar(
+          content: Text('Username já cadastrado'),
+          duration: Duration(seconds: 1),
+        );
+        Scaffold.of(context).showSnackBar(snackBar);
         return;
       }
 
       if (savedUserId <= 0) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('Falha no cadastro'),
-          duration: const Duration(seconds: 1),
-        ));
+        final snackBar = SnackBar(
+          content: Text('Falha no cadastro'),
+          duration: Duration(seconds: 1),
+        );
+        Scaffold.of(context).showSnackBar(snackBar);
         return;
       }
 
