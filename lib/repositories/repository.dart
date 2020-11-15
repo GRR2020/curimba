@@ -1,3 +1,4 @@
 abstract class Repository {
-  String table;
+  final String table;
+  const Repository({this.table});
 }

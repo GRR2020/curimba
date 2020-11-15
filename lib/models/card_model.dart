@@ -29,7 +29,7 @@ class CardModel {
     @required String lastNumbers,
     @required String brandName,
     @required String expiryDate,
-    @required int usersId,
+    int usersId,
     int id,
     Clock clock,
   }) {

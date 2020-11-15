@@ -1,8 +1,5 @@
-import 'package:curimba/database_helper.dart';
-import 'package:curimba/screens/root.dart';
-import 'package:curimba/view_models/card_view_model.dart';
+import 'package:curimba/helpers/database_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'locator.dart';
 import 'navigation_service.dart';
@@ -12,12 +9,7 @@ void main() async {
   DatabaseHelper.instance.database;
   setUpLocator();
 
-  final cardViewModel = locator<CardViewModel>();
-  await cardViewModel.init();
-
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider<CardViewModel>.value(value: cardViewModel),
-  ], child: MyApp()));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -26,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'App',
       navigatorKey: locator<NavigationService>().navigatorKey,
+      initialRoute: '/',
       onGenerateRoute: (routeSettings) =>
           locator<NavigationService>().generateRoute(routeSettings),
       theme: ThemeData(
@@ -36,7 +29,6 @@ class MyApp extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         ),
       ),
-      home: Root(),
     );
   }
 }

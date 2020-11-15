@@ -1,11 +1,10 @@
-import 'package:curimba/database_helper.dart';
+import 'package:curimba/helpers/database_helper.dart';
 import 'package:curimba/models/card_model.dart';
 import 'package:curimba/repositories/repository.dart';
 import 'package:sqflite/sqflite.dart';
 
-class CardRepository implements Repository {
-  @override
-  String table = 'cards';
+class CardRepository extends Repository {
+  const CardRepository() : super(table: 'cards');
 
   Future<List<CardModel>> getFromUser(int userId) async {
     Database db = await DatabaseHelper.instance.database;

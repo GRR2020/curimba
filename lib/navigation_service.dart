@@ -1,7 +1,7 @@
 import 'package:curimba/screens/create_card.dart';
 import 'package:curimba/screens/home.dart';
 import 'package:curimba/screens/list_cards.dart';
-import 'package:curimba/screens/recomended_cards.dart';
+import 'package:curimba/screens/recommended_cards.dart';
 import 'package:curimba/screens/root.dart';
 import 'package:curimba/screens/sign_in.dart';
 import 'package:curimba/screens/sign_up.dart';
