@@ -12,11 +12,6 @@ class SignInViewModel extends BaseViewModel {
 
   SignInViewModel({this.repository = const UserRepository()});
 
-  @override
-  refreshAllStates() async {
-    notifyListeners();
-  }
-
   Future<int> login(String username, String password) async {
     setViewState(ViewState.Busy);
 

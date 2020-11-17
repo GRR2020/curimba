@@ -1,4 +1,5 @@
 import 'package:clock/clock.dart';
+import 'package:curimba/utils/masks.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
@@ -10,6 +11,9 @@ class CardModel {
   String expiryDate;
   String invoiceDate;
   Clock clock;
+
+  String get formattedLastNumbers =>
+      Masks.lastNumbersMask.maskText(lastNumbers);
 
   String _getInvoiceDate(String expiryDate) {
     var now = clock.now();

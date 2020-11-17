@@ -29,6 +29,18 @@ void main() {
       expect(cardModel.invoiceDate, '10/23');
     });
 
+    test('test formattedLastNumbers, should return masked value', () {
+      final cardModel = CardModel(
+        id: 1,
+        lastNumbers: '1234',
+        brandName: 'brand',
+        expiryDate: '30',
+        usersId: 0,
+      );
+
+      expect(cardModel.formattedLastNumbers, '•••• •••• •••• 1234');
+    });
+
     test('test toMap, should return mapped model', () {
       final cardModel = CardModel(
         id: 1,

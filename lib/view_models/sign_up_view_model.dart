@@ -13,11 +13,6 @@ class SignUpViewModel extends BaseViewModel {
 
   SignUpViewModel({this.repository = const UserRepository()});
 
-  @override
-  refreshAllStates() async {
-    notifyListeners();
-  }
-
   Future<int> register(UserModel model) async {
     setViewState(ViewState.Busy);
 

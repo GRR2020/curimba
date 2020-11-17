@@ -18,7 +18,7 @@ class RecommendedCardsViewModel extends BaseViewModel {
   RecommendedCardsViewModel({this.repository = const CardRepository()});
 
   @override
-  Future<void> refreshAllStates() async {
+  Future<void> initialize() async {
     _cards = await _getCards();
     notifyListeners();
   }
@@ -29,7 +29,6 @@ class RecommendedCardsViewModel extends BaseViewModel {
     List<CardModel> recommendedCards = [];
     final userId = await locator<SharedPreferencesHelper>().userId;
     final cards = await repository.getFromUser(userId);
-
 
     var now = new DateTime.now();
     cards.sort((a, b) => a.invoiceDate.compareTo(b.invoiceDate));

@@ -1,10 +1,11 @@
 import 'package:curimba/helpers/database_helper.dart';
 import 'package:curimba/models/user_model.dart';
-import 'package:curimba/repositories/repository.dart';
 import 'package:sqflite/sqflite.dart';
 
-class UserRepository extends Repository {
-  const UserRepository() : super(table: 'users');
+class UserRepository {
+  final table = 'users';
+
+  const UserRepository();
 
   Future<int> insert(UserModel model) async {
     Database db = await DatabaseHelper.instance.database;

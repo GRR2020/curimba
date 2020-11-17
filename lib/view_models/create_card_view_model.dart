@@ -13,11 +13,6 @@ class CreateCardViewModel extends BaseViewModel {
 
   CreateCardViewModel({this.repository = const CardRepository()});
 
-  @override
-  refreshAllStates() async {
-    notifyListeners();
-  }
-
   Future<int> register(CardModel model) async {
     setViewState(ViewState.Busy);
 
