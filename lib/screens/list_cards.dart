@@ -4,6 +4,7 @@ import 'package:curimba/view_models/list_cards_view_model.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/locator.dart';
+import '../widgets/card_widget.dart';
 import 'base_view.dart';
 
 class ListCards extends StatelessWidget {
@@ -12,45 +13,55 @@ class ListCards extends StatelessWidget {
     return BaseView<ListCardsViewModel>(
       viewModel: locator<ListCardsViewModel>(),
       onModelLoaded: (model) async {
-        await model.refreshAllStates();
+        await model.initialize();
       },
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           title: Text('Listar Cartões'),
         ),
         body: model.viewState == ViewState.Idle
-            ? _buildListCards(model.cards)
-            : Center(child: CircularProgressIndicator()),
+            ? model.cards == null || model.cards.isEmpty
+                ? _emptyView
+                : _buildListCards(model.cards)
+            : _loading,
       ),
     );
   }
 
+  Widget get _emptyView => Center(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+            Icon(
+              Icons.error,
+              color: Colors.red,
+              size: 60,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Text('Não há cartões cadastrados'),
+            )
+          ]));
+
+  Widget get _loading => Center(
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[CircularProgressIndicator()]));
+
   Widget _buildListCards(List<CardModel> cards) {
-    return cards.isEmpty
-        ? Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                Icon(
-                  Icons.error,
-                  color: Colors.red,
-                  size: 60,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: Text('Não há cartões cadastrados'),
-                )
-              ]))
-        : ListView.builder(
-            itemCount: cards.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text('${cards[index].brandName}'),
-                subtitle: Text(
-                    '${cards[index].invoiceDate.substring(3, 5)}/${cards[index].invoiceDate.substring(0, 2)}'),
-              );
-            },
-          );
+    return ListView.separated(
+      separatorBuilder: (context, index) =>
+          Divider(color: Colors.grey, height: 1),
+      itemCount: cards.length,
+      itemBuilder: (context, index) {
+        return CardWidget(
+          brandName: cards[index].brandName,
+          expiryDate: cards[index].invoiceDate,
+          lastNumbers: cards[index].formattedLastNumbers,
+        );
+      },
+    );
   }
 }

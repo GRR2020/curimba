@@ -12,7 +12,7 @@ class RecommendedCards extends StatelessWidget {
     return BaseView<RecommendedCardsViewModel>(
       viewModel: locator<RecommendedCardsViewModel>(),
       onModelLoaded: (model) async {
-        await model.refreshAllStates();
+        await model.initialize();
       },
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(

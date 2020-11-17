@@ -18,7 +18,7 @@ class ListCardsViewModel extends BaseViewModel {
   ListCardsViewModel({this.repository = const CardRepository()});
 
   @override
-  Future<void> refreshAllStates() async {
+  Future<void> initialize() async {
     _cards = await _getCards();
     notifyListeners();
   }
