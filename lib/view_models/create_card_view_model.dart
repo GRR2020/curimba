@@ -17,7 +17,7 @@ class CreateCardViewModel extends BaseViewModel {
     setViewState(ViewState.Busy);
 
     final userId = await locator<SharedPreferencesHelper>().userId;
-    if (userId == null) {
+    if (userId <= 0) {
       return -1;
     }
 
