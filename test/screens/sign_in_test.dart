@@ -5,10 +5,14 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:curimba/utils/locator.dart';
 import 'package:curimba/screens/sign_in.dart';
+import 'package:curimba/utils/locator.dart';
+import 'package:curimba/utils/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+
+import '../mocks/mock_navigation_observer.dart';
 
 void main() {
   setUpAll(() {
@@ -22,6 +26,21 @@ void main() {
       expect(find.byType(TextFormField), findsNWidgets(2));
       expect(find.byType(FlatButton), findsOneWidget);
       expect(find.byType(RaisedButton), findsOneWidget);
+    });
+
+    testWidgets('should redirect, on click "Não possui cadastro?"',
+        (WidgetTester tester) async {
+      final mockNavigatorObserver = MockNavigatorObserver();
+      await tester.pumpWidget(MaterialApp(
+        home: SignIn(),
+        navigatorKey: locator<NavigationService>().navigatorKey,
+        onGenerateRoute: (routeSettings) =>
+            locator<NavigationService>().generateRoute(routeSettings),
+        navigatorObservers: [mockNavigatorObserver],
+      ));
+
+      await tester.tap(find.byType(FlatButton));
+      verify(mockNavigatorObserver.didPush(any, any));
     });
 
     group('Fields validation', () {

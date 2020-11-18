@@ -20,12 +20,12 @@ void main() {
 
       final viewModel = CreateCardViewModel(repository: mockRepository);
 
-      final savedUserId = await viewModel.register(CardModel(
+      final savedCardId = await viewModel.register(CardModel(
         brandName: 'brand',
         expiryDate: '10',
         lastNumbers: '1234',
       ));
-      expect(savedUserId, 1);
+      expect(savedCardId, 1);
     });
 
     test('should return error code, when it fails to register card', () async {
@@ -34,12 +34,12 @@ void main() {
 
       final viewModel = CreateCardViewModel(repository: mockRepository);
 
-      final savedUserId = await viewModel.register(CardModel(
+      final savedCardId = await viewModel.register(CardModel(
         brandName: 'brand',
         expiryDate: '10',
         lastNumbers: '1234',
       ));
-      expect(savedUserId, -1);
+      expect(savedCardId, -1);
     });
   });
 }
