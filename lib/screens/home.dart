@@ -1,13 +1,28 @@
+import 'package:curimba/enums/view_state.dart';
 import 'package:curimba/helpers/shared_preferences_helper.dart';
+import 'package:curimba/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/locator.dart';
 import '../utils/navigation_service.dart';
+import 'base_view.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   @override
+  HomeState createState() => HomeState();
+}
+
+class HomeState extends State<Home> {
+  int receiveNotifications;
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BaseView<HomeViewModel>(
+      viewModel: locator<HomeViewModel>(),
+      onModelLoaded: (model) async {
+        await model.initNotifications();
+        receiveNotifications = model.receiveNotifications;
+      },
+      builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           title: Text('Tela inicial'),
         ),
@@ -40,7 +55,24 @@ class Home extends StatelessWidget {
                   },
                   color: Colors.black,
                   textColor: Colors.white,
-                  child: Text('Sair'.toUpperCase()))
-            ])));
+                  child: Text('Sair'.toUpperCase())),
+              FloatingActionButton(
+                  onPressed: () async {
+                    handleNotifications(context, receiveNotifications);
+                    setState(() {
+                      receiveNotifications = receiveNotifications == 0 ? 1 : 0;
+                    });
+                  },
+                  tooltip: 'notifications',
+                  child: receiveNotifications == 0 ? Icon(Icons.notifications_none) : Icon(Icons.notifications_active),
+              )
+            ]))));
+  }
+
+  Future<void> handleNotifications(context, receiveNotifications) async {
+    final userId = await locator<SharedPreferencesHelper>().userId;
+    int updatedReceiveNotifications = receiveNotifications == 0 ? 1 : 0;
+    locator<HomeViewModel>().updateReceiveNotifications(userId, updatedReceiveNotifications);
+    return;
   }
 }

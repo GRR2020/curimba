@@ -28,6 +28,7 @@ class SignInViewModel extends BaseViewModel {
     }
 
     await locator<SharedPreferencesHelper>().setUserId(user.id);
+    await locator<SharedPreferencesHelper>().setReceiveNotifications();
     setViewState(ViewState.Idle);
     return user.id;
   }

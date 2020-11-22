@@ -38,6 +38,28 @@ class UserRepository {
         name: dbUsers[i]['name'],
         username: dbUsers[i]['username'],
         password: dbUsers[i]['password'],
+        receiveNotifications: dbUsers[i]['receive_notifications']
+      );
+    });
+  }
+
+  Future<List<UserModel>> findById(int id) async {
+    Database db = await DatabaseHelper.instance.database;
+
+    var dbUsers = await db.query(
+      table,
+      where: 'id = ?',
+      whereArgs: [id],
+      limit: 1,
+    );
+
+    return List.generate(dbUsers.length, (i) {
+      return UserModel(
+        id: dbUsers[i]['id'],
+        name: dbUsers[i]['name'],
+        username: dbUsers[i]['username'],
+        password: dbUsers[i]['password'],
+        receiveNotifications: dbUsers[i]['receive_notifications']
       );
     });
   }

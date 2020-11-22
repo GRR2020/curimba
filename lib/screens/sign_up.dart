@@ -135,6 +135,7 @@ class SignUp extends StatelessWidget {
         name: _nameCtrl.text,
         username: _usernameCtrl.text,
         password: _passwordCtrl.text,
+        receiveNotifications: 0
       ));
 
       if (savedUserId == SignInUpErrors.UserFound.code) {

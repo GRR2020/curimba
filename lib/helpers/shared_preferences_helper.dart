@@ -23,4 +23,25 @@ class SharedPreferencesHelper {
     }
     _sharedPrefs.remove('userId');
   }
+
+  Future<int> get receiveNotifications async {
+    if (_sharedPrefs == null) {
+      _sharedPrefs = await SharedPreferences.getInstance();
+    }
+    return _sharedPrefs.getInt('receiveNotifications');
+  }
+
+  setReceiveNotifications({int receiveNotifications = 0}) async {
+    if (_sharedPrefs == null) {
+      _sharedPrefs = await SharedPreferences.getInstance();
+    }
+    _sharedPrefs.setInt('receiveNotifications', receiveNotifications);
+  }
+
+  deleteReceiveNotifications() async {
+    if (_sharedPrefs == null) {
+      _sharedPrefs = await SharedPreferences.getInstance();
+    }
+    _sharedPrefs.remove('receiveNotifications');
+  }
 }
