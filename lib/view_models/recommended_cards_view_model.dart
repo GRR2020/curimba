@@ -23,6 +23,14 @@ class RecommendedCardsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  Future<CardModel> getFirstCard() async {
+    if (cards == null) {
+      await initialize();
+    }
+
+    return cards[0];
+  }
+
   Future<List<CardModel>> _getCards() async {
     setViewState(ViewState.Busy);
 

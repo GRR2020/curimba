@@ -1,8 +1,7 @@
+import 'package:curimba/helpers/time_helper.dart';
 import 'package:curimba/models/card_model.dart';
 import 'package:curimba/utils/locator.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/data/latest.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 import 'package:curimba/view_models/recommended_cards_view_model.dart';
 
 class NotificationsHelper {
@@ -18,18 +17,20 @@ class NotificationsHelper {
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
-  initScheduleRecommendCards() {
-    locator<RecommendedCardsViewModel>().initialize();
-    CardModel recommendedCard = locator<RecommendedCardsViewModel>().cards[0];
+  initScheduleRecommendCards() async {
+    CardModel recommendedCard = await locator<RecommendedCardsViewModel>().getFirstCard();
     _scheduleWeeklyMondayTenAMNotification(recommendedCard);
   }
 
   Future<void> _scheduleWeeklyMondayTenAMNotification(CardModel card) async {
+    await locator<TimeHelper>().setup();
+    String title = card != null ? 'O cartão recomendado da semana é:' : 'Registre um cartão';
+    String body =  card != null ? "${card.brandName} com números ${card.formattedLastNumbers}" : 'E receba recomendações personzalidas para seu uso';
     await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
-        'Recomendação de cartão',
-        "O cartão recomendado da semana é o ${card.brandName} com números ${card.formattedLastNumbers}",
-        _nextInstanceOfMondayTenAM(),
+        title,
+        body,
+        locator<TimeHelper>().nextInstanceOfMondayTenAM(),
         const NotificationDetails(
           android: AndroidNotificationDetails(
               'weekly notification channel id',
@@ -40,24 +41,6 @@ class NotificationsHelper {
         uiLocalNotificationDateInterpretation:
         UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime);
-  }
-
-  tz.TZDateTime _nextInstanceOfTenAM() {
-    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate =
-    tz.TZDateTime(tz.local, now.year, now.month, now.day, 10);
-    if (scheduledDate.isBefore(now)) {
-      scheduledDate = scheduledDate.add(const Duration(days: 1));
-    }
-    return scheduledDate;
-  }
-
-  tz.TZDateTime _nextInstanceOfMondayTenAM() {
-    tz.TZDateTime scheduledDate = _nextInstanceOfTenAM();
-    while (scheduledDate.weekday != DateTime.monday) {
-      scheduledDate = scheduledDate.add(const Duration(days: 1));
-    }
-    return scheduledDate;
   }
 
   Future<void> cancelAllNotifications() async {

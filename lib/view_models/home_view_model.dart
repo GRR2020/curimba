@@ -17,7 +17,7 @@ class HomeViewModel extends BaseViewModel {
     return;
   }
 
-  Future<int> updateReceiveNotifications(int userId, int receiveNotifications) async {
+  Future<void> updateReceiveNotifications(int userId, int receiveNotifications) async {
     setViewState(ViewState.Busy);
 
     final user = await repository.findById(userId);
@@ -28,6 +28,6 @@ class HomeViewModel extends BaseViewModel {
       await locator<SharedPreferencesHelper>().setReceiveNotifications(receiveNotifications: receiveNotifications);
     }
     setViewState(ViewState.Idle);
-    return receiveNotifications;
+    return;
   }
 }

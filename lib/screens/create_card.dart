@@ -1,6 +1,7 @@
 import 'package:curimba/enums/view_state.dart';
 import 'package:curimba/models/card_model.dart';
 import 'package:curimba/utils/masks.dart';
+import 'package:curimba/utils/navigation_service.dart';
 import 'package:curimba/utils/validators.dart';
 import 'package:curimba/view_models/create_card_view_model.dart';
 import 'package:flutter/material.dart';
@@ -125,13 +126,14 @@ class CreateCard extends StatelessWidget {
           content: Text('Cartão salvo com sucesso'),
           duration: Duration(seconds: 1),
         );
-        Scaffold.of(context).showSnackBar(snackBar);
+      //   Scaffold.of(context).showSnackBar(snackBar);
+        locator<NavigationService>().navigateToAndReplace('/home');
       } else {
         final snackBar = SnackBar(
           content: Text('Falha no cadastro do cartão'),
           duration: Duration(seconds: 1),
         );
-        Scaffold.of(context).showSnackBar(snackBar);
+      //   Scaffold.of(context).showSnackBar(snackBar);
       }
     }
   }

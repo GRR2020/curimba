@@ -1,4 +1,5 @@
 import 'package:curimba/enums/view_state.dart';
+import 'package:curimba/helpers/notifications_helper.dart';
 import 'package:curimba/helpers/shared_preferences_helper.dart';
 import 'package:curimba/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
@@ -56,8 +57,9 @@ class HomeState extends State<Home> {
                   color: Colors.black,
                   textColor: Colors.white,
                   child: Text('Sair'.toUpperCase())),
+              SizedBox(height: 50),
               FloatingActionButton(
-                  onPressed: () async {
+                  onPressed: () {
                     handleNotifications(context, receiveNotifications);
                     setState(() {
                       receiveNotifications = receiveNotifications == 0 ? 1 : 0;
@@ -66,13 +68,22 @@ class HomeState extends State<Home> {
                   tooltip: 'notifications',
                   child: receiveNotifications == 0 ? Icon(Icons.notifications_none) : Icon(Icons.notifications_active),
               )
-            ]))));
+            ])
+        ),
+      )
+    );
   }
 
   Future<void> handleNotifications(context, receiveNotifications) async {
     final userId = await locator<SharedPreferencesHelper>().userId;
     int updatedReceiveNotifications = receiveNotifications == 0 ? 1 : 0;
     locator<HomeViewModel>().updateReceiveNotifications(userId, updatedReceiveNotifications);
+    if (updatedReceiveNotifications == 1) {
+      locator<NotificationsHelper>().init();
+      locator<NotificationsHelper>().initScheduleRecommendCards();
+    } else {
+      locator<NotificationsHelper>().cancelAllNotifications();
+    }
     return;
   }
 }
