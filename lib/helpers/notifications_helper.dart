@@ -19,13 +19,15 @@ class NotificationsHelper {
 
   initScheduleRecommendCards() async {
     CardModel recommendedCard = await locator<RecommendedCardsViewModel>().getFirstCard();
-    _scheduleWeeklyMondayTenAMNotification(recommendedCard);
+    if (recommendedCard != null) {
+      _scheduleWeeklyMondayTenAMNotification(recommendedCard);
+    }
   }
 
   Future<void> _scheduleWeeklyMondayTenAMNotification(CardModel card) async {
-    await locator<TimeHelper>().setup();
-    String title = card != null ? 'O cartão recomendado da semana é:' : 'Registre um cartão';
-    String body =  card != null ? "${card.brandName} com números ${card.formattedLastNumbers}" : 'E receba recomendações personzalidas para seu uso';
+    locator<TimeHelper>().setup();
+    String title = 'O cartão recomendado da semana é:';
+    String body =  "${card.brandName} com números ${card.formattedLastNumbers}";
     await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
         title,

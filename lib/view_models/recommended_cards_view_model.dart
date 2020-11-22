@@ -28,6 +28,10 @@ class RecommendedCardsViewModel extends BaseViewModel {
       await initialize();
     }
 
+    if (cards == []) {
+      return null;
+    }
+
     return cards[0];
   }
 
