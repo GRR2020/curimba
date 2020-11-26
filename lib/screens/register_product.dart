@@ -1,37 +1,37 @@
 import 'package:curimba/enums/view_state.dart';
-import 'package:curimba/models/card_model.dart';
+import 'package:curimba/models/product_model.dart';
 import 'package:curimba/utils/masks.dart';
 import 'package:curimba/utils/validators.dart';
-import 'package:curimba/view_models/create_card_view_model.dart';
+import 'package:curimba/view_models/register_product_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../utils/locator.dart';
 import 'base_view.dart';
 
-class CreateCard extends StatelessWidget {
+class RegisterProduct extends StatelessWidget {
   // Keys values
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Text fields focus node
-  final _brandNameFocus = FocusNode(canRequestFocus: true);
-  final _lastNumbersFocus = FocusNode(canRequestFocus: true);
-  final _expiryDateFocus = FocusNode(canRequestFocus: true);
+  final _nameFocus = FocusNode(canRequestFocus: true);
+  final _descriptionFocus = FocusNode(canRequestFocus: true);
+  final _priceFocus = FocusNode(canRequestFocus: true);
 
   // Text fields controllers
-  final _brandNameController = TextEditingController();
-  final _lastNumbersController = TextEditingController();
-  final _expiryDateController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _priceController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<CreateCardViewModel>(
-        viewModel: locator<CreateCardViewModel>(),
+    return BaseView<RegisterProductViewModel>(
+        viewModel: locator<RegisterProductViewModel>(),
         builder: (context, model, child) => Scaffold(
             key: _scaffoldKey,
             appBar: AppBar(
-              title: Text('Cadastrar Cartão'),
+              title: Text('Registrar um produto'),
             ),
             body: Container(
                 padding: EdgeInsets.only(left: 10, right: 10),
@@ -40,64 +40,59 @@ class CreateCard extends StatelessWidget {
                     child: ListView(children: <Widget>[
                       SizedBox(height: 10),
                       TextFormField(
-                        controller: _brandNameController,
-                        focusNode: _brandNameFocus,
+                        controller: _nameController,
+                        focusNode: _nameFocus,
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) => _fieldFocusChange(
-                            context, _brandNameFocus, _lastNumbersFocus),
+                            context, _nameFocus, _descriptionFocus),
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            hintText: 'Visa',
-                            labelText: 'Marca do Cartão'),
+                            hintText: 'Produto',
+                            labelText: 'Nome do produto'),
                         validator: (value) {
                           return Validators.validateNotEmpty(value);
                         },
                       ),
                       SizedBox(height: 10),
                       TextFormField(
-                        controller: _lastNumbersController,
-                        focusNode: _lastNumbersFocus,
-                        keyboardType: TextInputType.number,
+                        controller: _descriptionController,
+                        focusNode: _descriptionFocus,
                         textInputAction: TextInputAction.next,
-                        inputFormatters: [
-                          Masks.lastNumbersMask,
-                          LengthLimitingTextInputFormatter(19)
-                        ],
                         onFieldSubmitted: (_) => _fieldFocusChange(
-                            context, _lastNumbersFocus, _expiryDateFocus),
+                            context, _descriptionFocus, _priceFocus),
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            hintText: '•••• •••• •••• 4444',
-                            labelText: 'Últimos números'),
-                        validator: (value) {
-                          return Validators.validateLastNumbers(value);
-                        },
+                            hintText: 'Descrição',
+                            labelText: 'Descrição do produto'),
                       ),
                       SizedBox(height: 10),
                       TextFormField(
-                        controller: _expiryDateController,
-                        focusNode: _expiryDateFocus,
+                        controller: _priceController,
+                        focusNode: _priceFocus,
                         keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.done,
-                        inputFormatters: [LengthLimitingTextInputFormatter(2)],
-                        onFieldSubmitted: (_) => _submitCard(context, model),
+                        inputFormatters: [
+                          Masks.monetaryValue,
+                          LengthLimitingTextInputFormatter(19)
+                        ],
+                        onFieldSubmitted: (_) => _submitProduct(context, model),
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: 'Dia do Vencimento da Fatura',
-                            hintText: 'DD'),
+                            labelText: 'Preço',
+                            hintText: 'R\$0,00'),
                         validator: (value) {
-                          return Validators.validateExpiryDay(value);
+                          return Validators.validateNotEmpty(value);
                         },
                       ),
                       SizedBox(height: 10),
                       model.viewState == ViewState.Idle
                           ? RaisedButton(
                               onPressed: () {
-                                _submitCard(context, model);
+                                _submitProduct(context, model);
                               },
                               color: Colors.black,
                               textColor: Colors.white,
-                              child: Text('Cadastrar cartão'.toUpperCase()))
+                              child: Text('Registrar produto'.toUpperCase()))
                           : Center(
                               child: CircularProgressIndicator(),
                             )
@@ -110,26 +105,26 @@ class CreateCard extends StatelessWidget {
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-  _submitCard(
-      BuildContext context, CreateCardViewModel createCardViewModel) async {
+  _submitProduct(BuildContext context,
+      RegisterProductViewModel registerProductViewModel) async {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState.validate()) {
-      var savedCardId = await createCardViewModel.register(CardModel(
-        lastNumbers:
-            Masks.lastNumbersMask.unmaskText(_lastNumbersController.text),
-        brandName: _brandNameController.text,
-        expiryDate: _expiryDateController.text,
+      var savedCardId = await registerProductViewModel.register(ProductModel(
+        name: _nameController.text,
+        description: _descriptionController.text,
+        price:
+            double.parse(Masks.monetaryValue.unmaskText(_priceController.text)),
       ));
 
       if (savedCardId > 0) {
         final snackBar = SnackBar(
-          content: Text('Cartão salvo com sucesso'),
+          content: Text('Produto salvo com sucesso'),
           duration: Duration(seconds: 1),
         );
-        _scaffoldKey.currentState.showSnackBar(snackBar);
+        _scaffoldKey.currentState..showSnackBar(snackBar);
       } else {
         final snackBar = SnackBar(
-          content: Text('Falha no cadastro do cartão'),
+          content: Text('Falha no cadastro do Produto'),
           duration: Duration(seconds: 1),
         );
         _scaffoldKey.currentState.showSnackBar(snackBar);

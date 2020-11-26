@@ -2,6 +2,7 @@ import 'package:curimba/screens/create_card.dart';
 import 'package:curimba/screens/home.dart';
 import 'package:curimba/screens/list_cards.dart';
 import 'package:curimba/screens/recommended_cards.dart';
+import 'package:curimba/screens/register_product.dart';
 import 'package:curimba/screens/root.dart';
 import 'package:curimba/screens/sign_in.dart';
 import 'package:curimba/screens/sign_up.dart';
@@ -33,6 +34,8 @@ class NavigationService {
         return MaterialPageRoute(builder: (_) => SignIn());
       case '/sign-up':
         return MaterialPageRoute(builder: (_) => SignUp());
+      case '/register-product':
+        return MaterialPageRoute(builder: (_) => RegisterProduct());
       default:
         return MaterialPageRoute(builder: (_) => Root());
     }

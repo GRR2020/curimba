@@ -34,6 +34,12 @@ class Home extends StatelessWidget {
                   textColor: Colors.white,
                   child: Text('Cartões recomendados'.toUpperCase())),
               RaisedButton(
+                  onPressed: () => locator<NavigationService>()
+                      .navigateTo('/register-product'),
+                  color: Colors.black,
+                  textColor: Colors.white,
+                  child: Text('Registrar produto'.toUpperCase())),
+              RaisedButton(
                   onPressed: () {
                     locator<SharedPreferencesHelper>().deleteUserId();
                     locator<NavigationService>().navigateToAndReplace('/');
