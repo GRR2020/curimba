@@ -1,5 +1,6 @@
 import 'package:curimba/enums/view_state.dart';
 import 'package:curimba/models/product_model.dart';
+import 'package:curimba/utils/a.dart';
 import 'package:curimba/utils/masks.dart';
 import 'package:curimba/utils/validators.dart';
 import 'package:curimba/view_models/register_product_view_model.dart';
@@ -72,7 +73,7 @@ class RegisterProduct extends StatelessWidget {
                         keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.done,
                         inputFormatters: [
-                          Masks.monetaryValue,
+                          MonetaryValueMask(),
                           LengthLimitingTextInputFormatter(19)
                         ],
                         onFieldSubmitted: (_) => _submitProduct(context, model),
