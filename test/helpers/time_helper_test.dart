@@ -10,14 +10,10 @@ void main() {
     var sp = tz.getLocation('America/Sao_Paulo');
     tz.setLocalLocation(sp);
   });
-  //
-  // tearDown(() {
-  //   SharedPreferences.setMockInitialValues({});
-  // });
 
   group('TimeHelper tests', () {
     group('nextInstanceOfTenAM', () {
-      test('should next day when is after ten AM', () async {
+      test('should be next day when is after ten AM', () async {
         final mockClock = Clock.fixed(DateTime(2020, 10, 23, 11));
         final timeHelper = TimeHelper(clock: mockClock);
         timeHelper.setup();
