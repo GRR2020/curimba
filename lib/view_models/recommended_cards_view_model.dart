@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:curimba/enums/view_state.dart';
 import 'package:curimba/helpers/shared_preferences_helper.dart';
 import 'package:curimba/models/card_model.dart';
@@ -10,12 +11,13 @@ import '../utils/locator.dart';
 class RecommendedCardsViewModel extends BaseViewModel {
   @protected
   final CardRepository repository;
+  Clock clock;
 
   List<CardModel> _cards;
 
   List<CardModel> get cards => _cards;
 
-  RecommendedCardsViewModel({this.repository = const CardRepository()});
+  RecommendedCardsViewModel({this.repository = const CardRepository(), this.clock = const Clock()});
 
   @override
   Future<void> initialize() async {
@@ -42,7 +44,7 @@ class RecommendedCardsViewModel extends BaseViewModel {
     final userId = await locator<SharedPreferencesHelper>().userId;
     final cards = await repository.getFromUser(userId);
 
-    var now = new DateTime.now();
+    var now = clock.now();
     cards.sort((a, b) => a.invoiceDate.compareTo(b.invoiceDate));
     cards.forEach((element) {
       int invoiceMonth = int.parse(element.invoiceDate.substring(0, 2));

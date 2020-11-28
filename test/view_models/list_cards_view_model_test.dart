@@ -16,7 +16,7 @@ void main() {
 
   group('ListCardsViewModel tests', () {
     group('initialize', () {
-      test('should return cards, when cards are registered', () async {
+      test('should return empty list, when no cards are registered', () async {
         final mockRepository = MockCardRepository();
         final viewModel = ListCardsViewModel(repository: mockRepository);
         when(mockRepository.getFromUser(any))
@@ -27,7 +27,7 @@ void main() {
         expect(viewModel.cards, []);
       });
 
-      test('should return empty list, when there are no cards registered',
+      test('should return cards, when there are cards registered',
           () async {
         final mockRepository = MockCardRepository();
         final viewModel = ListCardsViewModel(repository: mockRepository);

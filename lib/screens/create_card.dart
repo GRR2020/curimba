@@ -126,14 +126,14 @@ class CreateCard extends StatelessWidget {
           content: Text('Cartão salvo com sucesso'),
           duration: Duration(seconds: 1),
         );
-      //   Scaffold.of(context).showSnackBar(snackBar);
+        _scaffoldKey.currentState.showSnackBar(snackBar);
         locator<NavigationService>().navigateToAndReplace('/home');
       } else {
         final snackBar = SnackBar(
           content: Text('Falha no cadastro do cartão'),
           duration: Duration(seconds: 1),
         );
-      //   Scaffold.of(context).showSnackBar(snackBar);
+        _scaffoldKey.currentState..showSnackBar(snackBar);
       }
     }
   }

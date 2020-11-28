@@ -9,19 +9,12 @@ import '../utils/locator.dart';
 import '../utils/navigation_service.dart';
 import 'base_view.dart';
 
-class Home extends StatefulWidget {
-  @override
-  HomeState createState() => HomeState();
-}
-
-class HomeState extends State<Home> {
-  int receiveNotifications;
+class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<HomeViewModel>(
       viewModel: locator<HomeViewModel>(),
       onModelLoaded: (model) async {
-        await model.initNotifications();
-        receiveNotifications = model.receiveNotifications;
+        model.initialize();
       },
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
@@ -52,6 +45,7 @@ class HomeState extends State<Home> {
               RaisedButton(
                   onPressed: () {
                     locator<SharedPreferencesHelper>().deleteUserId();
+                    locator<SharedPreferencesHelper>().deleteReceiveNotifications();
                     locator<NavigationService>().navigateToAndReplace('/');
                   },
                   color: Colors.black,
@@ -60,30 +54,14 @@ class HomeState extends State<Home> {
               SizedBox(height: 50),
               FloatingActionButton(
                   onPressed: () {
-                    handleNotifications(context, receiveNotifications);
-                    setState(() {
-                      receiveNotifications = receiveNotifications == 0 ? 1 : 0;
-                    });
+                    locator<HomeViewModel>().handleNotifications();
                   },
                   tooltip: 'notifications',
-                  child: receiveNotifications == 0 ? Icon(Icons.notifications_none) : Icon(Icons.notifications_active),
+                  child: model.receiveNotifications == 0 ? Icon(Icons.notifications_none) : Icon(Icons.notifications_active),
               )
             ])
         ),
       )
     );
-  }
-
-  Future<void> handleNotifications(context, receiveNotifications) async {
-    final userId = await locator<SharedPreferencesHelper>().userId;
-    int updatedReceiveNotifications = receiveNotifications == 0 ? 1 : 0;
-    locator<HomeViewModel>().updateReceiveNotifications(userId, updatedReceiveNotifications);
-    if (updatedReceiveNotifications == 1) {
-      locator<NotificationsHelper>().init();
-      locator<NotificationsHelper>().initScheduleRecommendCards();
-    } else {
-      locator<NotificationsHelper>().cancelAllNotifications();
-    }
-    return;
   }
 }

@@ -1,16 +1,25 @@
+import 'package:clock/clock.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 class TimeHelper {
+  Clock clock;
 
-  void setup() {
+  TimeHelper({
+    Clock clock,
+  }) {
+    this.clock = clock ?? Clock();
+  }
+
+  void setup({String locale: 'America/Sao_Paulo'}) {
     tz.initializeTimeZones();
-    var sp = tz.getLocation('America/Sao_Paulo');
+    var sp = tz.getLocation(locale);
     tz.setLocalLocation(sp);
   }
 
   tz.TZDateTime nextInstanceOfTenAM() {
-    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    DateTime clockNow = clock.now();
+    final tz.TZDateTime now = tz.TZDateTime.from(clockNow, tz.local);
     tz.TZDateTime scheduledDate =
     tz.TZDateTime(tz.local, now.year, now.month, now.day, 10);
     if (scheduledDate.isBefore(now)) {

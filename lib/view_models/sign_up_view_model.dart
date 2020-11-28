@@ -25,7 +25,6 @@ class SignUpViewModel extends BaseViewModel {
     final savedUserId = await repository.insert(model);
     if (savedUserId > 0) {
       await locator<SharedPreferencesHelper>().setUserId(savedUserId);
-      await locator<SharedPreferencesHelper>().setReceiveNotifications();
     }
     setViewState(ViewState.Idle);
     return savedUserId;
