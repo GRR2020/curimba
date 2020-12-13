@@ -1,6 +1,6 @@
 import 'package:curimba/enums/view_state.dart';
 import 'package:curimba/models/product_model.dart';
-import 'package:curimba/utils/a.dart';
+import 'package:curimba/utils/monetary_value_mask.dart';
 import 'package:curimba/utils/masks.dart';
 import 'package:curimba/utils/validators.dart';
 import 'package:curimba/view_models/register_product_view_model.dart';
@@ -74,7 +74,6 @@ class RegisterProduct extends StatelessWidget {
                         textInputAction: TextInputAction.done,
                         inputFormatters: [
                           MonetaryValueMask(),
-                          LengthLimitingTextInputFormatter(19)
                         ],
                         onFieldSubmitted: (_) => _submitProduct(context, model),
                         decoration: InputDecoration(
@@ -113,8 +112,7 @@ class RegisterProduct extends StatelessWidget {
       var savedCardId = await registerProductViewModel.register(ProductModel(
         name: _nameController.text,
         description: _descriptionController.text,
-        price:
-            double.parse(Masks.monetaryValue.unmaskText(_priceController.text)),
+        price: double.parse(_priceController.text.substring(3)),
       ));
 
       if (savedCardId > 0) {

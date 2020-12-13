@@ -5,7 +5,6 @@ class MonetaryValueMask extends TextInputFormatter {
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
     final newFormattedValue = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
-    final oldFormattedValue = oldValue.text.replaceAll(RegExp(r'[^0-9]'), '');
     int index = newValue.selection.end;
 
     final value = (double.parse(newFormattedValue) / 100).toStringAsFixed(2);
@@ -13,12 +12,12 @@ class MonetaryValueMask extends TextInputFormatter {
 
     if (oldValue.text.isEmpty) {
       index = newText.length;
-    } else {
-      if (newValue.selection.end < oldValue.selection.end && newFormattedValue.length < oldFormattedValue.length) {
-        index = newValue.selection.end;
-      } else {
-        index = oldValue.selection.end;
-      }
+    } else if (index > newText.length) {
+      index--;
+    } else if (newText == oldValue.text) {
+      index = oldValue.selection.end;
+    } else if (oldValue.selection.end >= 0 && oldValue.selection.end <= 2) {
+      index = 2;
     }
 
     return TextEditingValue(
