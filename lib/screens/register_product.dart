@@ -1,7 +1,6 @@
 import 'package:curimba/enums/view_state.dart';
 import 'package:curimba/models/product_model.dart';
 import 'package:curimba/utils/monetary_value_mask.dart';
-import 'package:curimba/utils/masks.dart';
 import 'package:curimba/utils/validators.dart';
 import 'package:curimba/view_models/register_product_view_model.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +18,13 @@ class RegisterProduct extends StatelessWidget {
   final _nameFocus = FocusNode(canRequestFocus: true);
   final _descriptionFocus = FocusNode(canRequestFocus: true);
   final _priceFocus = FocusNode(canRequestFocus: true);
+  final _monthFocus = FocusNode(canRequestFocus: true);
 
   // Text fields controllers
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _priceController = TextEditingController();
+  final _monthController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +86,22 @@ class RegisterProduct extends StatelessWidget {
                         },
                       ),
                       SizedBox(height: 10),
+                      TextFormField(
+                        controller: _monthController,
+                        focusNode: _monthFocus,
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.done,
+                        inputFormatters: [LengthLimitingTextInputFormatter(2)],
+                        onFieldSubmitted: (_) => _submitProduct(context, model),
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Mês da compra',
+                            hintText: 'MM'),
+                        validator: (value) {
+                          return Validators.validateMonth(value);
+                        },
+                      ),
+                      SizedBox(height: 10),
                       model.viewState == ViewState.Idle
                           ? RaisedButton(
                               onPressed: () {
@@ -110,10 +127,10 @@ class RegisterProduct extends StatelessWidget {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState.validate()) {
       var savedCardId = await registerProductViewModel.register(ProductModel(
-        name: _nameController.text,
-        description: _descriptionController.text,
-        price: double.parse(_priceController.text.substring(3)),
-      ));
+          name: _nameController.text,
+          description: _descriptionController.text,
+          price: double.parse(_priceController.text.substring(3)),
+          month: int.parse(_monthController.text)));
 
       if (savedCardId > 0) {
         final snackBar = SnackBar(

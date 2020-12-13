@@ -8,7 +8,6 @@ import 'package:curimba/helpers/shared_preferences_helper.dart';
 import 'package:curimba/models/card_model.dart';
 import 'package:curimba/screens/list_cards.dart';
 import 'package:curimba/utils/locator.dart';
-import 'package:curimba/utils/navigation_service.dart';
 import 'package:curimba/view_models/list_cards_view_model.dart';
 import 'package:curimba/widgets/card_widget.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +23,6 @@ void main() {
   });
 
   setUp(() {
-    locator.registerLazySingleton(() => NavigationService());
     locator.registerLazySingleton(() => SharedPreferencesHelper());
   });
 

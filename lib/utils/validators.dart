@@ -15,13 +15,25 @@ class Validators {
     return null;
   }
 
-  static validateExpiryDay(value) {
+  static validateDay(value) {
     if (value.isEmpty) {
       return 'Complete o campo';
     } else {
       var day = int.parse(value);
       if (day > 31 || day < 1) {
         return 'Dia inválido';
+      }
+    }
+    return null;
+  }
+
+  static validateMonth(value) {
+    if (value.isEmpty) {
+      return 'Complete o campo';
+    } else {
+      var month = int.parse(value);
+      if (month > 12 || month < 1) {
+        return 'Mês inválido';
       }
     }
     return null;

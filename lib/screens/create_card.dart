@@ -86,7 +86,7 @@ class CreateCard extends StatelessWidget {
                             labelText: 'Dia do Vencimento da Fatura',
                             hintText: 'DD'),
                         validator: (value) {
-                          return Validators.validateExpiryDay(value);
+                          return Validators.validateDay(value);
                         },
                       ),
                       SizedBox(height: 10),

@@ -22,8 +22,6 @@ class NavigationService {
 
   Route<dynamic> generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
-      case '/home':
-        return MaterialPageRoute(builder: (_) => Home());
       case '/register-card':
         return MaterialPageRoute(builder: (_) => CreateCard());
       case '/list-cards':

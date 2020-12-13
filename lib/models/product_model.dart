@@ -7,10 +7,12 @@ class ProductModel {
   String name;
   double price;
   String description;
+  int month;
 
   ProductModel({
     @required String name,
     @required double price,
+    @required int month,
     String description,
     int id,
     int usersId,
@@ -19,6 +21,7 @@ class ProductModel {
     this.usersId = usersId;
     this.name = name;
     this.price = price;
+    this.description = description;
     this.description = description;
   }
 
@@ -29,6 +32,7 @@ class ProductModel {
       'name': name,
       'price': price,
       'description': description,
+      'month': month,
     };
   }
 }

@@ -1,7 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-// coverage:ignore-file
 class DatabaseHelper {
   static final _databaseName = 'database.db';
   static final _databaseVersion = 1;
