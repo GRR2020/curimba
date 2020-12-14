@@ -22,7 +22,7 @@ class ProductModel {
     this.name = name;
     this.price = price;
     this.description = description;
-    this.description = description;
+    this.month = month;
   }
 
   Map<String, dynamic> toMap() {

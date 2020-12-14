@@ -34,14 +34,14 @@ void main() {
     });
     group('validateMonth', () {
       test('should return error if empty', () {
-        expect(Validators.validateDay(""), 'Complete o campo');
+        expect(Validators.validateMonth(""), 'Complete o campo');
       });
       test('should return error if month not valid', () {
-        expect(Validators.validateDay("0"), 'Dia inválido');
-        expect(Validators.validateDay("13"), 'Dia inválido');
+        expect(Validators.validateMonth("0"), 'Mês inválido');
+        expect(Validators.validateMonth("13"), 'Mês inválido');
       });
       test('should return null if month valid', () {
-        expect(Validators.validateDay("1"), null);
+        expect(Validators.validateMonth("1"), null);
       });
     });
     group('validateLastNumbers', () {
