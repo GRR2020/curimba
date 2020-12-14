@@ -9,19 +9,19 @@ class CardRepository {
 
   Future<List<CardModel>> getFromUser(int userId) async {
     Database db = await DatabaseHelper.instance.database;
-    var dbCards = await db.query(
+    var cardsByUserId = await db.query(
       table,
       where: 'users_id = ?',
       whereArgs: [userId],
     );
 
-    return List.generate(dbCards.length, (i) {
+    return List.generate(cardsByUserId.length, (i) {
       return CardModel(
-        id: dbCards[i]['id'],
-        lastNumbers: dbCards[i]['last_numbers'],
-        brandName: dbCards[i]['brand_name'],
-        expiryDate: dbCards[i]['expiry_date'],
-        usersId: dbCards[i]['users_id'],
+        id: cardsByUserId[i]['id'],
+        lastNumbers: cardsByUserId[i]['last_numbers'],
+        brandName: cardsByUserId[i]['brand_name'],
+        expiryDate: cardsByUserId[i]['expiry_date'],
+        usersId: cardsByUserId[i]['users_id'],
       );
     });
   }
