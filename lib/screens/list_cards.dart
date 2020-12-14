@@ -29,10 +29,10 @@ class ListCards extends StatelessWidget {
   }
 
   Widget get _emptyView => Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
             Icon(
               Icons.error,
               color: Colors.red,
@@ -42,7 +42,9 @@ class ListCards extends StatelessWidget {
               padding: const EdgeInsets.only(top: 16),
               child: Text('Não há cartões cadastrados'),
             )
-          ]));
+          ],
+        ),
+      );
 
   Widget get _loading => Center(
       child: Column(

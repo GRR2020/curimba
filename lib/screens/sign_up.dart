@@ -131,11 +131,13 @@ class SignUp extends StatelessWidget {
   _signUp(BuildContext context, SignUpViewModel viewModel) async {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState.validate()) {
-      var savedUserId = await viewModel.register(UserModel(
+      final userToBeRegistered = UserModel(
         name: _nameCtrl.text,
         username: _usernameCtrl.text,
         password: _passwordCtrl.text,
-      ));
+      );
+
+      var savedUserId = await viewModel.register(userToBeRegistered);
 
       if (savedUserId == SignInUpErrors.UserFound.code) {
         final snackBar = SnackBar(
