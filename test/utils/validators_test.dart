@@ -20,16 +20,28 @@ void main() {
         expect(Validators.validateNotEmpty("brand"), null);
       });
     });
-    group('validateExpiryDay', () {
+    group('validateDay', () {
       test('should return error if empty', () {
-        expect(Validators.validateExpiryDay(""), 'Complete o campo');
+        expect(Validators.validateDay(""), 'Complete o campo');
       });
       test('should return error if day not valid', () {
-        expect(Validators.validateExpiryDay("0"), 'Dia inválido');
-        expect(Validators.validateExpiryDay("32"), 'Dia inválido');
+        expect(Validators.validateDay("0"), 'Dia inválido');
+        expect(Validators.validateDay("32"), 'Dia inválido');
       });
       test('should return null if day valid', () {
-        expect(Validators.validateExpiryDay("1"), null);
+        expect(Validators.validateDay("1"), null);
+      });
+    });
+    group('validateMonth', () {
+      test('should return error if empty', () {
+        expect(Validators.validateMonth(""), 'Complete o campo');
+      });
+      test('should return error if month not valid', () {
+        expect(Validators.validateMonth("0"), 'Mês inválido');
+        expect(Validators.validateMonth("13"), 'Mês inválido');
+      });
+      test('should return null if month valid', () {
+        expect(Validators.validateMonth("1"), null);
       });
     });
     group('validateLastNumbers', () {

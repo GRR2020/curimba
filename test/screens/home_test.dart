@@ -41,7 +41,7 @@ void main() {
         verify(mockNavigatorObserver.didPush(any, any));
       });
 
-      testWidgets('should redirect on click "LISTAR CARTÕES"',
+      testWidgets('should redirect to list cards on click "LISTAR CARTÕES"',
           (WidgetTester tester) async {
         final mockNavigatorObserver = MockNavigatorObserver();
 
@@ -57,7 +57,7 @@ void main() {
         verify(mockNavigatorObserver.didPush(any, any));
       });
 
-      testWidgets('should redirect to on click "CARTÕES RECOMENDADOS"',
+      testWidgets('should redirect to recommended cards on click "CARTÕES RECOMENDADOS"',
           (WidgetTester tester) async {
         final mockNavigatorObserver = MockNavigatorObserver();
         await tester.pumpWidget(MaterialApp(
@@ -71,6 +71,21 @@ void main() {
         await tester.tap(find.text('CARTÕES RECOMENDADOS'));
         verify(mockNavigatorObserver.didPush(any, any));
       });
+
+      testWidgets('should redirect to register product on click "REGISTRAR PRODUTO"',
+              (WidgetTester tester) async {
+            final mockNavigatorObserver = MockNavigatorObserver();
+            await tester.pumpWidget(MaterialApp(
+              home: Home(),
+              navigatorKey: locator<NavigationService>().navigatorKey,
+              onGenerateRoute: (routeSettings) =>
+                  locator<NavigationService>().generateRoute(routeSettings),
+              navigatorObservers: [mockNavigatorObserver],
+            ));
+
+            await tester.tap(find.text('REGISTRAR PRODUTO'));
+            verify(mockNavigatorObserver.didPush(any, any));
+          });
 
       testWidgets('should redirect to on click "SAIR"',
           (WidgetTester tester) async {

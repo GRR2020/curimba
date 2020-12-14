@@ -14,12 +14,12 @@ class CreateCard extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-// Text fields focus node
+  // Text fields focus node
   final _brandNameFocus = FocusNode(canRequestFocus: true);
   final _lastNumbersFocus = FocusNode(canRequestFocus: true);
   final _expiryDateFocus = FocusNode(canRequestFocus: true);
 
-// Text fields controllers
+  // Text fields controllers
   final _brandNameController = TextEditingController();
   final _lastNumbersController = TextEditingController();
   final _expiryDateController = TextEditingController();
@@ -86,7 +86,7 @@ class CreateCard extends StatelessWidget {
                             labelText: 'Dia do Vencimento da Fatura',
                             hintText: 'DD'),
                         validator: (value) {
-                          return Validators.validateExpiryDay(value);
+                          return Validators.validateDay(value);
                         },
                       ),
                       SizedBox(height: 10),
@@ -115,7 +115,8 @@ class CreateCard extends StatelessWidget {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState.validate()) {
       var savedCardId = await createCardViewModel.register(CardModel(
-        lastNumbers: _lastNumbersController.text,
+        lastNumbers:
+            Masks.lastNumbersMask.unmaskText(_lastNumbersController.text),
         brandName: _brandNameController.text,
         expiryDate: _expiryDateController.text,
       ));
@@ -125,13 +126,13 @@ class CreateCard extends StatelessWidget {
           content: Text('Cartão salvo com sucesso'),
           duration: Duration(seconds: 1),
         );
-        Scaffold.of(context).showSnackBar(snackBar);
+        _scaffoldKey.currentState.showSnackBar(snackBar);
       } else {
         final snackBar = SnackBar(
           content: Text('Falha no cadastro do cartão'),
           duration: Duration(seconds: 1),
         );
-        Scaffold.of(context).showSnackBar(snackBar);
+        _scaffoldKey.currentState.showSnackBar(snackBar);
       }
     }
   }

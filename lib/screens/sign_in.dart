@@ -115,7 +115,7 @@ class SignIn extends StatelessWidget {
           content: Text('Usuário não encontrado'),
           duration: Duration(seconds: 1),
         );
-        Scaffold.of(context).showSnackBar(snackBar);
+        _scaffoldKey.currentState.showSnackBar(snackBar);
         return;
       }
 
@@ -124,7 +124,7 @@ class SignIn extends StatelessWidget {
           content: Text('Senha incorreta'),
           duration: Duration(seconds: 1),
         );
-        Scaffold.of(context).showSnackBar(snackBar);
+        _scaffoldKey.currentState.showSnackBar(snackBar);
         return;
       }
 
