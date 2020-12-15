@@ -26,25 +26,30 @@ class RecommendedCardsViewModel extends BaseViewModel {
   Future<List<CardModel>> _getCards() async {
     setViewState(ViewState.Busy);
 
-    List<CardModel> recommendedCards = [];
     final userId = await locator<SharedPreferencesHelper>().userId;
     final cards = await repository.getFromUser(userId);
+    final recommendedCards = _sortCardsByInvoiceDate(cards);
 
-    var now = new DateTime.now();
-    cards.sort((a, b) => a.invoiceDate.compareTo(b.invoiceDate));
-    cards.forEach((element) {
-      int invoiceMonth = int.parse(element.invoiceDate.substring(0, 2));
-      int invoiceDay = int.parse(element.invoiceDate.substring(3, 5));
-      var invoiceDate = new DateTime(now.year, invoiceMonth, invoiceDay);
-      var expiryDate = invoiceDate.add(new Duration(days: 7));
-      now = new DateTime(now.year, now.month, now.day);
-      if ((now.isAtSameMomentAs(invoiceDate) || now.isAfter(invoiceDate)) &&
-          now.isBefore(expiryDate)) {
-        recommendedCards.add(element);
-      }
-    });
-    recommendedCards.sort((b, a) => a.invoiceDate.compareTo(b.invoiceDate));
     setViewState(ViewState.Idle);
     return recommendedCards;
+  }
+
+  List<CardModel> _sortCardsByInvoiceDate(List<CardModel> cards) {
+    final dateTimeNow = new DateTime.now();
+    final sortedCards = List<CardModel>();
+
+    cards.sort((a, b) => a.invoiceDate.compareTo(b.invoiceDate));
+    cards.forEach((element) {
+      final invoiceMonth = int.parse(element.invoiceDate.substring(0, 2));
+      final invoiceDay = int.parse(element.invoiceDate.substring(3, 5));
+      final invoiceDate = DateTime(dateTimeNow.year, invoiceMonth, invoiceDay);
+      final expiryDate = invoiceDate.add(Duration(days: 7));
+      if ((dateTimeNow.isAtSameMomentAs(invoiceDate) || dateTimeNow.isAfter(invoiceDate)) &&
+          dateTimeNow.isBefore(expiryDate)) {
+        sortedCards.add(element);
+      }
+    });
+    sortedCards.sort((b, a) => a.invoiceDate.compareTo(b.invoiceDate));
+    return sortedCards;
   }
 }
