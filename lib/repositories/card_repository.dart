@@ -30,14 +30,4 @@ class CardRepository {
     Database db = await DatabaseHelper.instance.database;
     return await db.insert(table, card.toMap());
   }
-
-  Future<int> update(CardModel card) async {
-    Database db = await DatabaseHelper.instance.database;
-    return await db.update(
-      table,
-      card.toMap(),
-      where: 'id = ?',
-      whereArgs: [card.id],
-    );
-  }
 }

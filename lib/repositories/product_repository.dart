@@ -31,14 +31,4 @@ class ProductRepository {
     Database db = await DatabaseHelper.instance.database;
     return await db.insert(table, product.toMap());
   }
-
-  Future<int> update(ProductModel product) async {
-    Database db = await DatabaseHelper.instance.database;
-    return await db.update(
-      table,
-      product.toMap(),
-      where: 'id = ?',
-      whereArgs: [product.id],
-    );
-  }
 }

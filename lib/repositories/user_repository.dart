@@ -12,16 +12,6 @@ class UserRepository {
     return await db.insert(table, model.toMap());
   }
 
-  Future<int> update(UserModel model) async {
-    Database db = await DatabaseHelper.instance.database;
-    return await db.update(
-      table,
-      model.toMap(),
-      where: 'id = ?',
-      whereArgs: [model.id],
-    );
-  }
-
   Future<List<UserModel>> findByUsername(String username) async {
     Database db = await DatabaseHelper.instance.database;
 
