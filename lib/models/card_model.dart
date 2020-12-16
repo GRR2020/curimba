@@ -17,13 +17,13 @@ class CardModel {
 
   String _getInvoiceDate(String expiryDate, Clock clock) {
     var now = clock.now();
+    var formatter = DateFormat('MM/dd');
     // If already passed the expiration day, we count from the next month
     if (int.parse(expiryDate) < now.day) {
       now = now.add(new Duration(days: TimeDefinitions.Month.days));
     }
-    var formatter = DateFormat('MM/dd');
-    String month = now.month.toString();
-    String expiryDateWithMonth = month + '/' + expiryDate;
+    final month = now.month.toString();
+    final expiryDateWithMonth = month + '/' + expiryDate;
     var tempDate = formatter.parse(expiryDateWithMonth);
     tempDate = tempDate.subtract(new Duration(days: TimeDefinitions.Week.days));
     return formatter.format(tempDate);
