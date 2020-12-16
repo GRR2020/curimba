@@ -137,7 +137,7 @@ class SignUp extends StatelessWidget {
         password: _passwordCtrl.text,
       );
 
-      var savedUserId = await viewModel.register(userToBeRegistered);
+      var savedUserId = await viewModel.registerUser(userToBeRegistered);
 
       if (savedUserId == SignInUpErrors.UserFound.code) {
         final snackBar = SnackBar(

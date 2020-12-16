@@ -19,11 +19,11 @@ class ListCardsViewModel extends BaseViewModel {
 
   @override
   Future<void> initialize() async {
-    _cards = await _getCards();
+    _cards = await _getUserCards();
     notifyListeners();
   }
 
-  Future<List<CardModel>> _getCards() async {
+  Future<List<CardModel>> _getUserCards() async {
     setViewState(ViewState.Busy);
     final userId = await locator<SharedPreferencesHelper>().userId;
     final cards = await repository.getFromUser(userId);

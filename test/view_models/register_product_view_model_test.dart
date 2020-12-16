@@ -21,7 +21,7 @@ void main() {
 
       final viewModel = RegisterProductViewModel(repository: mockRepository);
 
-      final savedCardId = await viewModel.register(ProductModel(
+      final savedCardId = await viewModel.registerProduct(ProductModel(
         name: 'name',
         description: 'description',
         price: 10,
@@ -36,7 +36,7 @@ void main() {
 
       final viewModel = RegisterProductViewModel(repository: mockRepository);
 
-      final savedCardId = await viewModel.register(ProductModel(
+      final savedCardId = await viewModel.registerProduct(ProductModel(
         name: 'name',
         description: 'description',
         price: 10,

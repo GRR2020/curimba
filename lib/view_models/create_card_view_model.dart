@@ -13,7 +13,7 @@ class CreateCardViewModel extends BaseViewModel {
 
   CreateCardViewModel({this.repository = const CardRepository()});
 
-  Future<int> register(CardModel model) async {
+  Future<int> registerCard(CardModel model) async {
     setViewState(ViewState.Busy);
 
     final userId = await locator<SharedPreferencesHelper>().userId;

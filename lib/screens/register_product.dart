@@ -136,7 +136,7 @@ class RegisterProduct extends StatelessWidget {
       );
 
       var savedCardId =
-          await registerProductViewModel.register(productToBeRegistered);
+          await registerProductViewModel.registerProduct(productToBeRegistered);
 
       if (savedCardId > 0) {
         final snackBar = SnackBar(

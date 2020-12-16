@@ -13,7 +13,7 @@ class RegisterProductViewModel extends BaseViewModel {
 
   RegisterProductViewModel({this.repository = const ProductRepository()});
 
-  Future<int> register(ProductModel model) async {
+  Future<int> registerProduct(ProductModel model) async {
     setViewState(ViewState.Busy);
 
     final userId = await locator<SharedPreferencesHelper>().userId;

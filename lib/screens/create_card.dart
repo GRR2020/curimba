@@ -122,7 +122,7 @@ class CreateCard extends StatelessWidget {
         expiryDate: _expiryDateController.text,
       );
 
-      var savedCardId = await createCardViewModel.register(cardToBeRegistered);
+      var savedCardId = await createCardViewModel.registerCard(cardToBeRegistered);
 
       if (savedCardId > 0) {
         final snackBar = SnackBar(
