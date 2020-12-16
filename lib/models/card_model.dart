@@ -1,3 +1,4 @@
+import 'package:curimba/enums/time_definitions.dart';
 import 'package:clock/clock.dart';
 import 'package:curimba/utils/masks.dart';
 import 'package:flutter/foundation.dart';
@@ -18,13 +19,13 @@ class CardModel {
     var now = clock.now();
     // If already passed the expiration day, we count from the next month
     if (int.parse(expiryDate) < now.day) {
-      now = now.add(new Duration(days: 30));
+      now = now.add(new Duration(days: TimeDefinitions.Month.days));
     }
     var formatter = DateFormat('MM/dd');
     String month = now.month.toString();
     String expiryDateWithMonth = month + '/' + expiryDate;
     var tempDate = formatter.parse(expiryDateWithMonth);
-    tempDate = tempDate.subtract(new Duration(days: 7));
+    tempDate = tempDate.subtract(new Duration(days: TimeDefinitions.Week.days));
     return formatter.format(tempDate);
   }
 

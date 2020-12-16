@@ -1,3 +1,4 @@
+import 'package:curimba/enums/time_definitions.dart';
 import 'package:curimba/enums/view_state.dart';
 import 'package:curimba/helpers/shared_preferences_helper.dart';
 import 'package:curimba/models/card_model.dart';
@@ -44,7 +45,7 @@ class RecommendedCardsViewModel extends BaseViewModel {
       final invoiceMonth = parsedInvoiceDate['month'];
       final invoiceDay = parsedInvoiceDate['day'];
       final invoiceDate = DateTime(dateTimeNow.year, invoiceMonth, invoiceDay);
-      final expiryDate = invoiceDate.add(Duration(days: 7));
+      final expiryDate = invoiceDate.add(Duration(days: TimeDefinitions.Week.days));
       if ((dateTimeNow.isAtSameMomentAs(invoiceDate) || dateTimeNow.isAfter(invoiceDate)) &&
           dateTimeNow.isBefore(expiryDate)) {
         sortedCards.add(element);
