@@ -40,8 +40,9 @@ class RecommendedCardsViewModel extends BaseViewModel {
 
     cards.sort((a, b) => a.invoiceDate.compareTo(b.invoiceDate));
     cards.forEach((element) {
-      final invoiceMonth = int.parse(element.invoiceDate.substring(0, 2));
-      final invoiceDay = int.parse(element.invoiceDate.substring(3, 5));
+      final parsedInvoiceDate = _parseInvoiceDate(element.invoiceDate);
+      final invoiceMonth = parsedInvoiceDate['month'];
+      final invoiceDay = parsedInvoiceDate['day'];
       final invoiceDate = DateTime(dateTimeNow.year, invoiceMonth, invoiceDay);
       final expiryDate = invoiceDate.add(Duration(days: 7));
       if ((dateTimeNow.isAtSameMomentAs(invoiceDate) || dateTimeNow.isAfter(invoiceDate)) &&
@@ -51,5 +52,12 @@ class RecommendedCardsViewModel extends BaseViewModel {
     });
     sortedCards.sort((b, a) => a.invoiceDate.compareTo(b.invoiceDate));
     return sortedCards;
+  }
+
+  Map<String, int> _parseInvoiceDate(invoiceDate) {
+    return {
+      'month': int.parse(invoiceDate.substring(0, 2)),
+      'day': int.parse(invoiceDate.substring(3, 5)),
+    };
   }
 }
