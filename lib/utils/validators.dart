@@ -22,7 +22,7 @@ class Validators {
     } else {
       var day = int.parse(value);
       if (day > 31 || day < 1) {
-        throw new ValueException('Dia inválido')O;
+        throw new ValueException('Dia inválido');
       }
     }
     return null;

@@ -46,6 +46,30 @@ class CardModel {
     this.invoiceDate = _getInvoiceDate(expiryDate, clock ?? Clock());
   }
 
+  int getId(){
+    return this.id;
+  }
+
+  int getUsersId(){
+    return this.usersId;
+  } 
+
+  String getLastNumbers(){
+    return this.lastNumbers;
+  }
+
+  String getBrandName(){
+    return this.brandName;
+  }
+
+  String getExpiryDate(){
+    return this.expiryDate;
+  }
+
+  String getInvoiceDate(){
+    return this.invoiceDate;
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
