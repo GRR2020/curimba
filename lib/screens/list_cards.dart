@@ -1,4 +1,6 @@
 import 'package:curimba/enums/view_state.dart';
+import 'package:curimba/extensions/list_extensions.dart';
+import 'package:curimba/extensions/view_state_extensions.dart';
 import 'package:curimba/models/card_model.dart';
 import 'package:curimba/view_models/list_cards_view_model.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +21,7 @@ class ListCards extends StatelessWidget {
         appBar: AppBar(
           title: Text('Listar Cartões'),
         ),
-        body: model.viewState == ViewState.Idle
-            ? model.cards == null || model.cards.isEmpty
-                ? _emptyView
-                : _buildListCards(model.cards)
-            : _loading,
+        body: _bodyWidget(model.viewState, model.cards)
       ),
     );
   }
@@ -51,6 +49,18 @@ class ListCards extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[CircularProgressIndicator()]));
+
+  Widget _bodyWidget(ViewState viewState, List<CardModel> cards) {
+    if (viewState.isIdle) {
+      if (cards.isNullOrEmpty) {
+        return _emptyView;
+      } else {
+        return _buildListCards(cards);
+      }
+    } else {
+      return _loading;
+    }
+  }
 
   Widget _buildListCards(List<CardModel> cards) {
     return ListView.separated(

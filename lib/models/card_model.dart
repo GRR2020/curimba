@@ -1,5 +1,6 @@
-import 'package:curimba/enums/time_definitions.dart';
 import 'package:clock/clock.dart';
+import 'package:curimba/enums/time_definitions.dart';
+import 'package:curimba/extensions/time_values.dart';
 import 'package:curimba/utils/masks.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
