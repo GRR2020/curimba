@@ -128,7 +128,6 @@ class CreateCard extends StatelessWidget {
           duration: Duration(seconds: 1),
         );
         _scaffoldKey.currentState.showSnackBar(snackBar);
-        locator<NavigationService>().navigateToAndReplace('/home');
       } else {
         final snackBar = SnackBar(
           content: Text('Falha no cadastro do cartão'),
