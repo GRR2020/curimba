@@ -16,19 +16,27 @@ class SignInViewModel extends BaseViewModel {
     setViewState(ViewState.Busy);
 
     final dbUser = await repository.findByUsername(username);
-    if (dbUser.isEmpty) {
-      setViewState(ViewState.Idle);
-      return SignInUpErrors.UserNotFound.code;
+    int loginError = _checkLoginErrors(dbUser, password);
+    if (loginError != null) {
+      return loginError;
     }
 
     final user = dbUser.first;
-    if (user.password != password) {
-      setViewState(ViewState.Idle);
-      return SignInUpErrors.PasswordMismatch.code;
-    }
 
     await locator<SharedPreferencesHelper>().setUserId(user.id);
     setViewState(ViewState.Idle);
     return user.id;
+  }
+
+  int _checkLoginErrors(dbUser, password) {
+    if (dbUser.isEmpty) {
+      return SignInUpErrors.UserNotFound.code;
+    }
+
+    if (dbUser.first.password != password) {
+      return SignInUpErrors.PasswordMismatch.code;
+    }
+
+    return null;
   }
 }
