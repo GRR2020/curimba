@@ -18,28 +18,28 @@ class _RootState extends State<Root> {
         child: FutureBuilder<int>(
             future: _userId,
             builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-              if (snapshot.hasData) {
-                return snapshot.data > 0
-                    ? Home()
-                    : SignUp();
-              } else {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        child: CircularProgressIndicator(),
-                        width: 60,
-                        height: 60,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 16),
-                      )
-                    ],
-                  ),
-                );
-              }
+              if (!snapshot.hasData) return _showLoading();
+              if (snapshot.data > 0) return Home();
+              return SignUp();
             }));
+  }
+
+  Widget _showLoading() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(
+            child: CircularProgressIndicator(),
+            width: 60,
+            height: 60,
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 16),
+          )
+        ],
+      ),
+    );
   }
 }

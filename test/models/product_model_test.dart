@@ -19,7 +19,7 @@ void main() {
       expect(userMap['users_id'], 1);
       expect(userMap['name'], 'Nome');
       expect(userMap['description'], 'Descrição');
-      expect(userMap['month'], 6);
+      expect(userMap['purchase_month'], 6);
       expect(userMap['price'], 10);
     });
   });

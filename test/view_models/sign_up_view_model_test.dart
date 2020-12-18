@@ -29,7 +29,7 @@ void main() {
                 )
               ])));
 
-      final savedUserId = await viewModel.register(UserModel(
+      final savedUserId = await viewModel.registerUser(UserModel(
         name: 'Nome',
         username: 'username',
         password: 'senha',
@@ -45,7 +45,7 @@ void main() {
           .thenAnswer(((_) => new Future(() => [])));
       when(mockRepository.insert(any)).thenAnswer(((_) => new Future(() => 1)));
 
-      final savedUserId = await viewModel.register(UserModel(
+      final savedUserId = await viewModel.registerUser(UserModel(
         name: 'Nome',
         username: 'username',
         password: 'senha',

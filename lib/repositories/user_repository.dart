@@ -12,32 +12,22 @@ class UserRepository {
     return await db.insert(table, model.toMap());
   }
 
-  Future<int> update(UserModel model) async {
-    Database db = await DatabaseHelper.instance.database;
-    return await db.update(
-      table,
-      model.toMap(),
-      where: 'id = ?',
-      whereArgs: [model.id],
-    );
-  }
-
   Future<List<UserModel>> findByUsername(String username) async {
     Database db = await DatabaseHelper.instance.database;
 
-    var dbUsers = await db.query(
+    var usersByUsername = await db.query(
       table,
       where: 'username = ?',
       whereArgs: [username],
       limit: 1,
     );
 
-    return List.generate(dbUsers.length, (i) {
+    return List.generate(usersByUsername.length, (i) {
       return UserModel(
-        id: dbUsers[i]['id'],
-        name: dbUsers[i]['name'],
-        username: dbUsers[i]['username'],
-        password: dbUsers[i]['password'],
+        id: usersByUsername[i]['id'],
+        name: usersByUsername[i]['name'],
+        username: usersByUsername[i]['username'],
+        password: usersByUsername[i]['password'],
       );
     });
   }

@@ -126,11 +126,17 @@ class RegisterProduct extends StatelessWidget {
       RegisterProductViewModel registerProductViewModel) async {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState.validate()) {
-      var savedCardId = await registerProductViewModel.register(ProductModel(
-          name: _nameController.text,
-          description: _descriptionController.text,
-          price: double.parse(_priceController.text.substring(3)),
-          month: int.parse(_monthController.text)));
+      final price = double.parse(_priceController.text.substring(3));
+      final month = int.parse(_monthController.text);
+      final productToBeRegistered = ProductModel(
+        name: _nameController.text,
+        description: _descriptionController.text,
+        price: price,
+        month: month,
+      );
+
+      var savedCardId =
+          await registerProductViewModel.registerProduct(productToBeRegistered);
 
       if (savedCardId > 0) {
         final snackBar = SnackBar(

@@ -114,12 +114,15 @@ class CreateCard extends StatelessWidget {
       BuildContext context, CreateCardViewModel createCardViewModel) async {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState.validate()) {
-      var savedCardId = await createCardViewModel.register(CardModel(
-        lastNumbers:
-            Masks.lastNumbersMask.unmaskText(_lastNumbersController.text),
+      final lastNumbers =
+          Masks.lastNumbersMask.unmaskText(_lastNumbersController.text);
+      final cardToBeRegistered = CardModel(
+        lastNumbers: lastNumbers,
         brandName: _brandNameController.text,
         expiryDate: _expiryDateController.text,
-      ));
+      );
+
+      var savedCardId = await createCardViewModel.registerCard(cardToBeRegistered);
 
       if (savedCardId > 0) {
         final snackBar = SnackBar(
