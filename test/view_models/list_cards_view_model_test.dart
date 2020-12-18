@@ -1,4 +1,3 @@
-import 'package:curimba/enums/view_state.dart';
 import 'package:curimba/models/card_model.dart';
 import 'package:curimba/utils/locator.dart';
 import 'package:curimba/view_models/list_cards_view_model.dart';

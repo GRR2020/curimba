@@ -1,6 +1,6 @@
 import 'package:clock/clock.dart';
 import 'package:curimba/utils/masks.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
 class CardModel {
@@ -10,12 +10,11 @@ class CardModel {
   String brandName;
   String expiryDate;
   String invoiceDate;
-  Clock clock;
 
   String get formattedLastNumbers =>
       Masks.lastNumbersMask.maskText(lastNumbers);
 
-  String _getInvoiceDate(String expiryDate) {
+  String _getInvoiceDate(String expiryDate, Clock clock) {
     var now = clock.now();
     // If already passed the expiration day, we count from the next month
     if (int.parse(expiryDate) < now.day) {
@@ -42,8 +41,7 @@ class CardModel {
     this.lastNumbers = lastNumbers;
     this.brandName = brandName;
     this.expiryDate = expiryDate;
-    this.clock = clock ?? Clock();
-    this.invoiceDate = _getInvoiceDate(expiryDate);
+    this.invoiceDate = _getInvoiceDate(expiryDate, clock ?? Clock());
   }
 
   Map<String, dynamic> toMap() {
