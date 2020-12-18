@@ -17,8 +17,9 @@ class Validators {
   }
 
   static validateDay(value) {
+    assert(value != null);
     if (value.isEmpty) {
-      thrpe
+      return null;
     } else {
       var day = int.parse(value);
       if (day > 31 || day < 1) {
@@ -29,6 +30,7 @@ class Validators {
   }
 
   static validateMonth(value) {
+    assert(value != null);
     var notEmpty = validateNotEmpty(value);
     if (notEmpty != null) {
       return notEmpty;
