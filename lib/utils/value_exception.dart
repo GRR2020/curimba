@@ -1,6 +1,6 @@
 class ValueException implements Exception {
     
-    private String _message;
+    String _message;
     
     ValueException([String message = 'Um erro ocorreu ao criar esse campo']){
         return message;

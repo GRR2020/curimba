@@ -43,9 +43,7 @@ class RecommendedCardsViewModel extends BaseViewModel {
     cards.sort((a, b) => a.invoiceDate.compareTo(b.invoiceDate));
     cards.forEach((element) {
       final parsedInvoiceDate = _parseInvoiceDate(element.invoiceDate);
-      final invoiceMonth = parsedInvoiceDate['month'];
-      final invoiceDay = parsedInvoiceDate['day'];
-      final invoiceDate = DateTime(dateTimeNow.year, invoiceMonth, invoiceDay);
+      final invoiceDate = DateTime(dateTimeNow.year, parsedInvoiceDate['month'], parsedInvoiceDate['day']);
       final expiryDate =
           invoiceDate.add(Duration(days: TimeDefinitions.Week.days));
       if ((dateTimeNow.isAtSameMomentAs(invoiceDate) ||
