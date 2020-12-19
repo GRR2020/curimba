@@ -51,7 +51,6 @@ class RecommendedCardsViewModel extends BaseViewModel {
   }
 
   List<CardModel> _sortCardsByInvoiceDate(List<CardModel> cards) {
-    final dateTimeNow = new DateTime.now();
     final sortedCards = List<CardModel>();
 
     var now = clock.now();
@@ -60,12 +59,12 @@ class RecommendedCardsViewModel extends BaseViewModel {
       final parsedInvoiceDate = _parseInvoiceDate(element.invoiceDate);
       final invoiceMonth = parsedInvoiceDate['month'];
       final invoiceDay = parsedInvoiceDate['day'];
-      final invoiceDate = DateTime(dateTimeNow.year, invoiceMonth, invoiceDay);
+      final invoiceDate = DateTime(now.year, invoiceMonth, invoiceDay);
       final expiryDate =
           invoiceDate.add(Duration(days: TimeDefinitions.Week.days));
-      if ((dateTimeNow.isAtSameMomentAs(invoiceDate) ||
-              dateTimeNow.isAfter(invoiceDate)) &&
-          dateTimeNow.isBefore(expiryDate)) {
+      if ((now.isAtSameMomentAs(invoiceDate) ||
+              now.isAfter(invoiceDate)) &&
+          now.isBefore(expiryDate)) {
         sortedCards.add(element);
       }
     });
