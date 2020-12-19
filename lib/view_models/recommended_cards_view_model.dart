@@ -26,15 +26,15 @@ class RecommendedCardsViewModel extends BaseViewModel {
   }
 
   Future<CardModel> getFirstCard() async {
-    if (cards == null) {
+    if (_cards == null) {
       await initialize();
     }
 
-    if (cards == []) {
+    if (_cards.isEmpty) {
       return null;
     }
 
-    return cards[0];
+    return _cards[0];
   }
 
   Future<List<CardModel>> _getCards() async {

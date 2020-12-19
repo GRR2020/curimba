@@ -11,6 +11,7 @@ class HomeViewModel extends BaseViewModel {
   @protected
   final UserRepository repository;
   bool sendNotifications;
+  bool pushPluginInitialized = false;
   int _receiveNotifications;
 
   HomeViewModel({this.repository = const UserRepository(), this.sendNotifications = true});
@@ -27,7 +28,7 @@ class HomeViewModel extends BaseViewModel {
 
     final userId = await locator<SharedPreferencesHelper>().userId;
     final user = await repository.findById(userId);
-    user[0].receiveNotifications = receiveNotifications;
+    user.first.receiveNotifications = receiveNotifications;
 
     final savedUserId = await repository.update(user[0]);
     if (savedUserId > 0) {
@@ -39,11 +40,14 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> handleNotifications() async {
-    int updatedReceiveNotifications = _receiveNotifications == 0 ? 1 : 0;
+    int updatedReceiveNotifications = receiveNotifications == 0 ? 1 : 0;
     await updateReceiveNotifications(updatedReceiveNotifications);
     if (sendNotifications) {
-      if (updatedReceiveNotifications == 1) {
+      if (!pushPluginInitialized) {
         locator<NotificationsHelper>().init();
+        pushPluginInitialized = true;
+      }
+      if (updatedReceiveNotifications == 1) {
         locator<NotificationsHelper>().initScheduleRecommendCards();
       } else {
         locator<NotificationsHelper>().cancelAllNotifications();

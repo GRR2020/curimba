@@ -58,14 +58,14 @@ class Home extends StatelessWidget {
                   textColor: Colors.white,
                   child: Text('Sair'.toUpperCase())),
               SizedBox(height: 50),
-              FloatingActionButton(
-                  onPressed: () {
-                    locator<HomeViewModel>().handleNotifications();
-                  },
-                  tooltip: 'notifications',
-                  child: model.receiveNotifications == 0 ? Icon(Icons.notifications_none) : Icon(Icons.notifications_active),
-              )
             ])
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            model.handleNotifications();
+          },
+          tooltip: 'notifications',
+          child: model.receiveNotifications == 0 ? Icon(Icons.notifications_none) : Icon(Icons.notifications_active),
         ),
       )
     );
