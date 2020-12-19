@@ -7,12 +7,13 @@ class ProductRepository {
 
   const ProductRepository();
 
-  Future<List<ProductModel>> getFromUser(int userId) async {
+  Future<List<ProductModel>> getFromUserByYear(
+      int userId, int purchaseYear) async {
     Database db = await DatabaseHelper.instance.database;
     var productsByUserId = await db.query(
       table,
-      where: 'users_id = ?',
-      whereArgs: [userId],
+      where: 'users_id = ? AND purchase_year = ?',
+      whereArgs: [userId, purchaseYear],
     );
 
     return List.generate(productsByUserId.length, (i) {
@@ -22,7 +23,8 @@ class ProductRepository {
         name: productsByUserId[i]['name'],
         price: productsByUserId[i]['price'],
         description: productsByUserId[i]['description'],
-        month: productsByUserId[i]['month'],
+        purchaseMonth: productsByUserId[i]['purchase_month'],
+        purchaseYear: productsByUserId[i]['purchase_year'],
       );
     });
   }

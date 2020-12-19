@@ -1,3 +1,4 @@
+import 'package:curimba/helpers/shared_preferences_helper.dart';
 import 'package:curimba/screens/home.dart';
 import 'package:curimba/utils/locator.dart';
 import 'package:curimba/utils/navigation_service.dart';
@@ -9,7 +10,8 @@ import '../mocks/mock_navigation_observer.dart';
 
 void main() {
   setUpAll(() {
-    setUpLocator();
+    locator.registerLazySingleton(() => NavigationService());
+    locator.registerLazySingleton(() => SharedPreferencesHelper());
   });
 
   group('Home Widget', () {
@@ -22,6 +24,7 @@ void main() {
       expect(find.text('CADASTRAR CARTÃO'), findsOneWidget);
       expect(find.text('LISTAR CARTÕES'), findsOneWidget);
       expect(find.text('CARTÕES RECOMENDADOS'), findsOneWidget);
+      expect(find.text('GASTOS MENSAIS'), findsOneWidget);
       expect(find.text('SAIR'), findsOneWidget);
     });
 
@@ -57,7 +60,8 @@ void main() {
         verify(mockNavigatorObserver.didPush(any, any));
       });
 
-      testWidgets('should redirect to recommended cards on click "CARTÕES RECOMENDADOS"',
+      testWidgets(
+          'should redirect to recommended cards on click "CARTÕES RECOMENDADOS"',
           (WidgetTester tester) async {
         final mockNavigatorObserver = MockNavigatorObserver();
         await tester.pumpWidget(MaterialApp(
@@ -72,20 +76,37 @@ void main() {
         verify(mockNavigatorObserver.didPush(any, any));
       });
 
-      testWidgets('should redirect to register product on click "REGISTRAR PRODUTO"',
-              (WidgetTester tester) async {
-            final mockNavigatorObserver = MockNavigatorObserver();
-            await tester.pumpWidget(MaterialApp(
-              home: Home(),
-              navigatorKey: locator<NavigationService>().navigatorKey,
-              onGenerateRoute: (routeSettings) =>
-                  locator<NavigationService>().generateRoute(routeSettings),
-              navigatorObservers: [mockNavigatorObserver],
-            ));
+      testWidgets(
+          'should redirect to register product on click "REGISTRAR PRODUTO"',
+          (WidgetTester tester) async {
+        final mockNavigatorObserver = MockNavigatorObserver();
+        await tester.pumpWidget(MaterialApp(
+          home: Home(),
+          navigatorKey: locator<NavigationService>().navigatorKey,
+          onGenerateRoute: (routeSettings) =>
+              locator<NavigationService>().generateRoute(routeSettings),
+          navigatorObservers: [mockNavigatorObserver],
+        ));
 
-            await tester.tap(find.text('REGISTRAR PRODUTO'));
-            verify(mockNavigatorObserver.didPush(any, any));
-          });
+        await tester.tap(find.text('REGISTRAR PRODUTO'));
+        verify(mockNavigatorObserver.didPush(any, any));
+      });
+
+      testWidgets(
+          'should redirect to register product on click "GASTOS MENSAIS"',
+          (WidgetTester tester) async {
+        final mockNavigatorObserver = MockNavigatorObserver();
+        await tester.pumpWidget(MaterialApp(
+          home: Home(),
+          navigatorKey: locator<NavigationService>().navigatorKey,
+          onGenerateRoute: (routeSettings) =>
+              locator<NavigationService>().generateRoute(routeSettings),
+          navigatorObservers: [mockNavigatorObserver],
+        ));
+
+        await tester.tap(find.text('GASTOS MENSAIS'));
+        verify(mockNavigatorObserver.didPush(any, any));
+      });
 
       testWidgets('should redirect to on click "SAIR"',
           (WidgetTester tester) async {

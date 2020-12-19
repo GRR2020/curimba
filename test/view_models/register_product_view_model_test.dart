@@ -25,6 +25,8 @@ void main() {
         name: 'name',
         description: 'description',
         price: 10,
+        purchaseMonth: 12,
+        purchaseYear: 2000,
       ));
       expect(savedCardId, 1);
     });
@@ -40,6 +42,8 @@ void main() {
         name: 'name',
         description: 'description',
         price: 10,
+        purchaseMonth: 12,
+        purchaseYear: 2000,
       ));
       expect(savedCardId, -1);
     });

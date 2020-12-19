@@ -8,11 +8,13 @@ class ProductModel {
   double price;
   String description;
   int purchaseMonth;
+  int purchaseYear;
 
   ProductModel({
     @required String name,
     @required double price,
-    @required int month,
+    @required int purchaseMonth,
+    @required int purchaseYear,
     String description,
     int id,
     int usersId,
@@ -22,7 +24,8 @@ class ProductModel {
     this.name = name;
     this.price = price;
     this.description = description;
-    this.purchaseMonth = month;
+    this.purchaseMonth = purchaseMonth;
+    this.purchaseYear = purchaseYear;
   }
 
   Map<String, dynamic> toMap() {
@@ -33,6 +36,7 @@ class ProductModel {
       'price': price,
       'description': description,
       'purchase_month': purchaseMonth,
+      'purchase_year': purchaseYear,
     };
   }
 }

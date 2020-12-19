@@ -39,6 +39,31 @@ class Validators {
     return null;
   }
 
+  static validateYear(value) {
+    if (value.isEmpty) {
+      return 'Complete o campo';
+    } else {
+      if (value.length != 4) {
+        return 'Ano inválido';
+      }
+    }
+    return null;
+  }
+
+  static validateMonthYear(value) {
+    if (value.isEmpty) {
+      return 'Complete o campo';
+    } else {
+      final monthDate = value.split('/');
+
+      final monthValidated = validateMonth(monthDate[0]);
+      final yearValidated = validateYear(monthDate[1]);
+      if (monthValidated != null) return monthValidated;
+      if (yearValidated != null) return yearValidated;
+    }
+    return null;
+  }
+
   static validateLastNumbers(value) {
     var unmaskedValue = Masks.lastNumbersMask.unmaskText(value);
     return validateBySize(unmaskedValue, 4);

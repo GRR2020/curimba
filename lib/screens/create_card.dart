@@ -1,4 +1,4 @@
-import 'package:curimba/enums/view_state.dart';
+import 'package:curimba/extensions/view_state_extensions.dart';
 import 'package:curimba/models/card_model.dart';
 import 'package:curimba/utils/masks.dart';
 import 'package:curimba/utils/validators.dart';
@@ -90,7 +90,7 @@ class CreateCard extends StatelessWidget {
                         },
                       ),
                       SizedBox(height: 10),
-                      model.viewState == ViewState.Idle
+                      model.viewState.isIdle
                           ? RaisedButton(
                               onPressed: () {
                                 _submitCard(context, model);

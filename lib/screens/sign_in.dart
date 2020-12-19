@@ -1,5 +1,5 @@
 import 'package:curimba/enums/sign_in_up_errors.dart';
-import 'package:curimba/enums/view_state.dart';
+import 'package:curimba/extensions/view_state_extensions.dart';
 import 'package:curimba/utils/validators.dart';
 import 'package:curimba/view_models/sign_in_view_model.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +73,7 @@ class SignIn extends StatelessWidget {
                           textColor: Colors.black,
                           child: Text('Não possui cadastro?')),
                       SizedBox(height: 10),
-                      model.viewState == ViewState.Idle
+                      model.viewState.isIdle
                           ? RaisedButton(
                               onPressed: () => _signIn(context, model),
                               color: Colors.black,
