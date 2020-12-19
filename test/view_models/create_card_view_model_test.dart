@@ -20,7 +20,7 @@ void main() {
 
       final viewModel = CreateCardViewModel(repository: mockRepository);
 
-      final savedCardId = await viewModel.register(CardModel(
+      final savedCardId = await viewModel.registerCard(CardModel(
         brandName: 'brand',
         expiryDate: '10',
         lastNumbers: '1234',
@@ -34,7 +34,7 @@ void main() {
 
       final viewModel = CreateCardViewModel(repository: mockRepository);
 
-      final savedCardId = await viewModel.register(CardModel(
+      final savedCardId = await viewModel.registerCard(CardModel(
         brandName: 'brand',
         expiryDate: '10',
         lastNumbers: '1234',

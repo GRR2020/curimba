@@ -1,4 +1,4 @@
-import 'package:curimba/enums/view_state.dart';
+import 'package:curimba/extensions/view_state_extensions.dart';
 import 'package:curimba/models/card_model.dart';
 import 'package:curimba/view_models/recommended_cards_view_model.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class RecommendedCards extends StatelessWidget {
         appBar: AppBar(
           title: Text('Cartões recomendados'),
         ),
-        body: model.viewState == ViewState.Idle
+        body: model.viewState.isIdle
             ? _buildListCards(model.cards)
             : Center(child: CircularProgressIndicator()),
       ),

@@ -1,5 +1,5 @@
 import 'package:curimba/enums/sign_in_up_errors.dart';
-import 'package:curimba/enums/view_state.dart';
+import 'package:curimba/extensions/view_state_extensions.dart';
 import 'package:curimba/utils/locator.dart';
 import 'package:curimba/models/user_model.dart';
 import 'package:curimba/utils/validators.dart';
@@ -99,7 +99,7 @@ class SignUp extends StatelessWidget {
                           textColor: Colors.black,
                           child: Text('Já possui cadastro?')),
                       SizedBox(height: 10),
-                      model.viewState == ViewState.Idle
+                      model.viewState.isIdle
                           ? RaisedButton(
                               onPressed: () => _signUp(context, model),
                               color: Colors.black,
@@ -131,11 +131,13 @@ class SignUp extends StatelessWidget {
   _signUp(BuildContext context, SignUpViewModel viewModel) async {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState.validate()) {
-      var savedUserId = await viewModel.register(UserModel(
+      final userToBeRegistered = UserModel(
         name: _nameCtrl.text,
         username: _usernameCtrl.text,
         password: _passwordCtrl.text,
-      ));
+      );
+
+      var savedUserId = await viewModel.registerUser(userToBeRegistered);
 
       if (savedUserId == SignInUpErrors.UserFound.code) {
         final snackBar = SnackBar(

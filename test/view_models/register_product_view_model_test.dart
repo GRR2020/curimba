@@ -21,10 +21,12 @@ void main() {
 
       final viewModel = RegisterProductViewModel(repository: mockRepository);
 
-      final savedCardId = await viewModel.register(ProductModel(
+      final savedCardId = await viewModel.registerProduct(ProductModel(
         name: 'name',
         description: 'description',
         price: 10,
+        purchaseMonth: 12,
+        purchaseYear: 2000,
       ));
       expect(savedCardId, 1);
     });
@@ -36,10 +38,12 @@ void main() {
 
       final viewModel = RegisterProductViewModel(repository: mockRepository);
 
-      final savedCardId = await viewModel.register(ProductModel(
+      final savedCardId = await viewModel.registerProduct(ProductModel(
         name: 'name',
         description: 'description',
         price: 10,
+        purchaseMonth: 12,
+        purchaseYear: 2000,
       ));
       expect(savedCardId, -1);
     });

@@ -9,7 +9,8 @@ void main() {
         usersId: 1,
         name: 'Nome',
         description: 'Descrição',
-        month: 6,
+        purchaseMonth: 6,
+        purchaseYear: 2020,
         price: 10,
       );
 
@@ -19,7 +20,8 @@ void main() {
       expect(userMap['users_id'], 1);
       expect(userMap['name'], 'Nome');
       expect(userMap['description'], 'Descrição');
-      expect(userMap['month'], 6);
+      expect(userMap['purchase_month'], 6);
+      expect(userMap['purchase_year'], 2020);
       expect(userMap['price'], 10);
     });
   });
