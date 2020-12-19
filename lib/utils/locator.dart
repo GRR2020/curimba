@@ -5,6 +5,7 @@ import 'package:curimba/utils/navigation_service.dart';
 import 'package:curimba/view_models/create_card_view_model.dart';
 import 'package:curimba/view_models/home_view_model.dart';
 import 'package:curimba/view_models/list_cards_view_model.dart';
+import 'package:curimba/view_models/monthly_expenses_view_model.dart';
 import 'package:curimba/view_models/recommended_cards_view_model.dart';
 import 'package:curimba/view_models/register_product_view_model.dart';
 import 'package:curimba/view_models/sign_in_view_model.dart';
@@ -25,5 +26,5 @@ void setUpLocator() {
   locator.registerFactory(() => SignInViewModel());
   locator.registerFactory(() => SignUpViewModel());
   locator.registerFactory(() => HomeViewModel());
+  locator.registerFactory(() => MonthlyExpensesViewModel());
 }
-

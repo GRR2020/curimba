@@ -1,5 +1,7 @@
 import 'package:clock/clock.dart';
+import 'package:curimba/enums/time_definitions.dart';
 import 'package:curimba/enums/view_state.dart';
+import 'package:curimba/extensions/time_values.dart';
 import 'package:curimba/helpers/shared_preferences_helper.dart';
 import 'package:curimba/models/card_model.dart';
 import 'package:curimba/repositories/card_repository.dart';
@@ -21,7 +23,7 @@ class RecommendedCardsViewModel extends BaseViewModel {
 
   @override
   Future<void> initialize() async {
-    _cards = await _getCards();
+    _cards = await _getUserRecommendedCards();
     notifyListeners();
   }
 
@@ -37,28 +39,44 @@ class RecommendedCardsViewModel extends BaseViewModel {
     return _cards[0];
   }
 
-  Future<List<CardModel>> _getCards() async {
+  Future<List<CardModel>> _getUserRecommendedCards() async {
     setViewState(ViewState.Busy);
 
-    List<CardModel> recommendedCards = [];
     final userId = await locator<SharedPreferencesHelper>().userId;
     final cards = await repository.getFromUser(userId);
+    final recommendedCards = _sortCardsByInvoiceDate(cards);
+
+    setViewState(ViewState.Idle);
+    return recommendedCards;
+  }
+
+  List<CardModel> _sortCardsByInvoiceDate(List<CardModel> cards) {
+    final dateTimeNow = new DateTime.now();
+    final sortedCards = List<CardModel>();
 
     var now = clock.now();
     cards.sort((a, b) => a.invoiceDate.compareTo(b.invoiceDate));
     cards.forEach((element) {
-      int invoiceMonth = int.parse(element.invoiceDate.substring(0, 2));
-      int invoiceDay = int.parse(element.invoiceDate.substring(3, 5));
-      var invoiceDate = new DateTime(now.year, invoiceMonth, invoiceDay);
-      var expiryDate = invoiceDate.add(new Duration(days: 7));
-      now = new DateTime(now.year, now.month, now.day);
-      if ((now.isAtSameMomentAs(invoiceDate) || now.isAfter(invoiceDate)) &&
-          now.isBefore(expiryDate)) {
-        recommendedCards.add(element);
+      final parsedInvoiceDate = _parseInvoiceDate(element.invoiceDate);
+      final invoiceMonth = parsedInvoiceDate['month'];
+      final invoiceDay = parsedInvoiceDate['day'];
+      final invoiceDate = DateTime(dateTimeNow.year, invoiceMonth, invoiceDay);
+      final expiryDate =
+          invoiceDate.add(Duration(days: TimeDefinitions.Week.days));
+      if ((dateTimeNow.isAtSameMomentAs(invoiceDate) ||
+              dateTimeNow.isAfter(invoiceDate)) &&
+          dateTimeNow.isBefore(expiryDate)) {
+        sortedCards.add(element);
       }
     });
-    recommendedCards.sort((b, a) => a.invoiceDate.compareTo(b.invoiceDate));
-    setViewState(ViewState.Idle);
-    return recommendedCards;
+    sortedCards.sort((b, a) => a.invoiceDate.compareTo(b.invoiceDate));
+    return sortedCards;
+  }
+
+  Map<String, int> _parseInvoiceDate(invoiceDate) {
+    return {
+      'month': int.parse(invoiceDate.substring(0, 2)),
+      'day': int.parse(invoiceDate.substring(3, 5)),
+    };
   }
 }

@@ -25,20 +25,20 @@ class UserRepository {
   Future<List<UserModel>> findByUsername(String username) async {
     Database db = await DatabaseHelper.instance.database;
 
-    var dbUsers = await db.query(
+    var usersByUsername = await db.query(
       table,
       where: 'username = ?',
       whereArgs: [username],
       limit: 1,
     );
 
-    return List.generate(dbUsers.length, (i) {
+    return List.generate(usersByUsername.length, (i) {
       return UserModel(
-        id: dbUsers[i]['id'],
-        name: dbUsers[i]['name'],
-        username: dbUsers[i]['username'],
-        password: dbUsers[i]['password'],
-        receiveNotifications: dbUsers[i]['receive_notifications']
+        id: usersByUsername[i]['id'],
+        name: usersByUsername[i]['name'],
+        username: usersByUsername[i]['username'],
+        password: usersByUsername[i]['password'],
+        receiveNotifications: usersByUsername[i]['receive_notifications']
       );
     });
   }
@@ -59,7 +59,7 @@ class UserRepository {
         name: dbUsers[i]['name'],
         username: dbUsers[i]['username'],
         password: dbUsers[i]['password'],
-        receiveNotifications: dbUsers[i]['receive_notifications']
+        receiveNotifications: dbUsers[i]['receive_notifications'],
       );
     });
   }

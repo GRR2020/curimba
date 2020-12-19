@@ -44,6 +44,36 @@ void main() {
         expect(Validators.validateMonth("1"), null);
       });
     });
+    group('validateYear', () {
+      test('should return error if empty', () {
+        expect(Validators.validateYear(""), 'Complete o campo');
+      });
+      test('should return error if year not valid', () {
+        expect(Validators.validateYear("1"), 'Ano inválido');
+        expect(Validators.validateYear("12"), 'Ano inválido');
+        expect(Validators.validateYear("123"), 'Ano inválido');
+      });
+      test('should return null if year valid', () {
+        expect(Validators.validateYear("1234"), null);
+      });
+    });
+    group('validateMonthYear', () {
+      test('should return error if empty', () {
+        expect(Validators.validateMonthYear(""), 'Complete o campo');
+      });
+      test('should return error if month not valid', () {
+        expect(Validators.validateMonthYear("00/1234"), 'Mês inválido');
+      });
+      test('should return error if year not valid', () {
+        expect(Validators.validateMonthYear("12/0"), 'Ano inválido');
+      });
+      test('should return error if year is empty', () {
+        expect(Validators.validateMonthYear("12/"), 'Complete o campo');
+      });
+      test('should return null if month and year are valid', () {
+        expect(Validators.validateMonthYear("12/1234"), null);
+      });
+    });
     group('validateLastNumbers', () {
       test('should return error if empty', () {
         expect(Validators.validateLastNumbers(""), 'Campo deve ter no mínimo 4 caracteres');

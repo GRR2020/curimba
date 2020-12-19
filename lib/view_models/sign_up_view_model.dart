@@ -13,7 +13,7 @@ class SignUpViewModel extends BaseViewModel {
 
   SignUpViewModel({this.repository = const UserRepository()});
 
-  Future<int> register(UserModel model) async {
+  Future<int> registerUser(UserModel model) async {
     setViewState(ViewState.Busy);
 
     final user = await repository.findByUsername(model.username);

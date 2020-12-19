@@ -1,4 +1,4 @@
-import 'package:curimba/enums/view_state.dart';
+import 'package:curimba/extensions/view_state_extensions.dart';
 import 'package:curimba/models/card_model.dart';
 import 'package:curimba/utils/masks.dart';
 import 'package:curimba/utils/navigation_service.dart';
@@ -91,7 +91,7 @@ class CreateCard extends StatelessWidget {
                         },
                       ),
                       SizedBox(height: 10),
-                      model.viewState == ViewState.Idle
+                      model.viewState.isIdle
                           ? RaisedButton(
                               onPressed: () {
                                 _submitCard(context, model);
@@ -115,12 +115,15 @@ class CreateCard extends StatelessWidget {
       BuildContext context, CreateCardViewModel createCardViewModel) async {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState.validate()) {
-      var savedCardId = await createCardViewModel.register(CardModel(
-        lastNumbers:
-            Masks.lastNumbersMask.unmaskText(_lastNumbersController.text),
+      final lastNumbers =
+          Masks.lastNumbersMask.unmaskText(_lastNumbersController.text);
+      final cardToBeRegistered = CardModel(
+        lastNumbers: lastNumbers,
         brandName: _brandNameController.text,
         expiryDate: _expiryDateController.text,
-      ));
+      );
+
+      var savedCardId = await createCardViewModel.registerCard(cardToBeRegistered);
 
       if (savedCardId > 0) {
         final snackBar = SnackBar(

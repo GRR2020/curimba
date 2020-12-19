@@ -1,6 +1,6 @@
 import 'package:curimba/screens/create_card.dart';
-import 'package:curimba/screens/home.dart';
 import 'package:curimba/screens/list_cards.dart';
+import 'package:curimba/screens/monthly_expenses.dart';
 import 'package:curimba/screens/recommended_cards.dart';
 import 'package:curimba/screens/register_product.dart';
 import 'package:curimba/screens/root.dart';
@@ -34,6 +34,8 @@ class NavigationService {
         return MaterialPageRoute(builder: (_) => SignUp());
       case '/register-product':
         return MaterialPageRoute(builder: (_) => RegisterProduct());
+      case '/monthly-expenses':
+        return MaterialPageRoute(builder: (_) => MonthlyExpenses());
       default:
         return MaterialPageRoute(builder: (_) => Root());
     }

@@ -1,5 +1,6 @@
-import 'package:curimba/enums/view_state.dart';
+import 'package:curimba/extensions/view_state_extensions.dart';
 import 'package:curimba/models/product_model.dart';
+import 'package:curimba/utils/masks.dart';
 import 'package:curimba/utils/monetary_value_mask.dart';
 import 'package:curimba/utils/validators.dart';
 import 'package:curimba/view_models/register_product_view_model.dart';
@@ -18,13 +19,13 @@ class RegisterProduct extends StatelessWidget {
   final _nameFocus = FocusNode(canRequestFocus: true);
   final _descriptionFocus = FocusNode(canRequestFocus: true);
   final _priceFocus = FocusNode(canRequestFocus: true);
-  final _monthFocus = FocusNode(canRequestFocus: true);
+  final _monthYearFocus = FocusNode(canRequestFocus: true);
 
   // Text fields controllers
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _priceController = TextEditingController();
-  final _monthController = TextEditingController();
+  final _monthYearController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +74,7 @@ class RegisterProduct extends StatelessWidget {
                         focusNode: _priceFocus,
                         keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.done,
-                        inputFormatters: [
-                          MonetaryValueMask(),
-                        ],
+                        inputFormatters: [MonetaryValueMask()],
                         onFieldSubmitted: (_) => _submitProduct(context, model),
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
@@ -87,22 +86,25 @@ class RegisterProduct extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       TextFormField(
-                        controller: _monthController,
-                        focusNode: _monthFocus,
+                        controller: _monthYearController,
+                        focusNode: _monthYearFocus,
                         keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.done,
-                        inputFormatters: [LengthLimitingTextInputFormatter(2)],
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(7),
+                          Masks.monthYearMask,
+                        ],
                         onFieldSubmitted: (_) => _submitProduct(context, model),
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
-                            labelText: 'Mês da compra',
-                            hintText: 'MM'),
+                            labelText: 'Data da compra',
+                            hintText: 'MM/YYYY'),
                         validator: (value) {
-                          return Validators.validateMonth(value);
+                          return Validators.validateMonthYear(value);
                         },
                       ),
                       SizedBox(height: 10),
-                      model.viewState == ViewState.Idle
+                      model.viewState.isIdle
                           ? RaisedButton(
                               onPressed: () {
                                 _submitProduct(context, model);
@@ -126,11 +128,21 @@ class RegisterProduct extends StatelessWidget {
       RegisterProductViewModel registerProductViewModel) async {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState.validate()) {
-      var savedCardId = await registerProductViewModel.register(ProductModel(
-          name: _nameController.text,
-          description: _descriptionController.text,
-          price: double.parse(_priceController.text.substring(3)),
-          month: int.parse(_monthController.text)));
+      final price = double.parse(_priceController.text.substring(2));
+      final monthYear = _monthYearController.text.split('/');
+      final month = int.parse(monthYear[0]);
+      final year = int.parse(monthYear[1]);
+
+      final productToBeRegistered = ProductModel(
+        name: _nameController.text,
+        description: _descriptionController.text,
+        price: price,
+        purchaseMonth: month,
+        purchaseYear: year,
+      );
+
+      var savedCardId =
+          await registerProductViewModel.registerProduct(productToBeRegistered);
 
       if (savedCardId > 0) {
         final snackBar = SnackBar(

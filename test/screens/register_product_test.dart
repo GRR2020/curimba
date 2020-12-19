@@ -43,7 +43,7 @@ void main() {
         await tester.enterText(formFields.at(0), "product");
         await tester.enterText(formFields.at(1), "description");
         await tester.enterText(formFields.at(2), "10");
-        await tester.enterText(formFields.at(3), "10");
+        await tester.enterText(formFields.at(3), "10/2020");
 
         await tester.tap(registerBtn);
         await tester.pump(const Duration(milliseconds: 100));
@@ -62,7 +62,7 @@ void main() {
 
         await tester.enterText(formFields.at(1), "description");
         await tester.enterText(formFields.at(2), "10");
-        await tester.enterText(formFields.at(3), "10");
+        await tester.enterText(formFields.at(3), "10/2020");
 
         await tester.tap(registerBtn);
         await tester.pump(const Duration(milliseconds: 100));
@@ -81,7 +81,7 @@ void main() {
 
         await tester.enterText(formFields.at(0), "product");
         await tester.enterText(formFields.at(1), "description");
-        await tester.enterText(formFields.at(3), "10");
+        await tester.enterText(formFields.at(3), "10/2020");
 
         await tester.tap(registerBtn);
         await tester.pump(const Duration(milliseconds: 100));
@@ -100,7 +100,7 @@ void main() {
 
         await tester.enterText(formFields.at(0), "product");
         await tester.enterText(formFields.at(1), "description");
-        await tester.enterText(formFields.at(2), "10");
+        await tester.enterText(formFields.at(2), "10/2020");
 
         await tester.tap(registerBtn);
         await tester.pump(const Duration(milliseconds: 100));
@@ -126,7 +126,7 @@ void main() {
         await tester.enterText(formFields.at(0), "product");
         await tester.enterText(formFields.at(1), "description");
         await tester.enterText(formFields.at(2), "10");
-        await tester.enterText(formFields.at(3), "10");
+        await tester.enterText(formFields.at(3), "10/2020");
 
         await tester.tap(registerBtn);
         await tester.pump(const Duration(milliseconds: 100));
@@ -150,7 +150,7 @@ void main() {
         await tester.enterText(formFields.at(0), "product");
         await tester.enterText(formFields.at(1), "description");
         await tester.enterText(formFields.at(2), "10");
-        await tester.enterText(formFields.at(3), "10");
+        await tester.enterText(formFields.at(3), "10/2020");
 
         await tester.tap(registerBtn);
         await tester.pump(const Duration(milliseconds: 100));

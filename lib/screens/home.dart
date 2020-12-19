@@ -44,6 +44,12 @@ class Home extends StatelessWidget {
                   child: Text('Cartões recomendados'.toUpperCase())),
               RaisedButton(
                   onPressed: () => locator<NavigationService>()
+                      .navigateTo('/monthly-expenses'),
+                  color: Colors.black,
+                  textColor: Colors.white,
+                  child: Text('Gastos mensais'.toUpperCase())),
+              RaisedButton(
+                  onPressed: () => locator<NavigationService>()
                       .navigateTo('/register-product'),
                   color: Colors.black,
                   textColor: Colors.white,
