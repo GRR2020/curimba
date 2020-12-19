@@ -3,6 +3,7 @@ import 'package:curimba/screens/home.dart';
 import 'package:curimba/screens/root.dart';
 import 'package:curimba/screens/sign_up.dart';
 import 'package:curimba/utils/locator.dart';
+import 'package:curimba/view_models/home_view_model.dart';
 import 'package:curimba/view_models/sign_up_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,6 +13,7 @@ void main() {
   setUpAll(() {
     locator.registerLazySingleton(() => SharedPreferencesHelper());
     locator.registerFactory(() => SignUpViewModel());
+    locator.registerFactory(() => HomeViewModel());
     SharedPreferences.setMockInitialValues({});
   });
 

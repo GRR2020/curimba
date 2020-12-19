@@ -1,3 +1,4 @@
+import 'package:clock/clock.dart';
 import 'package:curimba/enums/time_definitions.dart';
 import 'package:curimba/enums/view_state.dart';
 import 'package:curimba/extensions/time_values.dart';
@@ -12,17 +13,30 @@ import '../utils/locator.dart';
 class RecommendedCardsViewModel extends BaseViewModel {
   @protected
   final CardRepository repository;
+  Clock clock;
 
   List<CardModel> _cards;
 
   List<CardModel> get cards => _cards;
 
-  RecommendedCardsViewModel({this.repository = const CardRepository()});
+  RecommendedCardsViewModel({this.repository = const CardRepository(), this.clock = const Clock()});
 
   @override
   Future<void> initialize() async {
     _cards = await _getUserRecommendedCards();
     notifyListeners();
+  }
+
+  Future<CardModel> getFirstCard() async {
+    if (_cards == null) {
+      await initialize();
+    }
+
+    if (_cards.isEmpty) {
+      return null;
+    }
+
+    return _cards[0];
   }
 
   Future<List<CardModel>> _getUserRecommendedCards() async {
@@ -37,20 +51,20 @@ class RecommendedCardsViewModel extends BaseViewModel {
   }
 
   List<CardModel> _sortCardsByInvoiceDate(List<CardModel> cards) {
-    final dateTimeNow = new DateTime.now();
     final sortedCards = List<CardModel>();
 
+    var now = clock.now();
     cards.sort((a, b) => a.invoiceDate.compareTo(b.invoiceDate));
     cards.forEach((element) {
       final parsedInvoiceDate = _parseInvoiceDate(element.invoiceDate);
       final invoiceMonth = parsedInvoiceDate['month'];
       final invoiceDay = parsedInvoiceDate['day'];
-      final invoiceDate = DateTime(dateTimeNow.year, invoiceMonth, invoiceDay);
+      final invoiceDate = DateTime(now.year, invoiceMonth, invoiceDay);
       final expiryDate =
           invoiceDate.add(Duration(days: TimeDefinitions.Week.days));
-      if ((dateTimeNow.isAtSameMomentAs(invoiceDate) ||
-              dateTimeNow.isAfter(invoiceDate)) &&
-          dateTimeNow.isBefore(expiryDate)) {
+      if ((now.isAtSameMomentAs(invoiceDate) ||
+              now.isAfter(invoiceDate)) &&
+          now.isBefore(expiryDate)) {
         sortedCards.add(element);
       }
     });

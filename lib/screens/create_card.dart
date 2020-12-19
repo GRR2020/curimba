@@ -1,6 +1,7 @@
 import 'package:curimba/extensions/view_state_extensions.dart';
 import 'package:curimba/models/card_model.dart';
 import 'package:curimba/utils/masks.dart';
+import 'package:curimba/utils/navigation_service.dart';
 import 'package:curimba/utils/validators.dart';
 import 'package:curimba/view_models/create_card_view_model.dart';
 import 'package:flutter/material.dart';

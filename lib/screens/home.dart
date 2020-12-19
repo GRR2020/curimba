@@ -1,13 +1,22 @@
+import 'package:curimba/enums/view_state.dart';
+import 'package:curimba/helpers/notifications_helper.dart';
 import 'package:curimba/helpers/shared_preferences_helper.dart';
+import 'package:curimba/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/locator.dart';
 import '../utils/navigation_service.dart';
+import 'base_view.dart';
 
 class Home extends StatelessWidget {
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BaseView<HomeViewModel>(
+      viewModel: locator<HomeViewModel>(),
+      onModelLoaded: (model) async {
+        model.initialize();
+      },
+      builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           title: Text('Tela inicial'),
         ),
@@ -48,11 +57,23 @@ class Home extends StatelessWidget {
               RaisedButton(
                   onPressed: () {
                     locator<SharedPreferencesHelper>().deleteUserId();
+                    locator<SharedPreferencesHelper>().deleteReceiveNotifications();
                     locator<NavigationService>().navigateToAndReplace('/');
                   },
                   color: Colors.black,
                   textColor: Colors.white,
-                  child: Text('Sair'.toUpperCase()))
-            ])));
+                  child: Text('Sair'.toUpperCase())),
+              SizedBox(height: 50),
+            ])
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            model.handleNotifications();
+          },
+          tooltip: 'notifications',
+          child: model.receiveNotifications == 0 ? Icon(Icons.notifications_none) : Icon(Icons.notifications_active),
+        ),
+      )
+    );
   }
 }

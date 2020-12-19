@@ -2,6 +2,7 @@ import 'package:curimba/helpers/shared_preferences_helper.dart';
 import 'package:curimba/screens/home.dart';
 import 'package:curimba/utils/locator.dart';
 import 'package:curimba/utils/navigation_service.dart';
+import 'package:curimba/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -12,6 +13,7 @@ void main() {
   setUpAll(() {
     locator.registerLazySingleton(() => NavigationService());
     locator.registerLazySingleton(() => SharedPreferencesHelper());
+    locator.registerFactory(() => HomeViewModel());
   });
 
   group('Home Widget', () {
